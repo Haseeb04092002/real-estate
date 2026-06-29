@@ -178,11 +178,13 @@
 
             <!-- Navigation Tabs -->
             <ul class="nav nav-pills nav-modern" id="userTab" role="tablist">
+                <!-- Hide Overview Tab 
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab"><i class="fa-solid fa-user me-2"></i> Overview & Info</button>
+                    <button class="nav-link" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab"><i class="fa-solid fa-user me-2"></i> Overview & Info</button>
                 </li>
+                -->
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="verification-tab" data-bs-toggle="tab" data-bs-target="#verification" type="button" role="tab"><i class="fa-solid fa-shield-halved me-2"></i> Verification & Status</button>
+                    <button class="nav-link active" id="verification-tab" data-bs-toggle="tab" data-bs-target="#verification" type="button" role="tab"><i class="fa-solid fa-shield-halved me-2"></i> Verification & Status</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="properties-tab" data-bs-toggle="tab" data-bs-target="#properties" type="button" role="tab"><i class="fa-solid fa-building me-2"></i> Listed Properties</button>
@@ -191,8 +193,8 @@
 
             <div class="tab-content" id="userTabContent">
                 
-                <!-- OVERVIEW TAB -->
-                <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                <!-- OVERVIEW TAB (Hidden) -->
+                <div class="tab-pane fade" id="overview" role="tabpanel" style="display:none;">
                     <div class="row g-4">
                         <div class="col-lg-8">
                             <div class="modern-card h-100">
@@ -255,7 +257,7 @@
                 </div>
 
                 <!-- VERIFICATION TAB -->
-                <div class="tab-pane fade" id="verification" role="tabpanel">
+                <div class="tab-pane fade show active" id="verification" role="tabpanel">
                     <div class="row g-4">
                         
                         <?php
@@ -275,68 +277,103 @@
 
                         // Helper function to render doc
                         if (!function_exists('render_doc_item')) {
-                            function render_doc_item($doc, $user) {
-                                if(!$doc) return '<div class="text-muted small fst-italic mb-3">No document uploaded.</div>';
+                            function render_doc_item($doc, $user, $rule) {
+                                $titleHTML = '<span class="fw-bold fs-6 me-2 text-uppercase" style="font-size:12px;">'.htmlspecialchars($rule->DocumentTitle).'</span>';
+                                if($rule->IsMandatory) {
+                                    $titleHTML .= '<span class="badge bg-danger rounded-pill px-2" style="font-size: 10px;">Mandatory</span>';
+                                } else {
+                                    $titleHTML .= '<span class="badge bg-light text-dark border rounded-pill px-2" style="font-size: 10px;">Optional</span>';
+                                }
+
+                                if(!$doc) {
+                                    return '
+                                    <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+                                        <div class="mb-2">'.$titleHTML.'</div>
+                                        <div class="text-muted small fst-italic"><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i> No document uploaded.</div>
+                                    </div>';
+                                }
                                 
                                 $ext = pathinfo($doc->FileName, PATHINFO_EXTENSION);
-                                $is_img = in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+                                $is_img = in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                                $is_file = !empty($ext) && in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'rtf', 'txt']);
                                 $path = base_url('uploads/Client/'.$user->ClientId.'/images/'.$doc->FileName);
                                 
                                 $statusColor = '';
-                                if($doc->VerificationStatus == 'Approved') $statusColor = 'text-success border-success';
-                                elseif($doc->VerificationStatus == 'Rejected') $statusColor = 'text-danger border-danger';
-                                else $statusColor = 'text-warning border-warning';
+                                if($doc->VerificationStatus == 'Approved') $statusColor = 'text-success border-success bg-success-subtle';
+                                elseif($doc->VerificationStatus == 'Rejected') $statusColor = 'text-danger border-danger bg-danger-subtle';
+                                else $statusColor = 'text-warning border-warning bg-warning-subtle';
                                 
                                 $html = '
-                                <div class="border rounded p-3 mb-3 d-flex align-items-center justify-content-between bg-white shadow-sm">
-                                    <div class="d-flex align-items-center">';
-                                
-                                if($is_img) {
-                                    $html .= '<a href="'.$path.'" target="_blank">
-                                                <img src="'.$path.'" style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3 border">
-                                              </a>';
-                                } else {
-                                    $html .= '<div class="bg-light rounded d-flex align-items-center justify-content-center me-3 border" style="width: 50px; height: 50px;">
-                                                <i class="fa-solid fa-file-pdf fs-3 text-secondary"></i>
-                                              </div>';
-                                }
-                                
-                                $html .= '<div>
-                                            <h6 class="mb-0 fw-bold">'.$doc->Remarks.'</h6>
-                                            <a href="'.$path.'" target="_blank" class="text-decoration-none small"><i class="fa-solid fa-up-right-from-square me-1"></i> Preview</a>
-                                        </div>
+                                <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>'.$titleHTML.'</div>
                                     </div>
                                     
-                                    <div>
-                                        <select class="form-select form-select-sm doc-status-select '.$statusColor.'" data-doc-id="'.$doc->DocumentId.'" style="width: 120px; font-weight: bold;">
-                                            <option value="Pending" '.($doc->VerificationStatus == 'Pending' ? 'selected' : '').' class="text-dark">Pending</option>
-                                            <option value="Approved" '.($doc->VerificationStatus == 'Approved' ? 'selected' : '').' class="text-dark">Approved</option>
-                                            <option value="Rejected" '.($doc->VerificationStatus == 'Rejected' ? 'selected' : '').' class="text-dark">Rejected</option>
-                                        </select>
-                                    </div>
-                                </div>';
+                                    <div class="d-flex align-items-center justify-content-between">';
+                                
+                                $html .= '<div class="d-flex align-items-center">';
+                                
+                                if($is_file) {
+                                    if($is_img) {
+                                        $html .= '<a href="'.$path.'" target="_blank">
+                                                    <img src="'.$path.'" style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3 border">
+                                                  </a>';
+                                    } else {
+                                        // No icon box for non-image files
+                                    }
+                                    
+                                    $html .= '<div>
+                                                <div class="fw-bold text-dark">'.htmlspecialchars($doc->FileName).'</div>
+                                            </div>
+                                        </div>';
+                                        
+                                    // Preview button for files
+                                    $html .= '<div class="d-flex align-items-center gap-3">
+                                                <a href="'.$path.'" target="_blank" class="text-decoration-none small fw-bold"><i class="fa-solid fa-up-right-from-square me-1"></i> Preview</a>';
+                                } else {
+                                    // It is text data
+                                    $html .= '<div class="bg-light rounded d-flex align-items-center justify-content-center me-3 border" style="width: 50px; height: 50px;">
+                                                <i class="fa-solid fa-font fs-3 text-secondary"></i>
+                                              </div>
+                                              <div>
+                                                <div class="fw-bold text-dark fs-5">'.htmlspecialchars($doc->FileName).'</div>
+                                              </div>
+                                          </div>';
+                                          
+                                    $html .= '<div class="d-flex align-items-center gap-3">';
+                                }
+                                
+                                $html .= '      <select class="form-select form-select-sm doc-status-select '.$statusColor.'" data-doc-id="'.$doc->DocumentId.'" style="width: 120px; font-weight: bold;">
+                                                    <option value="Pending" '.($doc->VerificationStatus == 'Pending' ? 'selected' : '').' class="text-dark bg-white">Pending</option>
+                                                    <option value="Approved" '.($doc->VerificationStatus == 'Approved' ? 'selected' : '').' class="text-dark bg-white">Approved</option>
+                                                    <option value="Rejected" '.($doc->VerificationStatus == 'Rejected' ? 'selected' : '').' class="text-dark bg-white">Rejected</option>
+                                                </select>
+                                            </div>';
+                                
+                                $html .= '</div>'; // close justify-content-between
+                                
+                                // Ref/Exp dates inside card if exist
+                                if($doc->ReferenceNumber || ($doc->ExpiryDate && $doc->ExpiryDate != '0000-00-00')) {
+                                    $html .= '<div class="d-flex gap-3 mt-3 pt-2 border-top small text-muted">';
+                                    if($doc->ReferenceNumber) $html .= '<span><i class="fa-solid fa-hashtag"></i> '.$doc->ReferenceNumber.'</span>';
+                                    if($doc->ExpiryDate && $doc->ExpiryDate != '0000-00-00') $html .= '<span><i class="fa-regular fa-calendar-xmark"></i> Exp: '.$doc->ExpiryDate.'</span>';
+                                    $html .= '</div>';
+                                }
+                                
+                                $html .= '</div>'; // close border rounded
                                 return $html;
                             }
                         }
                         ?>
 
-                        <div class="col-lg-7">
-                            <div class="modern-card h-100">
+                        <div class="col-md-7">
+                            <div class="modern-card h-100 border-start border-primary border-4">
                                 <div class="modern-card-header bg-light">
-                                    <i class="fa-solid fa-file-shield me-2 text-primary"></i> User Authorization — Documents Upload
+                                    <i class="fa-solid fa-file-contract me-2"></i> User Authorization — Documents Upload
                                 </div>
                                 <div class="modern-card-body">
                                     
-                                    <h6 class="text-primary fw-bold mb-3"><i class="fa-solid fa-id-badge me-2"></i> Identity Information</h6>
-                                    <div class="row mb-4">
-                                        <div class="col-6"><span class="info-label">Date of Birth (DOB)</span><span class="info-value"><?= $user->DOB ?: '<span class="text-muted">Not Provided</span>' ?></span></div>
-                                        <div class="col-6"><span class="info-label">Card Number</span><span class="info-value"><?= $user->CardNumber ?: '<span class="text-muted">Not Provided</span>' ?></span></div>
-                                        <div class="col-6 mt-3"><span class="info-label">Card Issue Date</span><span class="info-value"><?= $user->CardIssueDate ?: '<span class="text-muted">N/A</span>' ?></span></div>
-                                        <div class="col-6 mt-3"><span class="info-label">Card Expiry Date</span><span class="info-value"><?= $user->CardExpiryDate ?: '<span class="text-muted">N/A</span>' ?></span></div>
-                                    </div>
-
-                                    <hr>
-                                    <h6 class="text-primary fw-bold mb-3"><i class="fa-solid fa-file-contract me-2"></i> Required Verification Documents</h6>
+            
                                     <div class="row mb-2">
                                         <div class="col-12">
                                             <?php 
@@ -353,27 +390,7 @@
                                                         }
                                                     }
 
-                                                    echo '<div class="mb-4">';
-                                                    echo '<span class="info-label mb-2">'.htmlspecialchars($rule->DocumentTitle);
-                                                    if($rule->IsMandatory) {
-                                                        echo ' <span class="badge bg-danger rounded-pill px-2 ms-2" style="font-size: 10px;">Mandatory</span>';
-                                                    } else {
-                                                        echo ' <span class="badge bg-light text-dark border rounded-pill px-2 ms-2" style="font-size: 10px;">Optional</span>';
-                                                    }
-                                                    echo '</span>';
-
-                                                    if($uploaded_doc) {
-                                                        if($uploaded_doc->ReferenceNumber || ($uploaded_doc->ExpiryDate && $uploaded_doc->ExpiryDate != '0000-00-00')) {
-                                                            echo '<div class="d-flex gap-3 mb-2 small text-muted">';
-                                                            if($uploaded_doc->ReferenceNumber) echo '<span><i class="fa-solid fa-hashtag"></i> '.$uploaded_doc->ReferenceNumber.'</span>';
-                                                            if($uploaded_doc->ExpiryDate && $uploaded_doc->ExpiryDate != '0000-00-00') echo '<span><i class="fa-regular fa-calendar-xmark"></i> Exp: '.$uploaded_doc->ExpiryDate.'</span>';
-                                                            echo '</div>';
-                                                        }
-                                                        echo render_doc_item($uploaded_doc, $user);
-                                                    } else {
-                                                        echo '<div class="text-muted small fst-italic mb-3 p-3 bg-light rounded border" style="border-style: dashed !important;"><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i> No document uploaded.</div>';
-                                                    }
-                                                    echo '</div>';
+                                                    echo render_doc_item($uploaded_doc, $user, $rule);
                                                 }
                                             } else {
                                                 echo '<div class="text-muted fst-italic">No dynamic verification rules configured.</div>';
@@ -386,7 +403,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-5">
+                        <div class="col-md-5">
                             <div class="modern-card h-100 border-start border-primary border-4">
                                 <div class="modern-card-header bg-light">
                                     <i class="fa-solid fa-user-lock me-2 text-primary"></i> Account Status Control
@@ -428,10 +445,20 @@
                 <!-- PROPERTIES TAB -->
                 <div class="tab-pane fade" id="properties" role="tabpanel">
                     <div class="modern-card">
-                        <div class="modern-card-body text-center py-5">
-                            <div style="font-size: 50px; color: #e9ecef; margin-bottom: 20px;"><i class="fa-solid fa-building"></i></div>
-                            <h4 class="fw-bold">No Listed Properties Yet</h4>
-                            <p class="text-muted">This user has not listed any properties, or the property module is currently being integrated.</p>
+                        <div class="modern-card-body">
+                            <div class="row g-4">
+                                <?php if(empty($properties)): ?>
+                                    <div class="col-12 text-center py-5">
+                                        <div style="font-size: 50px; color: #e9ecef; margin-bottom: 20px;"><i class="fa-solid fa-building"></i></div>
+                                        <h4 class="fw-bold">No Listed Properties Yet</h4>
+                                        <p class="text-muted">This user has not listed any properties.</p>
+                                    </div>
+                                <?php else: ?>
+                                    <?php foreach ($properties as $key => $value): 
+                                          $this->load->view('components/property_card', ['value' => $value, 'UserId' => $user->ClientId]);
+                                    endforeach; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,8 @@ class Admin_User_Verifications_Model extends CI_Model {
     }
 
     public function get_rules() {
-        $this->db->order_by('RuleId', 'DESC');
+        $this->db->order_by('SortOrder', 'ASC');
+        $this->db->order_by('RuleId', 'ASC');
         return $this->db->get('tbl_user_verification_rules')->result();
     }
 

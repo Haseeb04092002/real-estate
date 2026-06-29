@@ -45,17 +45,7 @@ if (isset($PropertyId) && $PropertyId > 0) {
     if ($prop) $PropertyTypeId = $prop->PropertyTypeId;
 }
 
-$DocTypesCount = 0;
-if (isset($this->getlist_model)) {
-    $docTypesData = $this->getlist_model->getFieldsMultipleConditions('tbl_property_document_types', '*', "WHERE PropertyType='All' OR PropertyType='$PropertyTypeId' OR PropertyType='' OR PropertyType IS NULL", 2);
-    if(is_array($docTypesData)) $DocTypesCount = count($docTypesData);
-    elseif(is_object($docTypesData)) $DocTypesCount = 1;
-}
-
-$btnDocuments = '';
-if ($DocTypesCount > 0) {
-    $btnDocuments = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeDocuments.'" id="btnDocuments" '.$lnkDocuments.'><i class="fa fa-file-alt icon-left"></i><span>Documents</span></button>';
-}
+$btnDocuments = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeDocuments.'" id="btnDocuments" '.$lnkDocuments.'><i class="fa fa-file-alt icon-left"></i><span>Documents</span></button>';
 
 $btnPreview = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activePreview.'" id="btnPreview" '.$lnkPreview.'><i class="fa fa-eye icon-left"></i><span>Preview</span></button>';
 
@@ -237,9 +227,7 @@ $this->load->view('components/css_links');
                 ['id' => 'features', 'label' => 'Features', 'status' => $statusFeatures, 'link' => $lnkFeatures],
                 ['id' => 'media', 'label' => 'Media', 'status' => $statusMedia, 'link' => $lnkImages]
             ];
-            if ($DocTypesCount > 0) {
-                $steps[] = ['id' => 'documents', 'label' => 'Documents', 'status' => $statusDocs, 'link' => $lnkDocuments];
-            }
+            $steps[] = ['id' => 'documents', 'label' => 'Documents', 'status' => $statusDocs, 'link' => $lnkDocuments];
             $steps[] = ['id' => 'preview', 'label' => 'Preview', 'status' => 'empty', 'link' => $lnkPreview];
             
             $currentSubView = ($SubView == '') ? 'information' : $SubView;

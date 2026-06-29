@@ -211,16 +211,7 @@ class Documents extends CI_Controller {
 
       $Response['PropertyId'] = $ReferenceId;
       
-      $PropertyTypeId = 0;
-      $prop = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'PropertyTypeId', "WHERE PropertyId='$ReferenceId'", 2);
-      if ($prop) $PropertyTypeId = $prop->PropertyTypeId;
-
-      $docTypesData = $this->getlist_model->getFieldsMultipleConditions('tbl_property_document_types', '*', "WHERE PropertyType='All' OR PropertyType='$PropertyTypeId' OR PropertyType='' OR PropertyType IS NULL", 2);
-      $DocTypesCount = 0;
-      if(is_array($docTypesData)) $DocTypesCount = count($docTypesData);
-      elseif(is_object($docTypesData)) $DocTypesCount = 1;
-
-      $Response['NextTab'] = ($DocTypesCount > 0) ? 'btnDocuments' : 'btnPreview';
+      $Response['NextTab'] = 'btnDocuments';
 
       exit(json_encode($Response));
 

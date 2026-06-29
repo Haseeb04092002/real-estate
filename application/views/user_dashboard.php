@@ -4,6 +4,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $UserId = $this->session->userdata('user_id');
 $UserName = $this->session->userdata('user_name');
 
+$UserInfo = $this->getlist_model->getFieldsMultipleConditions('tbl_clients', 'AccountStatus', "WHERE ClientId = '$UserId'", 1);
+$isVerified = ($UserInfo === 'Active');
+
 $UserDocStatus = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', '*', "WHERE ReferenceId = '$UserId' AND Reference = 'Client'", 2);
 
 // --------- all favourites properties ------//
@@ -20,26 +23,26 @@ $arrActiveRequests = $this->getlist_model->getFieldsMultipleConditions('tbl_prop
 $NumActiveRequests = ($arrActiveRequests) ? count($arrActiveRequests) : 0;
 
 // --------- all properties ------//
-$arrProperties = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE ClientId = '$UserId' ORDER BY PropertyId DESC LIMIT 0,9");
+$arrProperties = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE AddedBy = '$UserId' AND IsDeleted = 0 ORDER BY PropertyId DESC LIMIT 0,9");
 
 // --------- counting all properties ------//
-$all_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE ClientId = '$UserId'", 1);
+$all_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE AddedBy = '$UserId'", 1);
 $all_listings = $all_listings ?? '0';
 
 // --------- counting all acive properties ------//
-$active_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE ClientId = '$UserId' AND IsDeleted = '0'", 1);
+$active_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE AddedBy = '$UserId' AND IsDeleted = '0'", 1);
 $active_listings = $active_listings ?? '0';
 
 // --------- counting all inactive properties ------//
-$inactive_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE ClientId = '$UserId' AND IsDeleted = '1'", 1);
+$inactive_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE AddedBy = '$UserId' AND IsDeleted = '1'", 1);
 $inactive_listings = $inactive_listings ?? '0';
 
 // --------- counting all rent types properties ------//
-$all_Rent_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE ClientId = '$UserId' AND ListType = 'Rent' AND IsDeleted = '0'", 1);
+$all_Rent_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE AddedBy = '$UserId' AND ListType = 'Rent' AND IsDeleted = '0'", 1);
 $all_Rent_listings = $all_Rent_listings ?? '0';
 
 // --------- counting all sale types properties ------//
-$all_Sale_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE ClientId = '$UserId' AND ListType = 'Sale' AND IsDeleted = '0'", 1);
+$all_Sale_listings = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'COUNT(*)', "WHERE AddedBy = '$UserId' AND ListType = 'Sale' AND IsDeleted = '0'", 1);
 $all_Sale_listings = $all_Sale_listings ?? '0';
 
 $Message_Box = 'd-none';
@@ -272,24 +275,44 @@ if (empty($arrProperties)) {
     <div class="w-75 mx-auto dashboard-container">
 
         <!-- Alert -->
+        <?php if(isset($isVerified) && $isVerified): ?>
+        <div class="verification-banner mb-4 bg-success border-0 shadow-sm" style="background: linear-gradient(135deg, #d1e7dd, #a3cfbb);">
+            <div class="row align-items-center">
+                <div class="col-lg-9">
+                    <h5 class="fw-bold mb-2 text-dark">
+                        <i class="bi bi-patch-check-fill text-success me-2"></i>
+                        Profile Fully Verified
+                    </h5>
+                    <p class="mb-0 text-dark">Your profile is verified and active. You can now build trust with buyers and sellers seamlessly.</p>
+                </div>
+                <div class="col-lg-3 text-lg-end mt-3 mt-lg-0">
+                    <a href="<?= site_url('Properties/property_user_docs'); ?>" class="btn btn-success btn-lg shadow-sm">View Docs</a>
+                </div>
+            </div>
+        </div>
+        <?php else: ?>
         <div class="verification-banner mb-4">
             <div class="row align-items-center">
                 <div class="col-lg-9">
                     <h5 class="fw-bold mb-2">
                         <i class="bi bi-shield-check me-2"></i>
                         Build trust and attract more buyers!
+                        <?php if(!empty($UserDocStatus)): ?>
+                            <span class="badge bg-warning text-dark ms-2 align-middle fs-6">Submitted - Approval Awaited</span>
+                        <?php endif; ?>
                     </h5>
                     <p class="mb-0">Verify your profile by sharing a few quick details about yourself.</p>
                 </div>
                 <div class="col-lg-3 text-lg-end mt-3 mt-lg-0">
                     <?php if(!empty($UserDocStatus)){ ?>
-                        <a href="<?= site_url('Properties/property_user_docs'); ?>" class="btn btn-secondary btn-lg">View All Documents</a>
+                        <a href="<?= site_url('Properties/property_user_docs'); ?>" class="btn btn-secondary btn-lg">View Docs</a>
                     <?php } else { ?>
                         <a href="<?= site_url('Properties/property_user_docs'); ?>" class="btn btn-primary btn-lg">Verify Profile</a>
                     <?php } ?>
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
         <!-- Stats -->
         <h4 class="section-title">Dashboard Overview</h4>
@@ -343,7 +366,7 @@ if (empty($arrProperties)) {
         
         <div class="row g-4 mb-5">
             <!-- Inquiry Requests -->
-            <div class="col-lg-7">
+            <div class="col-lg-6">
                 <div class="card dashboard-card h-100">
                     <div class="card-header">Inquiry Requests</div>
                     <div class="card-body" style="max-height: 400px; overflow-y: auto;">
@@ -400,125 +423,50 @@ if (empty($arrProperties)) {
                 </div>
             </div>
 
-            <!-- Verification Status -->
-            <div class="col-lg-5">
-                <div class="card dashboard-card h-100">
+            <!-- Saved Properties -->
+            <div class="col-lg-6">
+                <div class="card dashboard-card h-100 mb-0">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Profile Verification</span>
-                        <a href="<?= site_url('Properties/property_user_docs'); ?>" class="btn btn-primary btn-sm">Complete Verification</a>
+                        <span>Saved Properties</span>
                     </div>
-                    <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
-                        <div class="accordion accordion-flush" id="verificationAccordion">
-                            <?php if (empty($UserDocStatus)): ?>
-                                <div class="text-muted text-center p-4">No documents uploaded yet.</div>
+                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                        <div class="row g-4">
+                            <?php if (empty($arrFavProperties)): ?>
+                                <div class="col-12"><div class="text-muted text-center p-3">No Saved Properties</div></div>
                             <?php else: ?>
-                                <?php foreach ($UserDocStatus as $index => $doc): 
-                                    $docTitle = $doc->DocumentTitle ?? 'Document';
-                                    $status = $doc->VerificationStatus ?? 'Pending';
-                                    if ($status == 'Approved') {
-                                        $badgeClass = 'bg-success';
-                                    } else if ($status == 'Rejected') {
-                                        $badgeClass = 'bg-danger';
-                                    } else {
-                                        $badgeClass = 'bg-warning text-dark';
-                                        $status = 'Pending';
-                                    }
-                                    $collapseId = "collapseDoc" . $index;
-                                    $headingId = "headingDoc" . $index;
+                                <?php foreach ($arrFavProperties as $key => $fav):
+                                    $favPropertyId = $fav->PropertyId;
+                                    $favProp = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyId = '$favPropertyId'", 2);
+                                    if($favProp) {
+                                        $favTitle = $favProp->PropertyTitle ? $favProp->PropertyTitle : "Property Title";
+                                        $favPrice = $favProp->TotalPrice ? $favProp->TotalPrice : "0";
+                                        $favAddress = $favProp->MailingAddress ? $favProp->MailingAddress : "Mailing Address";
+                                        $favImage = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'FileName', "WHERE Reference = 'Properties' AND ReferenceId = '$favPropertyId'", 1);
+                                        $favImgSrc = (!empty($favImage) && is_string($favImage)) ? base_url('uploads/Properties/'.$favPropertyId.'/images/'.$favImage) : base_url('assets/images/property-1.jpg');
                                 ?>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="<?= $headingId ?>">
-                                        <button class="accordion-button collapsed px-4" type="button" data-bs-toggle="collapse" data-bs-target="#<?= $collapseId ?>">
-                                            <div class="d-flex justify-content-between align-items-center w-100 pe-3">
-                                                <span class="fw-medium"><?= $docTitle ?></span>
-                                                <span class="badge <?= $badgeClass ?>"><?= $status ?></span>
-                                            </div>
-                                        </button>
-                                    </h2>
-                                    <div id="<?= $collapseId ?>" class="accordion-collapse collapse" data-bs-parent="#verificationAccordion">
-                                        <div class="accordion-body px-4 pb-4 pt-2">
-                                            <?php if (!empty($doc->FileName)): ?>
-                                                <div class="mb-3 text-center bg-light rounded p-2">
-                                                    <?php 
-                                                    $ext = pathinfo($doc->FileName, PATHINFO_EXTENSION);
-                                                    if (in_array(strtolower($ext), ['jpg','jpeg','png','gif'])): ?>
-                                                        <img src="<?= base_url('uploads/Client/'.$UserId.'/'.$doc->FileName) ?>" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
-                                                    <?php else: ?>
-                                                        <a href="<?= base_url('uploads/Client/'.$UserId.'/'.$doc->FileName) ?>" target="_blank" class="btn btn-outline-primary btn-sm">
-                                                            <i class="bi bi-file-earmark-text"></i> View Document
-                                                        </a>
-                                                    <?php endif; ?>
-                                                </div>
-                                            <?php endif; ?>
-                                            
-                                            <div class="small text-muted mb-3">
-                                                <?php if (!empty($doc->ReferenceNumber)): ?>
-                                                    <div class="mb-1"><strong class="text-dark">Ref Number:</strong> <?= $doc->ReferenceNumber ?></div>
-                                                <?php endif; ?>
-                                                <?php if (!empty($doc->ExpiryDate)): ?>
-                                                    <div class="mb-1"><strong class="text-dark">Expires:</strong> <?= $doc->ExpiryDate ?></div>
-                                                <?php endif; ?>
-                                                <?php if (!empty($doc->Remarks)): ?>
-                                                    <div class="mb-1"><strong class="text-dark">Remarks:</strong> <?= $doc->Remarks ?></div>
-                                                <?php endif; ?>
-                                                <div class="mb-1"><strong class="text-dark">Uploaded:</strong> <?= date('d M Y', strtotime($doc->AddedOn ?? date('Y-m-d'))) ?></div>
-                                            </div>
-                                            
-                                            <?php if ($status != 'Approved'): ?>
-                                                <div class="d-flex gap-2 border-top pt-3 mt-3">
-                                                    <a href="<?= site_url('Properties/property_user_docs') ?>" class="btn btn-sm btn-outline-primary flex-fill"><i class="bi bi-pencil"></i> Edit</a>
-                                                    <a href="javascript:void(0)" onclick="customAlert('Notice', 'Document deletion to be handled by backend.', 'info')" class="btn btn-sm btn-outline-danger flex-fill"><i class="bi bi-trash"></i> Delete</a>
-                                                </div>
-                                            <?php endif; ?>
+                                <div class="col-md-6">
+                                    <div class="saved-property-card h-100">
+                                        <img src="<?= $favImgSrc ?>" class="img-fluid w-100">
+                                        <div class="saved-property-content">
+                                            <h6><?= $favTitle ?></h6>
+                                            <div class="saved-price">$<?= number_format($favPrice) ?></div>
+                                            <small class="text-muted"><i class="bi bi-geo-alt me-1"></i><?= $favAddress ?></small>
                                         </div>
                                     </div>
                                 </div>
-                                <?php endforeach; ?>
+                                <?php } endforeach; ?>
                             <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <!-- Saved Properties -->
-        <div class="card dashboard-card mb-5">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Saved Properties</span>
-            </div>
-            <div class="card-body">
-                <div class="row g-4">
-                    <?php if (empty($arrFavProperties)): ?>
-                        <div class="col-12"><div class="text-muted text-center">No Saved Properties</div></div>
-                    <?php else: ?>
-                        <?php foreach ($arrFavProperties as $key => $fav):
-                            $favPropertyId = $fav->PropertyId;
-                            $favProp = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyId = '$favPropertyId'", 2);
-                            if($favProp) {
-                                $favTitle = $favProp->PropertyTitle ? $favProp->PropertyTitle : "Property Title";
-                                $favPrice = $favProp->TotalPrice ? $favProp->TotalPrice : "0";
-                                $favAddress = $favProp->MailingAddress ? $favProp->MailingAddress : "Mailing Address";
-                                $favImage = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'FileName', "WHERE Reference = 'Properties' AND ReferenceId = '$favPropertyId'", 1);
-                                $favImgSrc = (!empty($favImage) && is_string($favImage)) ? base_url('uploads/Properties/'.$favPropertyId.'/images/'.$favImage) : base_url('assets/images/property-1.jpg');
-                        ?>
-                        <div class="col-lg-4">
-                            <div class="saved-property-card h-100">
-                                <img src="<?= $favImgSrc ?>" class="img-fluid w-100">
-                                <div class="saved-property-content">
-                                    <h6><?= $favTitle ?></h6>
-                                    <div class="saved-price">$<?= number_format($favPrice) ?></div>
-                                    <small class="text-muted"><i class="bi bi-geo-alt me-1"></i><?= $favAddress ?></small>
-                                </div>
-                            </div>
-                        </div>
-                        <?php } endforeach; ?>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
+
 
         <!-- My Listings -->
-        <div class="card dashboard-card">
+        <div class="card dashboard-card mt-5">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>My Recent Listings</span>
                 <a href="<?= site_url('Properties/AddListing'); ?>" class="btn btn-primary">
@@ -528,7 +476,7 @@ if (empty($arrProperties)) {
             <div class="card-body">
                 <div class="row g-4">
                     <?php if(empty($arrProperties)): ?>
-                        <div class="col-12"><div class="text-muted text-center">No Recent Listings</div></div>
+                        <div class="col-12"><div class="text-muted text-center p-4">No Recent Listings Found. Start adding some properties!</div></div>
                     <?php else: ?>
                         <?php foreach ($arrProperties as $key => $value): 
                               $this->load->view('components/property_card', ['value' => $value, 'UserId' => $UserId]);
@@ -548,5 +496,6 @@ if (empty($arrProperties)) {
 
     <?php $this->load->view('components/footer.php'); ?>
     <?php $this->load->view('components/js_links.php'); ?>
+
 </body>
 </html>

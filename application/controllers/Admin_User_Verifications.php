@@ -51,4 +51,19 @@ class Admin_User_Verifications extends CI_Controller {
         }
         redirect('Admin_User_Verifications/rules');
     }
+
+    public function api_update_order() {
+        $this->check_auth();
+        $orderData = $this->input->post('orderData');
+        if (!empty($orderData) && is_array($orderData)) {
+            foreach ($orderData as $item) {
+                if (isset($item['RuleId']) && isset($item['SortOrder'])) {
+                    $this->db->where('RuleId', $item['RuleId'])->update('tbl_user_verification_rules', ['SortOrder' => $item['SortOrder']]);
+                }
+            }
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid data']);
+        }
+    }
 }

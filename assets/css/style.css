@@ -933,3 +933,16 @@
     font-size: 4vw !important;
   }
 }
+
+/* Parsley Form Validation Errors */
+.parsley-errors-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+}
+
+.parsley-errors-list li {
+  color: red;
+  font-size: 13px;
+  margin-top: 3px;
+}

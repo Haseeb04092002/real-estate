@@ -63,9 +63,11 @@ class Admin extends CI_Controller {
         $this->check_auth();
         if(!$user_id) redirect('Admin/user_management');
         $this->load->model('Admin_User_Model');
+        $this->load->model('Admin_User_Verifications_Model');
         $data = $this->Admin_User_Model->get_user_details($user_id);
         if(!$data || !$data['user']) redirect('Admin/user_management');
         $data['page_title'] = 'User Details';
+        $data['verification_rules'] = $this->Admin_User_Verifications_Model->get_rules();
         $this->load->view('admin/user_details', $data);
     }
 

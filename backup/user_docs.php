@@ -66,94 +66,97 @@ $documents = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 
                     </div>
                     <div class="card-body p-4">
 
-                        <?php echo form_open_multipart('Properties/submit_user_docs/', ' id="frmDynamicDocs" name="frmDynamicDocs" class="form-horizontal" data-parsley-validate role="form"'); ?>
+                        <?php echo form_open_multipart('Properties/ImageUpload/Identity/', ' id="frmDocIdentity" name="frmDocIdentity" class="form-horizontal" data-parsley-validate role="form"'); ?>
                             <div class="row g-4">
-                                <h5 class="text-primary mt-4"><i class="bi bi-file-earmark-text"></i> Required Verification Documents</h5>
 
-                                <?php if (!empty($verification_rules)): ?>
-                                    <?php foreach($verification_rules as $rule): ?>
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-bold"><?= htmlspecialchars($rule->DocumentTitle) ?>
-                                                <?php if(!$rule->IsMandatory): ?> <span class="text-muted fw-normal">(Optional)</span> <?php else: ?> <span class="text-danger">*</span> <?php endif; ?>
-                                            </label>
-                                            
-                                            <?php 
-                                            // Check if already uploaded
-                                            $uploaded_val = '';
-                                            $uploaded_file_path = '';
-                                            $uploaded_status = '';
-                                            $is_file_doc = false;
-                                            $is_img = false;
-                                            if (!empty($uploaded_docs)) {
-                                                foreach ($uploaded_docs as $udoc) {
-                                                    if ($udoc->Remarks == $rule->DocumentTitle) {
-                                                        $uploaded_val = $udoc->FileName;
-                                                        $uploaded_status = $udoc->VerificationStatus;
-                                                        $ext = pathinfo($udoc->FileName, PATHINFO_EXTENSION);
-                                                        $is_file_doc = !empty($ext) && in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'rtf', 'txt']);
-                                                        if ($is_file_doc) {
-                                                            $is_img = in_array(strtolower($ext), ['jpg','jpeg','png','gif']);
-                                                            $UserId = $this->session->userdata('user_id');
-                                                            $uploaded_file_path = base_url('uploads/Client/'.$UserId.'/images/'.$udoc->FileName);
-                                                        }
-                                                        break;
-                                                    }
-                                                }
-                                            }
+                                <h5 class="text-primary mt-4"><i class="bi bi-person-badge"></i> Identity Information</h5>
 
-                                            $required = ($rule->IsMandatory && empty($uploaded_val)) ? 'required data-parsley-required="true"' : '';
-                                            $name = "rule_" . $rule->RuleId; 
-                                            ?>
+                                <div class="col-md-6">
+                                    <label class="form-label">Date of Birth (DOB)</label>
+                                    <input type="date" name="txtDOB" class="form-control" required data-parsley-required="true">
+                                </div>
+                                
+                                <hr>
+                                <h5 class="text-primary mt-4"><i class="bi bi-credit-card-2-front"></i> License Details</h5>
 
-                                            <?php if ($rule->InputType == 'File'): ?>
-                                                <?php 
-                                                    $multiple = $rule->AllowMultiple ? 'multiple="multiple"' : '';
-                                                    $accept = $rule->AllowAllFileTypes ? '' : 'accept="image/*,.pdf,.doc,.docx,.ppt,.pps,.pptx,.ods,.xlr,.xls,.xlsx,.rtf"';
-                                                    $inputName = $rule->AllowMultiple ? $name."[]" : $name;
-                                                ?>
-                                                <input class="form-control" type="file" name="<?= $inputName ?>" <?= $multiple ?> <?= $accept ?> <?= $required ?>>
-                                                
-                                                <?php if ($uploaded_val && $is_file_doc): ?>
-                                                    <div class="mt-2 p-2 border rounded bg-light d-flex align-items-center shadow-sm">
-                                                        <?php if ($is_img): ?>
-                                                            <img src="<?= $uploaded_file_path ?>" style="height: 35px; width: 35px; object-fit: cover;" class="rounded me-2 border">
-                                                        <?php else: ?>
-                                                            <div class="bg-white rounded border d-flex align-items-center justify-content-center me-2" style="width:35px; height:35px;">
-                                                                <i class="bi bi-file-earmark-text text-primary fs-5"></i>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                        <div>
-                                                            <a href="<?= $uploaded_file_path ?>" target="_blank" class="text-decoration-none small fw-bold">View Current File</a>
-                                                            <?php if ($uploaded_status): ?>
-                                                                <?php 
-                                                                $bclass = 'bg-secondary';
-                                                                if($uploaded_status=='Approved') $bclass='bg-success';
-                                                                elseif($uploaded_status=='Rejected') $bclass='bg-danger';
-                                                                elseif($uploaded_status=='Pending') $bclass='bg-warning text-dark';
-                                                                ?>
-                                                                <span class="badge <?= $bclass ?> ms-2" style="font-size:10px;"><?= $uploaded_status ?></span>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php endif; ?>
-                                                
-                                            <?php elseif ($rule->InputType == 'Text'): ?>
-                                                <input type="text" name="<?= $name ?>" class="form-control" <?= $required ?> value="<?= htmlspecialchars($uploaded_val) ?>">
-                                                
-                                            <?php elseif ($rule->InputType == 'Number'): ?>
-                                                <input type="number" name="<?= $name ?>" class="form-control" <?= $required ?> value="<?= htmlspecialchars($uploaded_val) ?>">
-                                                
-                                            <?php elseif ($rule->InputType == 'TextAndNumber'): ?>
-                                                <input type="text" name="<?= $name ?>" class="form-control" <?= $required ?> pattern="[a-zA-Z0-9\s]+" title="Only text and numbers allowed" value="<?= htmlspecialchars($uploaded_val) ?>">
-                                                
-                                            <?php elseif ($rule->InputType == 'Date'): ?>
-                                                <input type="date" name="<?= $name ?>" class="form-control" <?= $required ?> value="<?= htmlspecialchars($uploaded_val) ?>">
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <div class="col-12 text-muted">No verification rules configured.</div>
-                                <?php endif; ?>
+                                <div class="col-md-6">
+                                    <label class="form-label">License Number</label>
+                                    <input type="text" name="txtLicenseNumber" class="form-control" required data-parsley-required="true">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">License Expiry Date</label>
+                                    <input type="date" name="txtLicenseExpiryDate" class="form-control" required data-parsley-required="true">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">License Front – Upload</label>
+                                    <input class="form-control" id="my-file-selector" multiple="" type="file" name="images[]" accept="image/*,.pdf,.doc,.docx,.ppt.,.pps,.pptx,.ods,.xlr,.xls,.xlsx,.rtf" size="3000000" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">License Back – Upload</label>
+                                    <input class="form-control" id="my-file-selector" multiple="" type="file" name="images[]" accept="image/*,.pdf,.doc,.docx,.ppt.,.pps,.pptx,.ods,.xlr,.xls,.xlsx,.rtf" size="3000000" required>
+                                </div>
+
+                                <hr>
+                                <h5 class="text-primary mt-4"><i class="bi bi-credit-card"></i> ID Card Information</h5>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Card Number</label>
+                                    <input type="text" name="txtCardNumber" class="form-control" required data-parsley-required="true">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Card Issue Date</label>
+                                    <input type="date" name="txtCardIssueDate" class="form-control" required data-parsley-required="true">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Card Expiry Date</label>
+                                    <input type="date" name="txtCardExpiryDate" class="form-control" required data-parsley-required="true">
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <?php echo form_open_multipart('Properties/ImageUpload/Passport/', ' id="frmDocPassport" name="frmDocPassport" class="form-horizontal" data-parsley-validate role="form"'); ?>
+                            <div class="row g-4">
+
+                                <hr>
+                                <h5 class="text-primary mt-4"><i class="bi bi-passport"></i> Passport (Optional)</h5>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Passport Number</label>
+                                    <input type="text" name="txtPassportNumber" class="form-control">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Passport – Upload</label>
+                                    <input class="form-control" name="imgPassport" type="file">
+                                </div>
+                            </div>
+                        </form>
+
+                        <?php echo form_open_multipart('Properties/ImageUpload/Address/', ' id="frmDocAddress" name="frmDocAddress" class="form-horizontal" data-parsley-validate role="form"'); ?>
+                            <div class="row g-4">
+                                <hr>
+                                <h5 class="text-primary mt-4"><i class="bi bi-geo-alt"></i> Address & Authorization</h5>
+
+                                <div class="col-12">
+                                    <label class="form-label">Residential Address</label>
+                                    <input type="text" class="form-control" id="txtResidentialAddress" required data-parsley-required="true">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Proof of Address <span class="fw-normal text-muted">(Utility Bill, Property Documents ...)</span></label>
+                                    <input class="form-control" type="file" name="fileProofOfAddress" required data-parsley-required="true">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Profile Photo</label>
+                                    <input class="form-control" type="file" name="imgProfilePhoto" required data-parsley-required="true">
+                                </div>
 
                                 <div class="col-12 mt-4">
                                     <div class="form-check">
@@ -212,14 +215,48 @@ $documents = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 
         $(document).on('click', '#btnSubmit', function(e) {
             e.preventDefault();
 
-            if (!$('#frmDynamicDocs').parsley().validate()) 
+            var IsProcessed = 0;
+            if (!$('#frmDocIdentity').parsley().validate()) 
             {
-                customAlert('Validation Failed', 'Please fill all mandatory fields correctly.', 'error');
+                console.log("Form 1 Validation Failed");
                 return false;
             }
 
-            // Temporarily standard form submit until backend API is ready
-            $('#frmDynamicDocs').submit();
+            $.ajax({
+                  url: "<?= site_url('Properties/ImageUpload/Identity') ?>",
+                  type: "POST",
+                  dataType: "json",
+                  success: function(response) {
+                      if (response.status === true) 
+                      {
+                          IsProcessed = 1;
+                      } 
+                  }
+            });
+            
+            $.ajax({
+                  url: "<?= site_url('Properties/ImageUpload/Passport') ?>",
+                  type: "POST",
+                  dataType: "json",
+                  success: function(response) {
+                      if (response.status === true) 
+                      {
+                          IsProcessed = 1;
+                      } 
+                  }
+            });
+
+            $.ajax({
+                  url: "<?= site_url('Properties/ImageUpload/Address') ?>",
+                  type: "POST",
+                  dataType: "json",
+                  success: function(response) {
+                      if (response.status === true) 
+                      {
+                          IsProcessed = 1;
+                      } 
+                  }
+            });
         });
 
 

@@ -54,6 +54,12 @@ class Admin_User_Model extends CI_Model {
         $this->db->where('ReferenceId', $user_id);
         $documents = $this->db->get('tbl_documents')->result();
 
+        // Properties
+        $this->db->where('AddedBy', $user_id);
+        $this->db->where('IsDeleted', 0);
+        $this->db->order_by('PropertyId', 'DESC');
+        $properties = $this->db->get('tbl_properties')->result();
+
         // Verification Rules
         $rules = $this->db->order_by('RuleId', 'ASC')->get('tbl_user_verification_rules')->result();
 
@@ -63,6 +69,7 @@ class Admin_User_Model extends CI_Model {
             'inquiries' => $inquiries,
             'logs' => $logs,
             'documents' => $documents,
+            'properties' => $properties,
             'verification_rules' => $rules
         ];
     }

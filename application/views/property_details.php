@@ -232,9 +232,48 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
         <div class="container-lg mt-4 mb-5">
             
             <?php if (isset($IsPreview) && $IsPreview): ?>
-                <div class="alert alert-info text-center fw-bold shadow-sm mb-4">
-                    <i class="fa fa-eye me-2"></i> This is a preview of how your property will look once published.
+                <div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-center shadow-sm mb-4">
+                    <div class="fw-bold mb-3 mb-md-0"><i class="fa fa-eye me-2"></i> This is a preview of how your property will look once published.</div>
+                    <button type="button" class="btn btn-success fw-bold px-4 shadow-sm" onclick="publishProperty(<?= $PropertyDetails->PropertyId ?>)"><i class="fa-solid fa-paper-plane me-2"></i>Publish Property</button>
                 </div>
+                
+                <script>
+                function publishProperty(propertyId) {
+                    Swal.fire({
+                        title: 'Publish Property?',
+                        text: "Are you sure you want to make this property live?",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#28a745',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, publish it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "<?= base_url('Properties/PublishProperty/') ?>" + propertyId,
+                                type: "POST",
+                                dataType: "json",
+                                success: function(res) {
+                                    if (res.Status) {
+                                        Swal.fire('Published!', res.Message, 'success').then(() => {
+                                            window.location.href = "<?= base_url('Properties/dashboard') ?>";
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Incomplete Details',
+                                            html: res.Message,
+                                            icon: 'warning'
+                                        });
+                                    }
+                                },
+                                error: function() {
+                                    Swal.fire('Error', 'An error occurred while communicating with the server.', 'error');
+                                }
+                            });
+                        }
+                    });
+                }
+                </script>
             <?php endif; ?>
 
             <!-- Header Section (Fully Wide) -->

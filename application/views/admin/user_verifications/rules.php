@@ -28,9 +28,10 @@
 
             <div class="modern-card card-body p-4 bg-white">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle init-datatable">
+                    <table class="table table-hover align-middle custom-datatable" id="rulesTable">
                         <thead class="table-light text-muted">
                             <tr>
+                                <th class="fw-semibold" style="width: 80px;">Order</th>
                                 <th class="fw-semibold">ID</th>
                                 <th class="fw-semibold">Document Title</th>
                                 <th class="fw-semibold">Input Type</th>
@@ -38,10 +39,14 @@
                                 <th class="fw-semibold">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable-body">
                             <?php if(!empty($rules)): ?>
-                                <?php foreach($rules as $r): ?>
-                                <tr>
+                                <?php foreach($rules as $index => $r): ?>
+                                <tr data-id="<?= $r->RuleId ?>">
+                                    <td class="drag-handle" style="cursor: grab;">
+                                        <i class="fa-solid fa-grip-vertical text-muted me-2"></i>
+                                        <span class="sort-order-text fw-bold"><?= $index + 1 ?></span>
+                                    </td>
                                     <td><?= $r->RuleId ?></td>
                                     <td class="fw-bold text-primary"><?= htmlspecialchars($r->DocumentTitle) ?></td>
                                     <td>
@@ -146,7 +151,54 @@
     </div>
 
     <?php $this->load->view('admin/components/js_links'); ?>
+    <!-- SortableJS -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script>
+        $(document).ready(function() {
+            var table = $('#rulesTable').DataTable({
+                "pageLength": 50,
+                "ordering": false,
+                "info": true,
+                "dom": '<"row align-items-center mb-3"<"col-md-6"l><"col-md-6 text-end"f>>rt<"row align-items-center mt-3"<"col-md-6"i><"col-md-6 text-end"p>>',
+                "language": {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                }
+            });
+
+            var el = document.getElementById('sortable-body');
+            if(el) {
+                var sortable = Sortable.create(el, {
+                    handle: '.drag-handle',
+                    animation: 150,
+                    onEnd: function () {
+                        // Re-calculate order text
+                        let orderData = [];
+                        $('#sortable-body tr').each(function(index) {
+                            $(this).find('.sort-order-text').text(index + 1);
+                            orderData.push({
+                                RuleId: $(this).data('id'),
+                                SortOrder: index + 1
+                            });
+                        });
+
+                        // Send to backend
+                        $.ajax({
+                            url: "<?= site_url('Admin_User_Verifications/api_update_order') ?>",
+                            type: "POST",
+                            data: { orderData: orderData },
+                            dataType: "json",
+                            success: function(response) {
+                                if(response.status !== 'success') {
+                                    customAlert('Error', 'Failed to save new order.', 'error');
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         function toggleFileSettings() {
             if(document.getElementById('InputTypeFile').checked) {
                 document.getElementById('fileSettingsBlock').style.display = 'block';

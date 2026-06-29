@@ -193,15 +193,106 @@ class Properties extends CI_Controller {
     if (!$this->session->userdata('user_id')) {
         redirect('Properties/signin');
     }
+    $UserId = $this->session->userdata('user_id');
     $this->load->model('Admin_User_Verifications_Model');
     $data['verification_rules'] = $this->Admin_User_Verifications_Model->get_rules();
+    $data['uploaded_docs'] = $this->db->where('ReferenceId', $UserId)
+                                      ->where('Reference', 'Client')
+                                      ->get('tbl_documents')->result();
     $this->load->view('user_docs', $data);
   }
 
   public function submit_user_docs() {
-    // Placeholder for actual upload handling logic.
-    // For now, redirect back with a success message.
+    if (!$this->session->userdata('user_id')) {
+        redirect('Properties/signin');
+    }
+    
+    $UserId = $this->session->userdata('user_id');
+    $this->load->model('Admin_User_Verifications_Model');
+    $rules = $this->Admin_User_Verifications_Model->get_rules();
+
+    $uploadPath = "uploads/Client/$UserId/images";
+    if (!is_dir(FCPATH . $uploadPath)) {
+        mkdir(FCPATH . $uploadPath, 0777, true);
+    }
+
+    // Process each rule dynamically
+    foreach ($rules as $rule) {
+        $inputName = "rule_" . $rule->RuleId;
+        
+        if ($rule->InputType == 'File') {
+            if (isset($_FILES[$inputName]) && !empty($_FILES[$inputName]['name'])) {
+                // If multiple
+                if (is_array($_FILES[$inputName]['name'])) {
+                    $fileCount = count($_FILES[$inputName]['name']);
+                    for ($i = 0; $i < $fileCount; $i++) {
+                        if (!empty($_FILES[$inputName]['name'][$i])) {
+                            $_FILES['file']['name']     = $_FILES[$inputName]['name'][$i];
+                            $_FILES['file']['type']     = $_FILES[$inputName]['type'][$i];
+                            $_FILES['file']['tmp_name'] = $_FILES[$inputName]['tmp_name'][$i];
+                            $_FILES['file']['error']    = $_FILES[$inputName]['error'][$i];
+                            $_FILES['file']['size']     = $_FILES[$inputName]['size'][$i];
+                            
+                            $this->upload_single_doc($rule->DocumentTitle, $UserId, 'file');
+                        }
+                    }
+                } else {
+                    $this->upload_single_doc($rule->DocumentTitle, $UserId, $inputName);
+                }
+            }
+        } else {
+            // Text, Number, TextAndNumber, Date
+            $val = $this->input->post($inputName);
+            if (!empty($val)) {
+                $data = [
+                    'ReferenceId' => $UserId,
+                    'Reference' => 'Client',
+                    'Remarks' => $rule->DocumentTitle,
+                    'FileName' => $val, // storing text data here
+                    'UploadedBy' => $UserId,
+                    'UploadTime' => date('Y-m-d H:i:s'),
+                    'VerificationStatus' => 'Pending'
+                ];
+                
+                // If it's a date, we can optionally store it in ExpiryDate as well
+                if ($rule->InputType == 'Date') {
+                    $data['ExpiryDate'] = $val;
+                }
+                
+                $this->db->insert('tbl_documents', $data);
+            }
+        }
+    }
+
+    $this->session->set_flashdata('success', 'Documents submitted successfully.');
     redirect('Properties/user_dashboard');
+  }
+
+  private function upload_single_doc($docTitle, $UserId, $fieldName) {
+      $uploadPath = "uploads/Client/$UserId/images/";
+      
+      $config['upload_path']   = FCPATH . $uploadPath;
+      $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf|doc|docx|ppt|pptx|xls|xlsx|rtf|webp|txt';
+      $config['max_size']      = 20480; // 20MB
+      $config['encrypt_name']  = TRUE;
+
+      $this->load->library('upload');
+      $this->upload->initialize($config);
+
+      if ($this->upload->do_upload($fieldName)) {
+          $uploadData = $this->upload->data();
+          $data = [
+              'ReferenceId' => $UserId,
+              'Reference' => 'Client',
+              'Remarks' => $docTitle,
+              'FileName' => $uploadData['file_name'],
+              'FileSize' => $uploadData['file_size'],
+              'UploadedBy' => $UserId,
+              'UploadTime' => date('Y-m-d H:i:s'),
+              'VerificationStatus' => 'Pending'
+          ];
+          $this->db->insert('tbl_documents', $data);
+      }
   }
 
   public function request_status_update($InspectionId='')
@@ -836,18 +927,18 @@ class Properties extends CI_Controller {
 
   public function AddDocuments($Case='Add', $PropertyId=0, $StationId=0)
   {
-    $PropertyTypeId = 0;
+    $ListType = '';
     if ($PropertyId > 0) {
-        $prop = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'PropertyTypeId', "WHERE PropertyId='$PropertyId'", 2);
-        if ($prop) $PropertyTypeId = $prop->PropertyTypeId;
+        $prop = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'ListType', "WHERE PropertyId='$PropertyId'", 2);
+        if ($prop) $ListType = $prop->ListType;
     }
     
-    // Fetch all document types that match this property type or are generic (All)
-    $DocTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_property_document_types', '*', "WHERE PropertyType='All' OR PropertyType='$PropertyTypeId' OR PropertyType='' OR PropertyType IS NULL", 2);
+    // Fetch all document types that match this ListType or Both
+    $DocTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_property_document_types', '*', "WHERE PropertyType='Both' OR PropertyType='$ListType' OR PropertyType='' OR PropertyType IS NULL", 0);
     if(!is_array($DocTypes) && !is_object($DocTypes)) $DocTypes = [];
 
     // Fetch already uploaded documents for this property
-    $UploadedDocs = $this->getlist_model->getFieldsMultipleConditions('tbl_property_documents', '*', "WHERE PropertyId='$PropertyId'", 2);
+    $UploadedDocs = $this->getlist_model->getFieldsMultipleConditions('tbl_property_documents', '*', "WHERE PropertyId='$PropertyId'", 0);
     if(!is_array($UploadedDocs) && !is_object($UploadedDocs)) $UploadedDocs = [];
 
     $data = [
@@ -993,6 +1084,78 @@ class Properties extends CI_Controller {
     {
         echo "<div class='alert alert-warning text-center mt-5'>No details found for this property. Please fill out the basic information first.</div>";
     }
+  }
+  public function PublishProperty($PropertyId = 0)
+  {
+    $Response = ['Status' => false, 'Message' => ''];
+    $PropertyId = (int)$PropertyId;
+    
+    $prop = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyId='$PropertyId'", 2);
+    if (!$prop) {
+        $Response['Message'] = 'Property not found.';
+        exit(json_encode($Response));
+    }
+
+    $missing = [];
+
+    // 1. General Info Validation
+    if (empty($prop->PropertyTitle) || empty($prop->CoveredArea) || empty($prop->PropertyStatus) || empty($prop->PropertyDescription) || empty($prop->MailingAddress)) {
+        $missing[] = "General Information (Title, Area, Status, Description, Address)";
+    }
+
+    // 2. Pricing Validation
+    if (empty($prop->TotalPrice)) {
+        $missing[] = "Pricing details (Total Price)";
+    }
+
+    // 3. Features Validation
+    $features = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features', '*', "WHERE PropertyId='$PropertyId'", 2);
+    if (!$features || empty($features->Bedrooms) || empty($features->Bathrooms)) {
+        $missing[] = "Property Features (Bedrooms, Bathrooms)";
+    }
+
+    // 4. Media Validation
+    $images = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'COUNT(*) as imgCount', "WHERE Reference='Properties' AND ReferenceId='$PropertyId'", 2);
+    if (!$images || $images->imgCount == 0) {
+        $missing[] = "At least one property media image";
+    }
+
+    // 5. Documents Validation
+    $ListType = $prop->ListType;
+    $DocTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_property_document_types', '*', "WHERE PropertyType='Both' OR PropertyType='$ListType' OR PropertyType='' OR PropertyType IS NULL", 0);
+    if (!is_array($DocTypes)) $DocTypes = [];
+
+    $UploadedDocs = $this->getlist_model->getFieldsMultipleConditions('tbl_property_documents', '*', "WHERE PropertyId='$PropertyId'", 0);
+    if (!is_array($UploadedDocs)) $UploadedDocs = [];
+
+    $missingDocs = [];
+    foreach ($DocTypes as $type) {
+        if ($type->IsMandatory == 1) {
+            $found = false;
+            foreach ($UploadedDocs as $doc) {
+                if ($doc->DocTypeId == $type->DocTypeId) {
+                    $found = true; break;
+                }
+            }
+            if (!$found) $missingDocs[] = $type->DocumentTitle;
+        }
+    }
+    
+    if (count($missingDocs) > 0) {
+        $missing[] = "Required Documents (" . implode(', ', $missingDocs) . ")";
+    }
+
+    if (count($missing) > 0) {
+        $Response['Message'] = "Cannot publish! Please complete the following required fields across the tabs:<br><br><ul class='text-start mb-0'><li>" . implode("</li><li>", $missing) . "</li></ul>";
+        exit(json_encode($Response));
+    }
+
+    // All good, publish it
+    $this->db->where('PropertyId', $PropertyId)->update('tbl_properties', ['Status' => 'Published']);
+    
+    $Response['Status'] = true;
+    $Response['Message'] = 'Your property has been successfully published and is now live!';
+    exit(json_encode($Response));
   }
 
 }
