@@ -1,0 +1,251 @@
+.property-title p{
+    font-size: 28px;
+    font-weight: 500;
+}
+.property-title h1{
+    font-size: 34px;
+    font-weight: 600;
+}
+.sec1-btn{
+    background-color: #565757;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7px;
+    border-radius: 3px;
+    border: none;
+}
+.sec1-btn:hover{
+    color: #00AEFF;
+}
+#tourTab .nav-link {
+    color: #1F509A !important;
+    font-weight: bold;
+}
+.nav-tabs .nav-link.active, .btn-light{
+    background-color: #EBF5FB !important;
+}
+.property-address{
+    color: #798189;
+}
+
+.cust-carousel{
+    width: 100%;
+}
+.carousel-item img{
+    width: 100%;
+    height: 75vh;
+    object-fit: cover;
+}
+.cust-carousel-control{
+    background-color: #00AEFF;
+    border: none;
+    border-radius: 5px;
+    padding: 20px;
+}
+.carousel-indicators img{
+    width: 90px;
+    height: auto;
+    display: block;
+}
+.carousel-indicators button{
+    width: max-content !important;
+}
+.carousel-indicators{
+    position: unset;
+}    
+.overview{
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+.description, .address, .details, .energy, .features, .property-video, .mortgage, .floor-plan{
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 30px;
+}
+
+.details-1{
+    background-color: #E5F7FF;
+    border: 2px solid #8BC4E8;
+    border-radius: 5px;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.gallery-img:hover {
+    transform: scale(1.05);
+}
+.gallery-row{
+    margin-top: 1px;
+    padding-left: 1px;
+    padding-right: 0px;
+}
+.mortgage-input i{
+    color: #798189;
+    border: 1px solid #798189;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: none;
+    padding: 0.88rem;
+}
+.mortgage-input input{
+    border: 1px solid #798189;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 0.625rem;
+}
+.feature-opt p:hover{
+    color: #00AEFF;
+    cursor: pointer;
+}
+.request-btn{
+    background-color: #28A745;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem;
+    transition: all 0.3s ease-in;
+    white-space: nowrap;
+}
+.request-btn:hover, .contact-btn:hover{
+    background-color: #34CE57;
+}
+.contact-btn{
+    background-color: #fff;
+    border: 2px solid #28A745;
+    border-radius: 6px;
+    padding: 0.5rem;
+    transition: all 0.3s ease-in;
+    color: #28A745;
+}
+.contact-btn:hover{
+    background-color: #34CE57;
+    border: 2px solid #34CE57;
+    color: white;
+}
+.tour-card{
+    width: 35%;
+}
+@media screen and (max-width: 1399px) {
+    .carousel-indicators img{
+        width: 80px;
+        display: block;
+    }
+
+    
+}
+@media screen and (max-width: 1200px) {
+    .carousel-indicators img{
+        width: 70px;
+        display: block;
+    } 
+}
+@media screen and (max-width: 990px) {
+    .tour-card{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .tour-card .card{
+        margin-left: 0px !important;
+    }
+    .all-section-main{
+        display: flex;
+        flex-direction: column;
+    }
+    .all-sections{
+        width: 100% !important;
+    }
+    .carousel-item img{
+        height: 450px;
+    }
+    .carousel-indicators img{
+        width: 70px;
+        display: block;
+    }
+    
+}
+@media screen and (max-width: 770px) {
+    .property-title {
+        flex-direction: column;
+        align-items: start !important;
+    }
+    .property-title p{
+        margin-bottom: 0px;
+    }
+    .property-title h1{
+        margin-bottom: 1.5rem;
+    }
+    .carousel-item img{
+        height: 51vh;
+    }
+    .overview-div2 {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px 20px;
+    }
+    .address-div2{
+        display: flex;
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .address-div2 div{
+        width: 100% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .details-div2{
+        display: flex;
+        flex-direction: column;
+    }
+    .details-div2 div{
+        width: 100% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .additional-details-div1{
+        display: flex;
+        flex-direction: column;
+    }
+    .additional-details-div1 div{
+        width: 100% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    /* .features-div2{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .features-div2 div{
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    } */
+    .features-div2 div p{
+        margin-bottom: 12px !important;
+    }
+    .carousel-indicators img{
+        width: 50px;
+        display: block;
+    }
+}
+@media screen and (max-width: 440px) {
+    .overview, .description, .address, .details, .energy, .features, .property-video, .mortgage, .floor-plan, .details-div2{
+        padding: 3rem 0.5rem !important;
+    }
+    .carousel-indicators img{
+        width: 40px;
+        display: block;
+    }
+    
+}

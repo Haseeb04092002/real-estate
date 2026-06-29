@@ -1,0 +1,28 @@
+{
+    "heebo": {
+        "normal": "D:\\xampp\\htdocs\\properties\\application\\third_party\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_normal_8c03f46dd53a3650aa88d5ce595a07a0",
+        "500": "D:\\xampp\\htdocs\\properties\\application\\third_party\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/heebo_500_a93d65bf0445d76d26bf1deb2d156012",
+        "600": "heebo_600_01fc3514d472a4e50ee7f537e2209ae5"
+    },
+    "inter": {
+        "bold": "D:\\xampp\\htdocs\\properties\\application\\third_party\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/inter_bold_02384cdf43e3d24b76c57c66dfd114bf",
+        "800": "inter_800_43e268268a3801a5ec2cf116ab01b114"
+    },
+    "font awesome 6 brands": {
+        "normal": "font_awesome_6_brands_normal_4ebefafcaa2f38eedb8418d5c7527cb9"
+    },
+    "font awesome 6 free": {
+        "normal": "D:\\xampp\\htdocs\\properties\\application\\third_party\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/font_awesome_6_free_normal_dd8cd617a48213fbee7bd15fe65f8533",
+        "900": "font_awesome_6_free_900_7404a5bfc402ab29acbd64d291f398ed"
+    },
+    "font awesome 5 brands": {
+        "normal": "font_awesome_5_brands_normal_4ebefafcaa2f38eedb8418d5c7527cb9"
+    },
+    "font awesome 5 free": {
+        "900": "D:\\xampp\\htdocs\\properties\\application\\third_party\\dompdf\\vendor\\dompdf\\dompdf\/lib\/fonts\/font_awesome_5_free_900_7404a5bfc402ab29acbd64d291f398ed",
+        "normal": "font_awesome_5_free_normal_dd8cd617a48213fbee7bd15fe65f8533"
+    },
+    "fontawesome": {
+        "normal": "fontawesome_normal_7f3c06f2e04bcd1e49e7a483892de692"
+    }
+}

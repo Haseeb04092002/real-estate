@@ -1,0 +1,15 @@
+Basic Info tab
+1. Property Title
+2. Covered Area (in square-foot)
+3. Description
+4. address
+
+Pricing tab
+{all requiredunder the opened tab}
+
+Features tab
+Bedroom, Bathroom, Built-in date
+
+Media tab
+one image is required
+

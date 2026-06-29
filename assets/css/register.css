@@ -1,0 +1,271 @@
+#registration-modal .modal-btn {
+  height: 7vh;
+  color: #006169;
+  background-color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid #33a137;
+  border-radius: 10px;
+}
+#registration-modal .modal-btn:hover {
+  background-color: #f2f2f2;
+}
+#registration-modal .fa-google {
+  background: linear-gradient(
+    90deg,
+    #4285f4 25%,
+    #34a853 50%,
+    #fbbc05 75%,
+    #ea4335 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#registration-modal .modal-p {
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+#registration-modal .modal-input {
+  height: 7vh;
+  border-radius: 10px;
+  border: 1px solid silver;
+}
+#registration-modal .modal-input:hover {
+  border: 1px solid #33a137 !important;
+}
+#registration-modal .modal-input:focus {
+  border: 1px solid #33a137 !important;
+  outline: none;
+}
+#registration-modal .modal-log {
+  height: 7vh;
+  border-radius: 10px;
+  border: none;
+  color: #767676;
+  font-weight: 600;
+  font-size: 18px;
+}
+#registration-modal .modal-forget {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+#registration-modal .modal-check {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+#registration-modal .modal-forget p,
+#registration-modal .modal-check p {
+  margin-bottom: 0;
+  font-weight: 700;
+}
+#registration-modal .modal-check p a {
+  color: #006169 !important;
+}
+#registration-modal .modal-check p a:hover {
+  text-decoration: underline !important;
+}
+#registration-modal .custom-checkbox {
+  width: 20px;
+  height: 20px;
+}
+ {
+  text-decoration: none !important;
+}
+#registration-modal .modal-p2 {
+  font-weight: 600;
+}
+
+#registration-modal .phone-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid silver;
+  border-radius: 10px;
+  padding: 5px;
+  width: 300px; /* Adjust width as needed */
+  height: 50px;
+}
+
+#registration-modal .flag-icon {
+  font-size: 18px; /* Adjust size of flag */
+  margin-right: 10px;
+}
+
+#registration-modal .country-code {
+  font-size: 16px;
+  margin-right: 10px;
+  color: #333;
+}
+
+#registration-modal .phone-input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+}
+
+#registration-modal .phone-input::placeholder {
+  color: gray;
+}
+
+
+/**/
+.d-none {
+    display: none !important;
+}
+.form-card {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: white;
+    /* padding: 20px 20px 20px 20px; */
+}
+
+.form-card-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #ddd;
+}
+
+.form-card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-btn {
+    height: 7vh !important;
+    color: #006169;
+    background-color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid #33A137;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.form-btn:hover {
+    background-color: #F2F2F2;
+}
+
+.fa-google {
+    background: linear-gradient(90deg, #4285F4 25%, #34A853 50%, #FBBC05 75%, #EA4335 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-p {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-input {
+    height: 7vh;
+    border-radius: 10px;
+    border: 1px solid silver;
+    margin-bottom: 1rem;
+}
+
+.form-input:hover {
+    border: 1px solid #33A137 !important; 
+}
+
+.form-input:focus {
+    border: 1px solid #33A137 !important;
+    outline: none;
+}
+
+.form-log {
+    height: 7vh !important;
+    border-radius: 10px;
+    border: none;
+    color: #767676;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 1rem;
+}
+
+.form-forget {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+    padding-bottom: 1rem;
+}
+
+.form-check {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.form-forget p, .form-check p {
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+.form-check p a {
+    color: #006169 !important;
+}
+
+.form-check p a:hover {
+    text-decoration: underline !important;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.form-p2 {
+    font-weight: 600;
+}
+
+.phone-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid silver;
+    border-radius: 10px;
+    padding: 5px;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 1rem;
+}
+
+.flag-icon {
+    font-size: 18px; 
+    margin-right: 10px;
+}
+
+.country-code {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #333;
+}
+
+.phone-input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+}
+
+.phone-input::placeholder {
+    color: gray;
+}

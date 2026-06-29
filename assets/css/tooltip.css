@@ -1,0 +1,72 @@
+/*.tooltip{
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
+.tooltipBtn{
+  padding: 10px;
+  width: 130px;
+  background-color: white;
+  border: 1px solid blue;
+}*/
+.tooltip-unit{
+  color: black;
+  font-size: 15px;
+  font-weight: 600;
+}
+.tooltip-value{
+  color: black;
+  font-size: 15px;
+  font-weight: 400;
+}
+.tooltipBtn:hover{
+  cursor: pointer;
+}
+.tippy-box[data-theme~="own"]{
+  background-color:#33bef5;
+  color: #ffff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 400;
+  padding: 10px;
+  line-height: 20px;
+  text-align: left;
+}
+/*.tippy-box[data-theme~="own"][data-placement^="top"] .tippy-arrow::before {
+  border-top-color: #33bef5;
+}
+.tippy-box[data-theme~="own"][data-placement^="bottom"] .tippy-arrow::before {
+  border-bottom-color: #33bef5;
+}
+
+.tippy-box[data-theme~="own"][data-placement^="left"] .tippy-arrow::before {
+  border-left-color: #33bef5;
+}
+
+.tippy-box[data-theme~="own"][data-placement^="right"] .tippy-arrow::before {
+  border-right-color: #33bef5;
+}
+
+.tippy-box[data-theme~='own'] .tippy-arrow {
+  display: none;
+}*/
+
+
+.tippy-box {
+  background: #fff !important;   /* or your desired tooltip background */
+  color: black !important;        /* text color */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.tippy-box[data-placement^='top'] > .tippy-arrow,
+.tippy-box[data-placement^='bottom'] > .tippy-arrow,
+.tippy-box[data-placement^='left'] > .tippy-arrow,
+.tippy-box[data-placement^='right'] > .tippy-arrow {
+  display: none !important; /* completely remove the arrow */
+}
+
+.tippy-box::before,
+.tippy-box::after {
+  display: none !important; /* extra safeguard against black square dots */
+}
+
