@@ -190,7 +190,18 @@ class Properties extends CI_Controller {
 
   public function property_user_docs()
   {
-    $this->load->view('user_docs');
+    if (!$this->session->userdata('user_id')) {
+        redirect('Properties/signin');
+    }
+    $this->load->model('Admin_User_Verifications_Model');
+    $data['verification_rules'] = $this->Admin_User_Verifications_Model->get_rules();
+    $this->load->view('user_docs', $data);
+  }
+
+  public function submit_user_docs() {
+    // Placeholder for actual upload handling logic.
+    // For now, redirect back with a success message.
+    redirect('Properties/user_dashboard');
   }
 
   public function request_status_update($InspectionId='')

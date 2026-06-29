@@ -128,7 +128,7 @@ $this->db->where('InspectionId',$InspectionId)->update('tbl_properties_messages'
 
       let message = $('input[name="message"]').val();
       if(!message){
-        alert('Empty cannot be sent!');
+        customAlert('Notice', 'Empty message cannot be sent!', 'info');
         return;
       }
 

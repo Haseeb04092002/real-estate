@@ -15,11 +15,11 @@
             
 
             
-            <ul class="nav nav-pills nav-modern mb-4">
+            <!-- <ul class="nav nav-pills nav-modern mb-4">
                 <li class="nav-item">
                     <a class="nav-link active" href="<?= site_url('Admin_User_Verifications/rules') ?>"><i class="fa-solid fa-list-check me-2"></i> Verification Rules</a>
                 </li>
-            </ul>
+            </ul> -->
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="fw-bold mb-0">Dynamic Document Rules</h4>
@@ -33,6 +33,7 @@
                             <tr>
                                 <th class="fw-semibold">ID</th>
                                 <th class="fw-semibold">Document Title</th>
+                                <th class="fw-semibold">Input Type</th>
                                 <th class="fw-semibold">Requirement</th>
                                 <th class="fw-semibold">Actions</th>
                             </tr>
@@ -44,6 +45,9 @@
                                     <td><?= $r->RuleId ?></td>
                                     <td class="fw-bold text-primary"><?= htmlspecialchars($r->DocumentTitle) ?></td>
                                     <td>
+                                        <span class="badge bg-secondary"><?= htmlspecialchars($r->InputType ?? 'File') ?></span>
+                                    </td>
+                                    <td>
                                         <?php if($r->IsMandatory): ?>
                                             <span class="badge bg-danger rounded-pill px-3">Mandatory</span>
                                         <?php else: ?>
@@ -51,7 +55,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick='editRule(<?= json_encode($r) ?>)'><i class="fa-solid fa-edit"></i> Edit</button>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="editRule(<?= htmlspecialchars(json_encode($r), ENT_QUOTES, 'UTF-8') ?>)"><i class="fa-solid fa-edit"></i> Edit</button>
                                         <a href="<?= site_url('Admin_User_Verifications/api_delete_rule/'.$r->RuleId) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this rule? It may break existing user validations.');"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
@@ -86,9 +90,49 @@
                         </div>
                         
                         <div class="mb-4">
+                            <label class="form-label fw-bold">Input Type <span class="text-danger">*</span></label>
+                            <div class="d-flex flex-wrap gap-3 mt-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="InputType" id="InputTypeFile" value="File" checked required onchange="toggleFileSettings()">
+                                    <label class="form-check-label" for="InputTypeFile">File Upload</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="InputType" id="InputTypeText" value="Text" required onchange="toggleFileSettings()">
+                                    <label class="form-check-label" for="InputTypeText">Text Input</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="InputType" id="InputTypeNumber" value="Number" required onchange="toggleFileSettings()">
+                                    <label class="form-check-label" for="InputTypeNumber">Number Input</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="InputType" id="InputTypeTextAndNumber" value="TextAndNumber" required onchange="toggleFileSettings()">
+                                    <label class="form-check-label" for="InputTypeTextAndNumber">Text and Numbers</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="InputType" id="InputTypeDate" value="Date" required onchange="toggleFileSettings()">
+                                    <label class="form-check-label" for="InputTypeDate">Date Input</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4" id="fileSettingsBlock">
+                            <label class="form-label fw-bold">File Upload Settings</label>
+                            <div class="d-flex flex-column gap-2 mt-2">
+                                <div class="form-check form-switch fs-6">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="AllowAllFileTypes" id="AllowAllFileTypes" value="1">
+                                    <label class="form-check-label ms-2" for="AllowAllFileTypes">Allow All File Types</label>
+                                </div>
+                                <div class="form-check form-switch fs-6">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="AllowMultiple" id="AllowMultiple" value="1">
+                                    <label class="form-check-label ms-2" for="AllowMultiple">Allow Multiple Files</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
                             <div class="form-check form-switch fs-5">
                                 <input class="form-check-input" type="checkbox" role="switch" name="IsMandatory" id="IsMandatory" value="1">
-                                <label class="form-check-label fs-6 mt-1 ms-2" for="IsMandatory"><strong>Is Mandatory?</strong><br><small class="text-muted fw-normal">User must upload this to be verified.</small></label>
+                                <label class="form-check-label fs-6 mt-1 ms-2" for="IsMandatory"><strong>Is Mandatory?</strong><br><small class="text-muted fw-normal">User must provide this to be verified.</small></label>
                             </div>
                         </div>
                     </div>
@@ -103,11 +147,23 @@
 
     <?php $this->load->view('admin/components/js_links'); ?>
     <script>
+        function toggleFileSettings() {
+            if(document.getElementById('InputTypeFile').checked) {
+                document.getElementById('fileSettingsBlock').style.display = 'block';
+            } else {
+                document.getElementById('fileSettingsBlock').style.display = 'none';
+            }
+        }
+
         function openRuleModal() {
             document.getElementById('modalTitle').innerText = 'Add Verification Rule';
             document.getElementById('RuleId').value = '';
             document.getElementById('DocumentTitle').value = '';
+            document.getElementById('InputTypeFile').checked = true;
+            document.getElementById('AllowAllFileTypes').checked = false;
+            document.getElementById('AllowMultiple').checked = false;
             document.getElementById('IsMandatory').checked = false;
+            toggleFileSettings();
             new bootstrap.Modal(document.getElementById('ruleModal')).show();
         }
 
@@ -115,7 +171,16 @@
             document.getElementById('modalTitle').innerText = 'Edit Verification Rule';
             document.getElementById('RuleId').value = r.RuleId;
             document.getElementById('DocumentTitle').value = r.DocumentTitle;
+            
+            let inputType = r.InputType || 'File';
+            let radio = document.querySelector('input[name="InputType"][value="' + inputType + '"]');
+            if(radio) radio.checked = true;
+
+            document.getElementById('AllowAllFileTypes').checked = r.AllowAllFileTypes == 1;
+            document.getElementById('AllowMultiple').checked = r.AllowMultiple == 1;
             document.getElementById('IsMandatory').checked = r.IsMandatory == 1;
+            
+            toggleFileSettings();
             new bootstrap.Modal(document.getElementById('ruleModal')).show();
         }
     </script>

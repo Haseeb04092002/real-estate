@@ -467,7 +467,7 @@ if (empty($arrProperties)) {
                                             <?php if ($status != 'Approved'): ?>
                                                 <div class="d-flex gap-2 border-top pt-3 mt-3">
                                                     <a href="<?= site_url('Properties/property_user_docs') ?>" class="btn btn-sm btn-outline-primary flex-fill"><i class="bi bi-pencil"></i> Edit</a>
-                                                    <a href="javascript:void(0)" onclick="alert('Document deletion to be handled by backend.')" class="btn btn-sm btn-outline-danger flex-fill"><i class="bi bi-trash"></i> Delete</a>
+                                                    <a href="javascript:void(0)" onclick="customAlert('Notice', 'Document deletion to be handled by backend.', 'info')" class="btn btn-sm btn-outline-danger flex-fill"><i class="bi bi-trash"></i> Delete</a>
                                                 </div>
                                             <?php endif; ?>
                                         </div>

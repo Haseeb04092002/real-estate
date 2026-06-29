@@ -191,7 +191,7 @@ unset($p);
       const place = autocomplete.getPlace();
 
       if (!place.geometry) {
-        alert("Please select a valid address from the list.");
+        customAlert('Warning', "Please select a valid address from the list.", 'warning');
         return;
       }
 
@@ -217,10 +217,12 @@ unset($p);
     });
   }
 
-  // Manual search button (optional)
   function searchAddress() {
     const address = document.getElementById("txtSearchAddress").value.trim();
-    if (!address) return alert("Please enter an address.");
+    if (!address) {
+        customAlert('Warning', "Please enter an address.", 'warning');
+        return;
+    }
 
     geocoder.geocode({ address: address }, function(results, status) {
       if (status === "OK") {
@@ -236,7 +238,7 @@ unset($p);
           title: "Searched Location"
         });
       } else {
-        alert("Geocode failed: " + status);
+        customAlert('Error', "Geocode failed: " + status, 'error');
       }
     });
   }

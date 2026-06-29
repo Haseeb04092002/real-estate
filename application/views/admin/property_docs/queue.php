@@ -151,7 +151,7 @@
                 if(data.success) {
                     location.reload();
                 } else {
-                    alert(data.message || 'Error saving review');
+                    customAlert('Error', data.message || 'Error saving review', 'error');
                 }
             });
         });

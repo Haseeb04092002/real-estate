@@ -221,7 +221,7 @@ function initAutocomplete() {
     placeSelected = true;
 
     if (!place.geometry) {
-      alert("Please select a valid address from the list.");
+      customAlert('Warning', "Please select a valid address from the list.", 'warning');
       input.value = "";
       return;
     }

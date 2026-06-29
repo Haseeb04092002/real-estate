@@ -34,6 +34,9 @@ class Admin_User_Verifications extends CI_Controller {
         $id = $this->input->post('RuleId');
         $data = [
             'DocumentTitle' => $this->input->post('DocumentTitle'),
+            'InputType' => $this->input->post('InputType') ?: 'File',
+            'AllowMultiple' => $this->input->post('AllowMultiple') ? 1 : 0,
+            'AllowAllFileTypes' => $this->input->post('AllowAllFileTypes') ? 1 : 0,
             'IsMandatory' => $this->input->post('IsMandatory') ? 1 : 0
         ];
         

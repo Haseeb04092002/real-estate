@@ -96,21 +96,23 @@
         const siteUrl = '<?= site_url() ?>';
 
         function updateStatus(id, status) {
-            if(confirm("Are you sure you want to mark this contract as " + status + "?")) {
-                $.ajax({
-                    url: siteUrl + 'Admin/api_update_contract_status',
-                    type: 'POST',
-                    data: { ContractId: id, Status: status },
-                    dataType: 'json',
-                    success: function(res) {
-                        if(res.success) {
-                            location.reload();
-                        } else {
-                            alert("Failed to update status.");
+            customConfirm('Update Status', "Are you sure you want to mark this contract as " + status + "?", 'warning', function(confirmed) {
+                if(confirmed) {
+                    $.ajax({
+                        url: siteUrl + 'Admin/api_update_contract_status',
+                        type: 'POST',
+                        data: { ContractId: id, Status: status },
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.success) {
+                                location.reload();
+                            } else {
+                                customAlert('Error', 'Failed to update status.', 'error');
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         }
     </script>
 </body>
