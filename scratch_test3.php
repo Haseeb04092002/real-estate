@@ -1,1 +1,0 @@
-﻿<?php $conn = new mysqli("localhost", "root", "", "properties_new", 3307); $result = $conn->query("SELECT InspectionId, MeetDate, MeetTime, TourType, Remarks FROM tbl_properties_inspection ORDER BY InspectionId DESC LIMIT 5"); while($row = $result->fetch_assoc()) { print_r($row); } $conn->close(); ?>
