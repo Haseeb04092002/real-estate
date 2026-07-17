@@ -18,6 +18,7 @@ class Admin_Property_Model extends CI_Model {
             p.AddedOn as CreatedDate,
             p.PropertyTypeId,
             p.CityId,
+            p.MailingAddress,
             p.ClientId,
             c.ClientName as OwnerName,
             t.Title as PropertyType,
@@ -40,6 +41,11 @@ class Admin_Property_Model extends CI_Model {
     public function update_property_status($property_id, $status) {
         $this->db->where('PropertyId', $property_id);
         return $this->db->update('tbl_properties', ['PropertyStatus' => $status, 'UpdatedOn' => date('Y-m-d H:i:s')]);
+    }
+
+    public function delete_property($property_id) {
+        $this->db->where('PropertyId', $property_id);
+        return $this->db->update('tbl_properties', ['IsDeleted' => 1, 'UpdatedOn' => date('Y-m-d H:i:s')]);
     }
 
     public function get_property_details($property_id) {

@@ -8,7 +8,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/forms.css'); ?>" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
   <style>
+    .iti { width: 100%; margin-bottom: 15px; }
+    .iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png");}
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .iti__flag {background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags@2x.png");}
+    }
+    .iti .form-control-custom {
+      margin-bottom: 0;
+    }
     .back-btn {
       color: #00b4d8;
       font-size: 1.5rem;
@@ -22,26 +31,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     .form-control-custom::placeholder {
       color: #6c757d;
-    }
-    .phone-input-group {
-      display: flex;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      overflow: hidden;
-      align-items: center;
-    }
-    .phone-code-text {
-      background: #fff;
-      padding: 12px 15px;
-      color: #495057;
-      border-right: 0px;
-    }
-    .phone-input {
-      border: none;
-      flex: 1;
-      padding: 12px 15px;
-      outline: none;
     }
     .btn-continue {
       border: 1px solid #198754;
@@ -83,10 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <input type="password" name="UserPass1" class="form-control form-control-custom w-100" placeholder="Password*" required>
       <input type="password" name="UserPass2" class="form-control form-control-custom w-100" placeholder="Confirm Password*" required>
       
-      <div class="phone-input-group w-100">
-        <div class="phone-code-text">PK +92</div>
-        <input type="tel" name="UserPhone" class="phone-input" placeholder="Enter your phone number" required>
-      </div>
+      <input type="tel" id="UserPhone" name="UserPhone" class="form-control form-control-custom w-100" placeholder="Enter your phone number" required>
 
       <div class="form-check d-flex align-items-start mt-3 mb-4">
         <input class="form-check-input me-2 mt-1" type="checkbox" id="terms" required style="width: 1.1rem; height: 1.1rem;">
@@ -105,5 +91,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+  const phoneInputField = document.querySelector("#UserPhone");
+  const phoneInput = window.intlTelInput(phoneInputField, {
+    initialCountry: "pk",
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  });
+</script>
 </body>
 </html>

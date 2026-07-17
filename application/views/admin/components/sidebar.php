@@ -32,7 +32,7 @@ $is_contract_mgmt = in_array($current_page, ['contract_management', 'contract_ty
         <!-- 1. Dashboard and Analytics -->
         <a href="<?= site_url('Admin/dashboard'); ?>" class="sidebar-link <?= ($current_page == 'dashboard') ? 'active' : '' ?>">
             <i class="fa-solid fa-gauge icon-left"></i> 
-            <span>Dashboard and Analytics</span>
+            <span>Dashboard</span>
         </a>
 
         <!-- 2. User Management -->
@@ -49,15 +49,20 @@ $is_contract_mgmt = in_array($current_page, ['contract_management', 'contract_ty
             </a>
         </li>
 
-        <!-- 3. Property Management -->
         <a href="<?= site_url('Admin/property_management'); ?>" class="sidebar-link <?= $is_prop_mgmt ? 'active' : '' ?>">
             <i class="fa-solid fa-building icon-left"></i>
             <span>Property Management</span>
         </a>
 
+        <!-- Property Settings -->
+        <a href="<?= site_url('Admin/property_settings'); ?>" class="sidebar-link <?= ($current_page == 'property_settings') ? 'active' : '' ?>">
+            <i class="fa-solid fa-cogs icon-left"></i>
+            <span>Property Settings</span>
+        </a>
+
         <!-- Property Documents -->
         <li class="sidebar-item" style="list-style: none;">
-            <a href="<?= site_url('Admin_Property_Docs/analytics') ?>" class="sidebar-link <?= ($docs_page == 'analytics') ? 'active' : '' ?>">
+            <a href="<?= site_url('Admin_Property_Docs/types') ?>" class="sidebar-link <?= ($docs_page == 'analytics') ? 'active' : '' ?>">
                 <i class="fa-solid fa-folder-open icon-left"></i>
                 <span>Property Documents</span>
             </a>
@@ -65,7 +70,7 @@ $is_contract_mgmt = in_array($current_page, ['contract_management', 'contract_ty
 
         <!-- Contract Management -->
         <li class="sidebar-item" style="list-style: none;">
-            <a href="<?= site_url('Admin/contract_management') ?>" class="sidebar-link <?= $is_contract_mgmt ? 'active' : '' ?>">
+            <a href="<?= site_url('Admin/contract_types') ?>" class="sidebar-link <?= $is_contract_mgmt ? 'active' : '' ?>">
                 <i class="fa-solid fa-file-signature icon-left"></i>
                 <span>Contract Management</span>
             </a>

@@ -48,7 +48,7 @@
                                         <small class="d-block text-primary"><i class="fa-solid fa-user me-1"></i> B: <?= $c->BuyerName ?: 'N/A' ?></small>
                                         <small class="d-block text-success"><i class="fa-solid fa-user-tie me-1"></i> S: <?= $c->SellerName ?: 'N/A' ?></small>
                                     </td>
-                                    <td><small class="text-truncate d-inline-block" style="max-width: 150px;" title="<?= htmlspecialchars($c->PropertyTitle) ?>"><?= $c->PropertyTitle ?: 'N/A' ?></small></td>
+                                    <td><small class="text-truncate d-inline-block" style="max-width: 150px;" title="<?= htmlspecialchars($c->PropertyTitle ?? '') ?>"><?= $c->PropertyTitle ?: 'N/A' ?></small></td>
                                     <td class="fw-bold">$<?= number_format($c->TotalAmount, 2) ?></td>
                                     <td>
                                         <?php 

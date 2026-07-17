@@ -63,10 +63,10 @@ if (empty($arrProperties)) {
                         $AddedOn        = $value->AddedOn ? date('d - M - Y', strtotime($value->AddedOn)) : "";
 
                         $PropertyFeatures = $this->getlist_model
-                            ->getFieldsMultipleConditions('tbl_properties_features', 'Bedrooms', "WHERE PropertyId = '$PropertyId'", 2);
+                            ->getFieldsMultipleConditions('tbl_properties_features', 'Bedrooms, Bathrooms', "WHERE PropertyId = '$PropertyId'", 2);
 
                         $Bedrooms  = $PropertyFeatures->Bedrooms  ?? "0";
-                        $Bathrooms = $value->BathRooms ?? $value->Bathrooms ?? "0";
+                        $Bathrooms = $PropertyFeatures->Bathrooms ?? "0";
 
                         $AreaUnit = ["Sqft", "Sqyd", "Kanal", "Marla"][$AreaUnitId - 1];
 

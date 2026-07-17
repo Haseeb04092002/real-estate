@@ -18,12 +18,15 @@
         <?php $this->load->view('admin/components/header'); ?>
 
         <div class="container-fluid py-4 px-4">
-
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">User Management</h4>
+            </div>
 
             <!-- List View -->
-            <div id="userListView" class="modern-card card-body p-4">
+            <div id="userListView" class="modern-card card-body p-4 bg-white">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle init-datatable" id="usersTable">
+                    <table class="table table-hover align-middle custom-datatable" id="usersTable">
                         <thead class="table-light text-muted">
                             <tr>
                                 <th class="fw-semibold">ID</th>
@@ -59,6 +62,7 @@
                     </table>
                 </div>
             </div>
+        </div>
 
 
 
@@ -70,6 +74,19 @@
     <script>
         const baseUrl = '<?= base_url() ?>';
         const siteUrl = '<?= site_url() ?>';
+        
+        $(document).ready(function() {
+            var table = $('#usersTable').DataTable({
+                "pageLength": 50,
+                "ordering": true,
+                "info": true,
+                "dom": '<"row align-items-center mb-3"<"col-md-6"l><"col-md-6 text-end"f>>rt<"row align-items-center mt-3"<"col-md-6"i><"col-md-6 text-end"p>>',
+                "language": {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search..."
+                }
+            });
+        });
     </script>
     <script src="<?= base_url('assets/js/admin_users.js'); ?>"></script>
 </body>

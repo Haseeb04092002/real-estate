@@ -125,6 +125,19 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function api_delete_property() {
+        $this->check_auth();
+        $this->load->model('Admin_Property_Model');
+        $property_id = $this->input->post('property_id');
+        
+        if ($property_id) {
+            $success = $this->Admin_Property_Model->delete_property($property_id);
+            echo json_encode(['success' => $success]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Missing parameters']);
+        }
+    }
+
     public function property_details($property_id) {
         $this->check_auth();
         $this->load->model('Admin_Property_Model');
@@ -138,7 +151,22 @@ class Admin extends CI_Controller {
         $data['property_types'] = $this->Admin_Property_Model->get_all_property_types();
         $data['cities'] = $this->Admin_Property_Model->get_all_cities();
         $data['features'] = $this->Admin_Property_Model->get_property_features($property_id);
+        
+        // Fetch dynamic features
+        $PropertyTypeId = $data['property']->PropertyTypeId ?? 0;
+        $data['DynamicFeatures'] = $this->db->where('PropertyTypeId', $PropertyTypeId)
+                                            ->or_where('PropertyTypeId', 0)
+                                            ->get('tbl_properties_features_lists')->result();
+        $mapped = $this->db->where('PropertyId', $property_id)->get('tbl_property_feature_mapping')->result();
+        $data['MappedValues'] = [];
+        foreach($mapped as $m) {
+            $data['MappedValues'][$m->FeatureId] = $m->FeatureValue;
+        }
+
         $data['media'] = $this->Admin_Property_Model->get_property_media($property_id);
+        
+        $data['documents'] = $this->db->where('PropertyId', $property_id)->get('tbl_property_documents')->result();
+        $data['doc_types'] = $this->db->get('tbl_property_document_types')->result();
         
         $this->load->view('admin/property_details', $data);
     }
@@ -161,66 +189,47 @@ class Admin extends CI_Controller {
             'TotalPrice' => $this->input->post('TotalPrice'),
             'PropertyTypeId' => $this->input->post('PropertyTypeId'),
             'CityId' => $this->input->post('CityId'),
-            'Rooms' => $this->input->post('Rooms'),
-            'BathRooms' => $this->input->post('BathRooms'),
             'CoveredArea' => $this->input->post('CoveredArea'),
             'MailingAddress' => $this->input->post('MailingAddress'),
-            'StreetName' => $this->input->post('StreetName'),
-            'StreetNumber' => $this->input->post('StreetNumber'),
-            'BuildingNumber' => $this->input->post('BuildingNumber'),
+            'Country' => $this->input->post('Country'),
+            'State' => $this->input->post('State'),
+            'Suburb' => $this->input->post('Suburb'),
             'ZipCode' => $this->input->post('ZipCode'),
+            'UnitNumber' => $this->input->post('UnitNumber'),
+            'StreetNumber' => $this->input->post('StreetNumber'),
+            'StreetName' => $this->input->post('StreetName'),
             'UpdatedOn' => date('Y-m-d H:i:s'),
             'UpdatedBy' => $this->session->userdata('user_id')
         ];
 
         $success = $this->Admin_Property_Model->update_property($property_id, $data);
 
-        $features_data = [
+        $feature_data = [
             'BuiltInYear' => $this->input->post('BuiltInYear'),
+            'Bedrooms' => $this->input->post('Bedrooms'),
+            'Bathrooms' => $this->input->post('Bathrooms_feature'),
             'ParkingSpaces' => $this->input->post('ParkingSpaces'),
             'Floors' => $this->input->post('Floors'),
-            'Bedrooms' => $this->input->post('Bedrooms'),
-            'Bathrooms' => $this->input->post('Bathrooms_feature'), // map form name
-            'OtherRooms' => $this->input->post('OtherRooms'),
-            'ServantQuarters' => $this->input->post('ServantQuarters'),
             'Kitchens' => $this->input->post('Kitchens'),
             'StoreRooms' => $this->input->post('StoreRooms'),
-            
-            // Boolean fields (checkboxes send '1' if checked, else null)
-            'IsDoubleGlazedWindows' => $this->input->post('IsDoubleGlazedWindows') ? 1 : 0,
-            'IsCentralAirConditioning' => $this->input->post('IsCentralAirConditioning') ? 1 : 0,
-            'IsCentralHeating' => $this->input->post('IsCentralHeating') ? 1 : 0,
-            'IsWasteDisposal' => $this->input->post('IsWasteDisposal') ? 1 : 0,
-            'IsFurnished' => $this->input->post('IsFurnished') ? 1 : 0,
-            'IsDrawingRoom' => $this->input->post('IsDrawingRoom') ? 1 : 0,
-            'IsDiningRoom' => $this->input->post('IsDiningRoom') ? 1 : 0,
-            'IsStudyRoom' => $this->input->post('IsStudyRoom') ? 1 : 0,
-            'IsPrayerRoom' => $this->input->post('IsPrayerRoom') ? 1 : 0,
-            'IsPowderRoom' => $this->input->post('IsPowderRoom') ? 1 : 0,
-            'IsGym' => $this->input->post('IsGym') ? 1 : 0,
-            'IsSteamRoom' => $this->input->post('IsSteamRoom') ? 1 : 0,
-            'IsLoungeRoom' => $this->input->post('IsLoungeRoom') ? 1 : 0,
-            'IsLaundryRoom' => $this->input->post('IsLaundryRoom') ? 1 : 0,
-            'IsBroadbandInternetAccess' => $this->input->post('IsBroadbandInternetAccess') ? 1 : 0,
-            'IsTVReady' => $this->input->post('IsTVReady') ? 1 : 0,
-            'IsIntercom' => $this->input->post('IsIntercom') ? 1 : 0,
-            'IsConferenceRoom' => $this->input->post('IsConferenceRoom') ? 1 : 0,
-            'IsCommunityLawn' => $this->input->post('IsCommunityLawn') ? 1 : 0,
-            'IsCommunitySwimmingPool' => $this->input->post('IsCommunitySwimmingPool') ? 1 : 0,
-            'IsCommunityGym' => $this->input->post('IsCommunityGym') ? 1 : 0,
-            'IsFirstAid' => $this->input->post('IsFirstAid') ? 1 : 0,
-            'IsDayCareCenter' => $this->input->post('IsDayCareCenter') ? 1 : 0,
-            'IsKidsPlayArea' => $this->input->post('IsKidsPlayArea') ? 1 : 0,
-            'IsBarbequeArea' => $this->input->post('IsBarbequeArea') ? 1 : 0,
-            'IsMosque' => $this->input->post('IsMosque') ? 1 : 0,
-            'IsCommunityCentre' => $this->input->post('IsCommunityCentre') ? 1 : 0,
-            'IsLawnGarden' => $this->input->post('IsLawnGarden') ? 1 : 0,
-            'IsSwimmingPool' => $this->input->post('IsSwimmingPool') ? 1 : 0,
-            'IsSauna' => $this->input->post('IsSauna') ? 1 : 0,
-            'IsJacuzzi' => $this->input->post('IsJacuzzi') ? 1 : 0,
+            'ServantQuarters' => $this->input->post('ServantQuarters')
         ];
         
-        $this->Admin_Property_Model->update_property_features($property_id, $features_data);
+        $this->Admin_Property_Model->update_property_features($property_id, $feature_data);
+
+        // Update Dynamic Features
+        $this->db->where('PropertyId', $property_id)->delete('tbl_property_feature_mapping');
+        $postData = $this->input->post();
+        foreach ($postData as $key => $value) {
+            if (strpos($key, 'feature_') === 0 && $value !== '') {
+                $FeatureId = str_replace('feature_', '', $key);
+                $this->db->insert('tbl_property_feature_mapping', [
+                    'PropertyId' => $property_id,
+                    'FeatureId' => $FeatureId,
+                    'FeatureValue' => $value
+                ]);
+            }
+        }
 
         echo json_encode(['success' => $success]);
     }
@@ -322,9 +331,11 @@ class Admin extends CI_Controller {
     public function contract_types() {
         $this->check_auth();
         $this->load->model('Admin_Contract_Model');
+        $this->load->model('Admin_Property_Model');
         $data['page_title'] = 'Contract Types';
         $data['active_tab'] = 'types';
         $data['types'] = $this->Admin_Contract_Model->get_contract_types();
+        $data['property_types'] = $this->Admin_Property_Model->get_all_property_types();
         $this->load->view('admin/contracts/types', $data);
     }
 
@@ -374,7 +385,8 @@ class Admin extends CI_Controller {
         $id = $this->input->post('TypeId');
         $data = [
             'Title' => $this->input->post('Title'),
-            'IsActive' => $this->input->post('IsActive')
+            'IsActive' => $this->input->post('IsActive'),
+            'PropertyTypeId' => $this->input->post('PropertyTypeId') ?: null
         ];
         if(!$id) {
             $data['AddedOn'] = date('Y-m-d H:i:s');
@@ -460,6 +472,28 @@ class Admin extends CI_Controller {
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream("Contract_".$contract->ContractId.".pdf", ["Attachment" => true]);
+    }
+
+    public function api_soft_delete_contract_item() {
+        $this->check_auth();
+        $id = $this->input->post('id');
+        $type = $this->input->post('type'); // 'type', 'template', 'clause'
+        
+        $success = false;
+        if ($id && $type) {
+            if ($type === 'type') {
+                $this->db->where('TypeId', $id)->update('tbl_properties_contracts_type', ['IsDeleted' => 1]);
+                $success = true;
+            } elseif ($type === 'template') {
+                $this->db->where('TemplateId', $id)->update('tbl_contract_templates', ['IsDeleted' => 1]);
+                $success = true;
+            } elseif ($type === 'clause') {
+                $this->db->where('ClauseId', $id)->update('tbl_contract_clauses', ['IsDeleted' => 1]);
+                $success = true;
+            }
+        }
+        
+        echo json_encode(['success' => $success]);
     }
 
     public function blogs_management() {
@@ -577,6 +611,84 @@ class Admin extends CI_Controller {
             }
         }
         echo "Migration ran successfully.";
+    }
+
+    public function property_settings() {
+        $this->check_auth();
+        
+        $data['page_title'] = 'Property Settings';
+        $data['property_types'] = $this->db->order_by('SortOrder', 'ASC')->get('tbl_properties_types')->result();
+        $data['features'] = $this->db->select('tbl_properties_features_lists.*, tbl_properties_types.Title as TypeTitle')
+                                     ->from('tbl_properties_features_lists')
+                                     ->join('tbl_properties_types', 'tbl_properties_types.TypeId = tbl_properties_features_lists.PropertyTypeId', 'left')
+                                     ->get()->result();
+
+        $this->load->view('admin/property_settings', $data);
+    }
+
+    public function api_save_property_type() {
+        $this->check_auth();
+        $id = $this->input->post('TypeId');
+        
+        $data = [
+            'Title' => $this->input->post('Title'),
+            'Remarks' => $this->input->post('Remarks'),
+            'PropertyIcon' => $this->input->post('PropertyIcon') ?? ''
+        ];
+
+        if ($id) {
+            $data['UpdatedOn'] = date('Y-m-d H:i:s');
+            $data['UpdatedBy'] = $this->session->userdata('user_id');
+            $this->db->where('TypeId', $id)->update('tbl_properties_types', $data);
+        } else {
+            $data['AddedOn'] = date('Y-m-d H:i:s');
+            $data['AddedBy'] = $this->session->userdata('user_id');
+            $this->db->insert('tbl_properties_types', $data);
+        }
+        echo json_encode(['success' => true]);
+    }
+
+    public function api_delete_property_type($id) {
+        $this->check_auth();
+        $this->db->where('TypeId', $id)->delete('tbl_properties_types');
+        echo json_encode(['success' => true]);
+    }
+
+    public function api_save_property_feature() {
+        $this->check_auth();
+        $id = $this->input->post('FeatureId');
+        
+        $data = [
+            'Title' => $this->input->post('Title'),
+            'PropertyTypeId' => $this->input->post('PropertyTypeId'),
+            'InputType' => $this->input->post('InputType'),
+            'IsRequired' => $this->input->post('IsRequired') ? 1 : 0
+        ];
+
+        if ($id) {
+            $data['UpdatedOn'] = date('Y-m-d H:i:s');
+            $data['UpdatedBy'] = $this->session->userdata('user_id');
+            $this->db->where('FeatureId', $id)->update('tbl_properties_features_lists', $data);
+        } else {
+            $data['AddedOn'] = date('Y-m-d H:i:s');
+            $data['AddedBy'] = $this->session->userdata('user_id');
+            $this->db->insert('tbl_properties_features_lists', $data);
+        }
+        echo json_encode(['success' => true]);
+    }
+
+    public function api_delete_property_feature($id) {
+        $this->check_auth();
+        
+        // Check if it's a system feature
+        $feature = $this->db->where('FeatureId', $id)->get('tbl_properties_features_lists')->row();
+        if ($feature && $feature->IsSystem == 1) {
+            echo json_encode(['success' => false, 'message' => 'System features cannot be deleted']);
+            return;
+        }
+
+        $this->db->where('FeatureId', $id)->delete('tbl_properties_features_lists');
+        echo json_encode(['success' => true]);
     }
 
 }

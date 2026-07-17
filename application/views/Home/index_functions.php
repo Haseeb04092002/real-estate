@@ -3,6 +3,7 @@
 $(document).ready(function(){
     var base_url = "<?php echo base_url();?>" ;
 
+    $(document).off('click', '.actSubmitForm');
     $(document).on('click', '.actSubmitForm', function(e) {
         e.preventDefault();
         $(this).attr('disabled',true);
@@ -11,16 +12,22 @@ $(document).ready(function(){
         var frm = $(this).attr('frm');
         var Ref = $(this).attr('ref');
         var btn = $(this);
-       $('#'+frm).addClass('apply_parsley');
-       $(document).apply_parsley(true);
-       
-       // Handle Parsley boolean return or object return
+       // Execute Parsley Validation Safely
        var isValid = false;
-       var parsleyObj = $('#'+frm).parsley('isValid');
-       if (typeof parsleyObj === "boolean") {
-           isValid = parsleyObj;
-       } else if (parsleyObj && parsleyObj.validationResult !== undefined) {
-           isValid = parsleyObj.validationResult;
+       try {
+           var formInstance = $('#'+frm).parsley();
+           formInstance.validate(); // Explicitly trigger UI messages
+           
+           // In Parsley 2.x, isValid() returns true/false or null
+           var validResult = formInstance.isValid();
+           if (validResult === null || validResult === true) {
+               isValid = true;
+           } else {
+               isValid = false;
+           }
+       } catch (e) {
+           console.error("Parsley validation error: ", e);
+           isValid = false; // Fallback to invalid to show modal and prevent submission
        }
        
        if(isValid)
@@ -63,6 +70,21 @@ $(document).ready(function(){
                           linkURL = linkURL.replace("/0", "/"+data.PropertyId);
                           $(this).attr('loadlink',linkURL);
                       });
+
+                      var formToTabMap = {
+                          'frmAddProperty': 'btnInformation',
+                          'frmAddPrice': 'btnPricing',
+                          'frmAddFeatures': 'btnFeatures',
+                          'frmUploadMedia': 'btnImages',
+                          'frmUploadDocuments': 'btnDocuments'
+                      };
+                      var tabId = formToTabMap[frm];
+                      if (tabId) {
+                          var tab = $('#' + tabId);
+                          if (tab.find('.fa-check-circle').length === 0) {
+                              tab.append('<i class="fa fa-check-circle ms-auto text-success fs-4"></i>');
+                          }
+                      }
 
                       var NextTab = data.NextTab;
                       console.log('NextTab = '+NextTab);
@@ -115,11 +137,11 @@ $(document).ready(function(){
        else
        {
            btn.attr('disabled', false);
+           if ($('#validationModal').length > 0) {
+               $('#validationModal').modal('show');
+           }
        }
        $('#'+frm).removeClass('apply_parsley');
-       }
-        
-        $('.actSubmitForm').attr('disabled',false);
         
     });
     // 

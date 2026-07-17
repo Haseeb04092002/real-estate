@@ -10,8 +10,12 @@ class Admin_Contract_Model extends CI_Model {
 
     // --- CONTRACT TYPES ---
     public function get_contract_types() {
-        $this->db->order_by('TypeId', 'DESC');
-        return $this->db->get('tbl_properties_contracts_type')->result();
+        $this->db->select('c.*, p.Title as PropertyTypeTitle');
+        $this->db->from('tbl_properties_contracts_type c');
+        $this->db->join('tbl_properties_types p', 'c.PropertyTypeId = p.TypeId', 'left');
+        $this->db->where('c.IsDeleted', 0);
+        $this->db->order_by('c.TypeId', 'DESC');
+        return $this->db->get()->result();
     }
 
     public function save_contract_type($data, $id = null) {
@@ -30,6 +34,7 @@ class Admin_Contract_Model extends CI_Model {
         $this->db->from('tbl_contract_templates t');
         $this->db->join('tbl_properties_contracts_type c', 't.ContractTypeId = c.TypeId', 'left');
         $this->db->where('t.Status !=', 'Archived');
+        $this->db->where('t.IsDeleted', 0);
         $this->db->order_by('t.TemplateId', 'DESC');
         return $this->db->get()->result();
     }
@@ -50,6 +55,7 @@ class Admin_Contract_Model extends CI_Model {
 
     // --- LEGAL CLAUSES ---
     public function get_legal_clauses() {
+        $this->db->where('IsDeleted', 0);
         $this->db->order_by('ClauseId', 'DESC');
         return $this->db->get('tbl_contract_clauses')->result();
     }

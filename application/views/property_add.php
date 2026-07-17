@@ -42,6 +42,8 @@ $SecurityBond = '';
 $Installments = '';
 $InstallmentAmount = '';
 $PossessionDate = '';
+$Longitude = '';
+$Latitude = '';
 
 if($PropertyDetails)
 {
@@ -67,6 +69,8 @@ if($PropertyDetails)
     $Installments = $PropertyDetails->Installments;
     $InstallmentAmount = $PropertyDetails->InstallmentAmount;
     $PossessionDate = $PropertyDetails->PossessionDate;
+    $Longitude = $PropertyDetails->Longitude;
+    $Latitude = $PropertyDetails->Latitude;
 }
 
 $CountryId = 28;
@@ -74,7 +78,7 @@ $CountryId = 28;
         
 
 <div class="dashboard-container pt-4">
-    <form class="" id="frmAddProperty" onsubmit="return false;">
+    <form class="" id="frmAddProperty" data-parsley-validate onsubmit="return false;">
         <input type="hidden" name="txtAddedOn" value="<?=$varNow;?>">
         
         <div class="dashboard-card">
@@ -86,6 +90,7 @@ $CountryId = 28;
         <div class="form-row">
             <div class="form-group">
                 <div class="d-block">
+                    <label class="mb-2">Property Type <span class="text-danger">*</span></label>
                     <div class="property-type d-flex flex-wrap gap-2">
 
                         <?php
@@ -115,16 +120,16 @@ $CountryId = 28;
         <!-- <h2 class="section-title my-4">Information</h2> -->
         <div class="form-row">
             <div class="form-group">
-                <label>Property Title</label>
+                <label>Property Title <span class="text-danger">*</span></label>
                 <input type="text" name="txtPropertyTitle" value="<?= $PropertyTitle;?>" required data-parsley-required-message="Property Title is required" placeholder="Best house in the city">
             </div>
 
             <div class="form-group">
-                <label>Covered Area <span style="font-size: 14px;" class="fw-normal">(in square-foot)</span></label>
+                <label>Covered Area <span class="text-danger">*</span> <span style="font-size: 14px;" class="fw-normal">(in square-foot)</span></label>
                 <input type="text" value="<?= $CoveredArea; ?>" name="txtCoveredArea" placeholder="10 Sqft" required data-parsley-required-message="Covered Area is required">
             </div>
             <div class="form-group">
-                <label>Property Status</label>
+                <label>Property Status <span class="text-danger">*</span></label>
                 <select class="form-select" name="selPropertyStatus" id="selPropertyStatus" required data-parsley-required-message="Property Status is required">
                     <?=$PropertyStatus;?>
                     <option value="occupied" <?= ($PropertyStatus === 'occupied') ? 'selected' : ''; ?> >Occupied</option>
@@ -136,25 +141,27 @@ $CountryId = 28;
 
         <div class="form-row">
             <div class="form-group full-width">
-                <label>Description</label>
+                <label>Description <span class="text-danger">*</span></label>
                 <textarea name="txtPropertyDescription" required data-parsley-required-message="Description is required" placeholder="Enter property description here..."><?= $PropertyDescription; ?></textarea>
             </div>
         </div>
 
         <div class="form-group">
+            <label>Mailing Address <span class="text-danger">*</span></label>
             <div class="d-flex">
-                <div class="input-group">
-                  <input value="<?= $MailingAddress; ?>" type="text" id="txtPropertyAddress" name="txtPropertyAddress" class="form-control" placeholder="Search by Address" required data-parsley-required-message="Address is required" />
+                <div class="input-group w-100">
+                  <input value="<?= $MailingAddress; ?>" type="text" id="txtPropertyAddress" name="txtPropertyAddress" class="form-control" placeholder="Search by Address" required data-parsley-required-message="Address is required" data-parsley-errors-container="#address-errors" />
                   <span class="input-group-text">
                     <i class="fas fa-search"></i>
                   </span>
                 </div>
 
                 <!-- Hidden Fields -->
-                <input type="hidden" name="txtLongitude" id="txtLongitude">
-                <input type="hidden" name="txtLatitude" id="txtLatitude">
+                <input type="hidden" name="txtLongitude" id="txtLongitude" value="<?= $Longitude ?>">
+                <input type="hidden" name="txtLatitude" id="txtLatitude" value="<?= $Latitude ?>">
 
             </div>
+            <div id="address-errors" class="mt-1"></div>
 
             <div class="row my-3">
                 <div class="col-md-3">
@@ -171,13 +178,13 @@ $CountryId = 28;
                 </div>
                 <div class="col-md-3">
                     <label for="numZipCode">Postal Code</label>
-                    <input value="<?= $ZipCode; ?>" type="number" name="numZipCode" class="form-control" required id="txtPostalCode">
+                    <input value="<?= $ZipCode; ?>" type="number" name="numZipCode" class="form-control" id="txtPostalCode">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3">
                     <label for="txtBuildingNumber">Unit Number:</label>
-                    <input value="<?= $BuildingNumber; ?>" type="text" id="txtUnitNumber" name="txtUnitNumber" class="form-control">
+                    <input value="<?= $UnitNumber; ?>" type="text" id="txtUnitNumber" name="txtUnitNumber" class="form-control">
                 </div>
                 <div class="col-md-3">
                     <label for="txtStreetNumber">Street Number:</label>
@@ -196,7 +203,7 @@ $CountryId = 28;
     </div>
 
         <div class="d-flex justify-content-center align-items-center gap-5 mt-4">
-            <button type="button" class="btn btn-primary py-3 px-5 my-4 fw-bold animated fadeIn actSubmitForm" frm="frmAddProperty" ref="urlResponse" href="Properties/SavePropertyInformation/<?= $Case ?>/<?= $PropertyId;?>">Save & Next</button>
+            <button type="button" class="btn btn-primary py-3 px-5 my-4 fw-bold animated fadeIn actSubmitForm" frm="frmAddProperty" ref="urlResponse" href="Properties/SavePropertyInformation/<?= ($PropertyId > 0) ? 'Edit' : $Case ?>/<?= $PropertyId;?>">Save & Next</button>
         </div>
 
         </div>
@@ -208,9 +215,14 @@ $CountryId = 28;
 <script>
 
     let placeSelected = false;
+    let autocompleteInitialized = false;
 
 function initAutocomplete() {
+  if (autocompleteInitialized) return;
   const input = document.getElementById('txtPropertyAddress');
+  if (!input) return;
+  autocompleteInitialized = true;
+  
   const autocomplete = new google.maps.places.Autocomplete(input, {
     componentRestrictions: { country: "au" },
     fields: ["address_components", "formatted_address", "geometry"]

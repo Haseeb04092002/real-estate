@@ -3,11 +3,13 @@ $PropertyId     = $value->PropertyId ?? '';
 $PropertyTitle  = $value->PropertyTitle ?? 'Property Title';
 $PropertyTypeId = $value->PropertyTypeId;
 $PropertyType   = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','Title',"WHERE TypeId = '$PropertyTypeId'", 1);
+$PropertyTypeName = is_object($PropertyType) ? ($PropertyType->Title ?? '') : (is_array($PropertyType) ? ($PropertyType['Title'] ?? '') : (is_string($PropertyType) ? $PropertyType : 'Property'));
 $ListType       = $value->ListType ?? 'Sale';
 $TotalPrice     = $value->TotalPrice ?? 0;
-$MailingAddress = $value->MailingAddress ?? 'Mailing Address';
+$MailingAddress = $value->MailingAddress ?? '';
 $CoveredArea    = $value->CoveredArea ?? '0';
 $AreaUnitId     = $value->AreaUnitId ?? '1';
+
 $PropertyDescription = $value->PropertyDescription ?? 'No description available for this property.';
 if (strlen($PropertyDescription) > 90) {
     $PropertyDescription = substr($PropertyDescription, 0, 90) . '...';
@@ -15,13 +17,13 @@ if (strlen($PropertyDescription) > 90) {
 
 $PropertyFeatures = $this->getlist_model->getFieldsMultipleConditions(
   'tbl_properties_features',
-  'Bedrooms',
+  'Bedrooms, Bathrooms',
   "WHERE PropertyId = '$PropertyId'",
   2
 );
 
 $Bedrooms = $PropertyFeatures->Bedrooms ?? '0';
-$Bathrooms = $value->BathRooms ?? $value->Bathrooms ?? '0';
+$Bathrooms = $PropertyFeatures->Bathrooms ?? '0';
 
 switch ($AreaUnitId) {
   case '1': $AreaUnit = 'Sqft'; break;
@@ -105,12 +107,26 @@ if ($ClientId > 0) {
 }
 
 // Format address
-$words = explode(' ', $MailingAddress);
+$dispAddr = [];
+if (!empty($MailingAddress)) {
+    $dispAddr[] = $MailingAddress;
+} else {
+    if (!empty($value->UnitNumber)) $dispAddr[] = "Unit " . $value->UnitNumber;
+    if (!empty($value->StreetNumber) && !empty($value->StreetName)) {
+        $dispAddr[] = $value->StreetNumber . ' ' . $value->StreetName;
+    }
+    if (!empty($value->Suburb)) $dispAddr[] = $value->Suburb;
+    if (!empty($value->State)) $dispAddr[] = $value->State;
+    if (!empty($value->ZipCode)) $dispAddr[] = $value->ZipCode;
+}
+$fAddr = implode(', ', array_filter($dispAddr));
+$words = explode(' ', $fAddr);
 if (count($words) > 5) {
     $displayAddress = implode(' ', array_slice($words, 0, 5)) . "...";
 } else {
-    $displayAddress = $MailingAddress;
+    $displayAddress = $fAddr;
 }
+if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
 ?>
 
 <div class="col-lg-4 col-md-6 wow fadeInUp property-item-box <?= htmlspecialchars($ListType); ?>" 
@@ -118,7 +134,7 @@ if (count($words) > 5) {
      data-search="<?= strtolower(
         $PropertyTitle . ' ' . 
         $MailingAddress . ' ' . 
-        $PropertyType . ' ' . 
+        $PropertyTypeName . ' ' . 
         ($value->State ?? '') . ' ' . 
         ($value->Suburb ?? '') . ' ' . 
         ($value->Postcode ?? '')
@@ -310,15 +326,13 @@ if (count($words) > 5) {
 
   <div class="prop-card" onclick="window.location='<?= site_url('Properties/PropertyDetails/' . $PropertyId); ?>'">
       
-      <!-- Top Image Section -->
       <div class="prop-card-img-wrap">
           <img src="<?= $imageSrc; ?>" alt="Property Image">
           
-          <div class="prop-badge-top-left">Featured</div>
+          <div class="prop-badge-top-left"><?= $PropertyTypeName; ?></div>
           
           <div class="prop-badge-top-right">
-              <span><?= $ListType; ?></span>
-              <span>Active</span>
+              <span>For <?= $ListType; ?></span>
           </div>
 
           <div class="prop-badge-bottom-left">
@@ -330,7 +344,7 @@ if (count($words) > 5) {
       <div class="prop-card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="prop-title" style="max-width: 65%;" title="<?= $PropertyTitle; ?>"><?= $PropertyTitle; ?></div>
-              <div class="prop-price">$<?= number_format($TotalPrice); ?></div>
+              <div class="prop-price">$<?= number_format($TotalPrice); ?><?= (strtolower($ListType) == 'rent') ? '/week' : '' ?></div>
           </div>
 
           <div class="prop-desc"><?= $PropertyDescription; ?></div>
@@ -364,60 +378,7 @@ if (count($words) > 5) {
                   </span>
               </div>
           </div>
-          
-          <div class="prop-actions">
-              <button type="button" class="prop-btn" data-bs-toggle="modal" data-bs-target="#shareModal<?= $PropertyId; ?>">
-                  <i class="fa fa-share-alt"></i>
-              </button>
-              
-              <?php if(isset($UserId) && $UserId > 0): ?>
-                  <?php if($IsFavourite == 0): ?>
-                  <a href="<?= site_url('Properties/AddToFavourites/'.$PropertyId); ?>" class="prop-btn">
-                      <i class="fa fa-heart"></i>
-                  </a>
-                  <?php else: ?>
-                  <a href="<?= site_url('Properties/RemoveFromFavourites/'.$PropertyId); ?>" class="prop-btn favourited">
-                      <i class="fa fa-heart"></i>
-                  </a>
-                  <?php endif; ?>
-              <?php else: ?>
-                  <a href="<?= site_url('Properties/signin'); ?>" class="prop-btn">
-                      <i class="fa fa-heart"></i>
-                  </a>
-              <?php endif; ?>
-          </div>
       </div>
 
   </div>
-
-  <!-- Share Modal -->
-  <div class="modal fade" id="shareModal<?= $PropertyId; ?>" tabindex="-1" aria-labelledby="shareModalLabel<?= $PropertyId; ?>" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content" onclick="event.stopPropagation();">
-        <div class="modal-header">
-          <h5 class="modal-title" id="shareModalLabel<?= $PropertyId; ?>">Share This Page</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="input-group">
-            <input type="text" id="shareUrlInput<?= $PropertyId; ?>" 
-                   value="<?= site_url('Properties/PropertyDetails/' . $PropertyId); ?>" 
-                   class="form-control" readonly>
-            <button class="btn btn-primary" type="button" onclick="copyShareUrl(<?= $PropertyId; ?>)">Copy</button>
-          </div>
-          <div id="copyMsg<?= $PropertyId; ?>" class="text-success small mt-2" style="display: none;">Copied!</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function copyShareUrl(id) {
-      const input = document.getElementById('shareUrlInput' + id);
-      input.select();
-      input.setSelectionRange(0, 99999); 
-      document.execCommand("copy");
-      document.getElementById('copyMsg' + id).style.display = 'block';
-    }
-  </script>
 </div>

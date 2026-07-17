@@ -243,6 +243,7 @@ class Documents extends CI_Controller {
       $images_count = count($_FILES['images']['name'] ?? []);
 
       for ($i = 0; $i < $images_count; $i++) {
+          if (empty($_FILES['images']['name'][$i])) continue;
           $_FILES['file']['name']     = $_FILES['images']['name'][$i];
           $_FILES['file']['type']     = $_FILES['images']['type'][$i];
           $_FILES['file']['tmp_name'] = $_FILES['images']['tmp_name'][$i];
@@ -307,6 +308,7 @@ class Documents extends CI_Controller {
       $videos_count = count($_FILES['videos']['name'] ?? []);
 
       for ($i = 0; $i < $videos_count; $i++) {
+          if (empty($_FILES['videos']['name'][$i])) continue;
           $_FILES['file']['name']     = $_FILES['videos']['name'][$i];
           $_FILES['file']['type']     = $_FILES['videos']['type'][$i];
           $_FILES['file']['tmp_name'] = $_FILES['videos']['tmp_name'][$i];
@@ -343,6 +345,19 @@ class Documents extends CI_Controller {
       return $video_upload;
   }
 
+
+  public function DeleteDocument($DocumentId = 0)
+  {
+      $Response['Status'] = false;
+      if ($DocumentId > 0) {
+          $this->db->where('DocumentId', $DocumentId);
+          $this->db->delete('tbl_documents');
+          if($this->db->affected_rows() > 0) {
+              $Response['Status'] = true;
+          }
+      }
+      exit(json_encode($Response));
+  }
 
 }
 

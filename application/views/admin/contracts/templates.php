@@ -75,6 +75,7 @@
                                         <button class="btn btn-sm btn-outline-secondary me-1" onclick='previewTemplate(<?= json_encode($t->TemplateTitle) ?>, <?= json_encode($t->TemplateContent) ?>)'><i class="fa-solid fa-eye"></i> Preview</button>
                                         <button class="btn btn-sm btn-outline-primary" onclick='editTemplate(<?= json_encode($t) ?>)'><i class="fa-solid fa-edit"></i> Edit</button>
                                         <button class="btn btn-sm btn-outline-info" onclick='duplicateTemplate(<?= json_encode($t) ?>)'><i class="fa-solid fa-copy"></i> Duplicate</button>
+                                        <button class="btn btn-sm btn-outline-danger ms-1" onclick="deleteContractItem(<?= $t->TemplateId ?>, 'template')"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -333,6 +334,26 @@
             document.getElementById('ContractTypeId').value = t.ContractTypeId;
             document.getElementById('Status').value = 'Draft';
             if(theEditor) theEditor.setData(t.TemplateContent || '');
+        }
+
+        function deleteContractItem(id, type) {
+            customConfirm('Delete Confirmation', 'Are you sure you want to delete this template?', 'warning', function(confirmed) {
+                if(confirmed) {
+                    $.ajax({
+                        url: '<?= site_url('Admin/api_soft_delete_contract_item') ?>',
+                        type: 'POST',
+                        data: { id: id, type: type },
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.success) {
+                                location.reload();
+                            } else {
+                                customAlert('Error', 'Failed to delete.', 'error');
+                            }
+                        }
+                    });
+                }
+            });
         }
     </script>
 </body>

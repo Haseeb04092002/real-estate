@@ -7,7 +7,7 @@
 $(document).ready(function(){
 
     var base_url = "<?php echo base_url();?>" ;
-    $("#divFunctions").load(base_url+'Home/LoadFunctions');
+    $("#divFunctions").load(base_url+'Properties/LoadFunctions');
 
 });
 </script>

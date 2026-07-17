@@ -167,16 +167,22 @@
             <!-- Navigation Tabs -->
             <ul class="nav nav-pills nav-modern" id="propertyTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab"><i class="fa-solid fa-circle-info me-2"></i> Basic Info</button>
+                    <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab"><i class="fa fa-info-circle me-2"></i> Basic Info</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="location-tab" data-bs-toggle="tab" data-bs-target="#location" type="button" role="tab"><i class="fa-solid fa-map-location-dot me-2"></i> Location</button>
+                    <button class="nav-link" id="pricing-tab" data-bs-toggle="tab" data-bs-target="#pricing" type="button" role="tab"><i class="fa fa-tags me-2"></i> Pricing</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab"><i class="fa-solid fa-list-check me-2"></i> Features</button>
+                    <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab"><i class="fa fa-money-check-alt me-2"></i> Features</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" type="button" role="tab"><i class="fa-solid fa-images me-2"></i> Media Gallery</button>
+                    <button class="nav-link" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" type="button" role="tab"><i class="fa fa-photo-video me-2"></i> Media</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" type="button" role="tab"><i class="fa fa-file-alt me-2"></i> Documents</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview" type="button" role="tab"><i class="fa fa-eye me-2"></i> Preview</button>
                 </li>
             </ul>
 
@@ -207,13 +213,6 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Price (Total)</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">$</span>
-                                                    <input type="number" class="form-control" name="TotalPrice" value="<?= $property->TotalPrice ?>" step="0.01">
-                                                </div>
-                                            </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Property Type</label>
                                                 <select class="form-select" name="PropertyTypeId">
@@ -277,13 +276,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Tab 2: Location -->
-                    <div class="tab-pane fade" id="location" role="tabpanel">
-                        <div class="row g-4">
-                            <div class="col-lg-8">
+                            <!-- Location Fields in Basic Info -->
+                            <div class="col-lg-8 mt-4">
                                 <div class="modern-card h-100">
                                     <div class="modern-card-header">
                                         Physical Address
@@ -291,45 +285,49 @@
                                     <div class="modern-card-body">
                                         <div class="row mb-3">
                                             <div class="col-md-12">
-                                                <label class="form-label">Full Mailing Address</label>
-                                                <input type="text" class="form-control" name="MailingAddress" value="<?= htmlspecialchars($property->MailingAddress ?? '') ?>">
+                                                <label class="form-label">Mailing Address</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="MailingAddress" value="<?= htmlspecialchars($property->MailingAddress ?? '') ?>" placeholder="Search by Address" required>
+                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Street Name</label>
-                                                <input type="text" class="form-control" name="StreetName" value="<?= htmlspecialchars($property->StreetName ?? '') ?>">
+                                            <div class="col-md-3">
+                                                <label class="form-label">Country</label>
+                                                <input type="text" class="form-control bg-light" name="Country" value="<?= htmlspecialchars($property->Country ?? 'Australia') ?>" readonly>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Street Number</label>
+                                            <div class="col-md-3">
+                                                <label class="form-label">State:</label>
+                                                <input type="text" class="form-control" name="State" value="<?= htmlspecialchars($property->State ?? '') ?>">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">Suburb:</label>
+                                                <input type="text" class="form-control" name="Suburb" value="<?= htmlspecialchars($property->Suburb ?? '') ?>">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">Postal Code</label>
+                                                <input type="number" class="form-control" name="ZipCode" value="<?= htmlspecialchars($property->ZipCode ?? '') ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-3">
+                                                <label class="form-label">Unit Number:</label>
+                                                <input type="text" class="form-control" name="UnitNumber" value="<?= htmlspecialchars($property->UnitNumber ?? '') ?>">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">Street Number:</label>
                                                 <input type="text" class="form-control" name="StreetNumber" value="<?= htmlspecialchars($property->StreetNumber ?? '') ?>">
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
                                             <div class="col-md-6">
-                                                <label class="form-label">Building Number</label>
-                                                <input type="text" class="form-control" name="BuildingNumber" value="<?= htmlspecialchars($property->BuildingNumber ?? '') ?>">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Zip Code</label>
-                                                <input type="text" class="form-control" name="ZipCode" value="<?= htmlspecialchars($property->ZipCode ?? '') ?>">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-12">
-                                                <label class="form-label">City</label>
-                                                <select class="form-select" name="CityId">
-                                                    <option value="">Select City</option>
-                                                    <?php foreach($cities as $ct): ?>
-                                                        <option value="<?= $ct->CityId ?>" <?= $property->CityId == $ct->CityId ? 'selected' : '' ?>><?= htmlspecialchars($ct->CityName ?? '') ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
+                                                <label class="form-label">Street Name:</label>
+                                                <input type="text" class="form-control" name="StreetName" value="<?= htmlspecialchars($property->StreetName ?? '') ?>">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 mt-4">
                                 <div class="modern-card h-100 border-start border-danger border-4">
                                     <div class="modern-card-header bg-light text-danger">
                                         <i class="fa-solid fa-map-location me-2"></i> Location Snapshot
@@ -356,6 +354,30 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Tab 2: Pricing -->
+                    <div class="tab-pane fade" id="pricing" role="tabpanel">
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="modern-card h-100">
+                                    <div class="modern-card-header">
+                                        Pricing Details
+                                    </div>
+                                    <div class="modern-card-body">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Price (Total)</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input type="number" class="form-control" name="TotalPrice" value="<?= $property->TotalPrice ?>" step="0.01">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Tab 3: Features -->
                     <div class="tab-pane fade" id="features" role="tabpanel">
@@ -365,38 +387,81 @@
                             </div>
                             <div class="modern-card-body bg-light">
                                 <div class="row g-3">
-                                    <div class="col-md-3">
-                                        <label class="form-label">Year Built</label>
-                                        <input type="date" class="form-control bg-white" name="BuiltInYear" value="<?= $features->BuiltInYear ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Bedrooms</label>
-                                        <input type="number" class="form-control bg-white" name="Bedrooms" value="<?= $features->Bedrooms ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Bathrooms</label>
-                                        <input type="number" class="form-control bg-white" name="Bathrooms_feature" value="<?= $features->Bathrooms ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Parking Spaces</label>
-                                        <input type="number" class="form-control bg-white" name="ParkingSpaces" value="<?= $features->ParkingSpaces ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Floors</label>
-                                        <input type="number" class="form-control bg-white" name="Floors" value="<?= $features->Floors ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Kitchens</label>
-                                        <input type="number" class="form-control bg-white" name="Kitchens" value="<?= $features->Kitchens ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Store Rooms</label>
-                                        <input type="number" class="form-control bg-white" name="StoreRooms" value="<?= $features->StoreRooms ?? '' ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label class="form-label">Servant Quarters</label>
-                                        <input type="number" class="form-control bg-white" name="ServantQuarters" value="<?= $features->ServantQuarters ?? '' ?>">
-                                    </div>
+                                    <?php
+                                    $structFeatures = [];
+                                    $structMap = [
+                                        'BuiltInYear' => ['built in year', 'year built'],
+                                        'Bedrooms' => ['bedrooms'],
+                                        'Bathrooms' => ['bathrooms'],
+                                        'ParkingSpaces' => ['parking spaces'],
+                                        'Floors' => ['floors'],
+                                        'Kitchens' => ['kitchens'],
+                                        'StoreRooms' => ['store rooms'],
+                                        'ServantQuarters' => ['servant quarters']
+                                    ];
+
+                                    foreach ($structMap as $key => $titles) {
+                                        $val = $features->$key ?? '';
+                                        if ($val === '') {
+                                            foreach ($DynamicFeatures as $f) {
+                                                if (in_array(strtolower(trim($f->Title)), $titles)) {
+                                                    $mVal = $MappedValues[$f->FeatureId] ?? '';
+                                                    if ($mVal !== '') {
+                                                        $val = $mVal;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        $structFeatures[$key] = $val;
+                                    }
+                                    ?>
+                                    <?php
+                                    // Mapping for the name attributes expected by Admin::api_save_property_details
+                                    $nameMap = [
+                                        'BuiltInYear' => 'BuiltInYear',
+                                        'Bedrooms' => 'Bedrooms',
+                                        'Bathrooms' => 'Bathrooms_feature',
+                                        'ParkingSpaces' => 'ParkingSpaces',
+                                        'Floors' => 'Floors',
+                                        'Kitchens' => 'Kitchens',
+                                        'StoreRooms' => 'StoreRooms',
+                                        'ServantQuarters' => 'ServantQuarters'
+                                    ];
+                                    
+                                    // Labels
+                                    $labelMap = [
+                                        'BuiltInYear' => 'Year Built',
+                                        'Bedrooms' => 'Bedrooms',
+                                        'Bathrooms' => 'Bathrooms',
+                                        'ParkingSpaces' => 'Parking Spaces',
+                                        'Floors' => 'Floors',
+                                        'Kitchens' => 'Kitchens',
+                                        'StoreRooms' => 'Store Rooms',
+                                        'ServantQuarters' => 'Servant Quarters'
+                                    ];
+
+                                    foreach ($structMap as $key => $titles) {
+                                        $isApplicable = false;
+                                        foreach ($DynamicFeatures as $f) {
+                                            if (in_array(strtolower(trim($f->Title)), $titles)) {
+                                                $isApplicable = true;
+                                                break;
+                                            }
+                                        }
+
+                                        // Only render if it's applicable to this property type OR it already has a value
+                                        if ($isApplicable || $structFeatures[$key] !== '') {
+                                            $inputType = ($key === 'BuiltInYear') ? 'text' : 'number';
+                                    ?>
+                                            <div class="col-md-3">
+                                                <label class="form-label"><?= $labelMap[$key] ?></label>
+                                                <input type="<?= $inputType ?>" class="form-control bg-white" name="<?= $nameMap[$key] ?>" value="<?= htmlspecialchars($structFeatures[$key]) ?>">
+                                            </div>
+                                    <?php 
+                                        } 
+                                    } 
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -407,51 +472,46 @@
                             </div>
                             <div class="modern-card-body">
                                 <div class="row">
-                                    <?php 
-                                    $bool_features = [
-                                        'IsDoubleGlazedWindows' => 'Double Glazed Windows',
-                                        'IsCentralAirConditioning' => 'Central Air Conditioning',
-                                        'IsCentralHeating' => 'Central Heating',
-                                        'IsWasteDisposal' => 'Waste Disposal',
-                                        'IsFurnished' => 'Furnished',
-                                        'IsDrawingRoom' => 'Drawing Room',
-                                        'IsDiningRoom' => 'Dining Room',
-                                        'IsStudyRoom' => 'Study Room',
-                                        'IsPrayerRoom' => 'Prayer Room',
-                                        'IsPowderRoom' => 'Powder Room',
-                                        'IsGym' => 'Gym',
-                                        'IsSteamRoom' => 'Steam Room',
-                                        'IsLoungeRoom' => 'Lounge Room',
-                                        'IsLaundryRoom' => 'Laundry Room',
-                                        'IsBroadbandInternetAccess' => 'Broadband Internet',
-                                        'IsTVReady' => 'TV Ready',
-                                        'IsIntercom' => 'Intercom',
-                                        'IsConferenceRoom' => 'Conference Room',
-                                        'IsCommunityLawn' => 'Community Lawn',
-                                        'IsCommunitySwimmingPool' => 'Community Swimming Pool',
-                                        'IsCommunityGym' => 'Community Gym',
-                                        'IsFirstAid' => 'First Aid',
-                                        'IsDayCareCenter' => 'Day Care Center',
-                                        'IsKidsPlayArea' => 'Kids Play Area',
-                                        'IsBarbequeArea' => 'Barbeque Area',
-                                        'IsMosque' => 'Mosque',
-                                        'IsCommunityCentre' => 'Community Centre',
-                                        'IsLawnGarden' => 'Lawn/Garden',
-                                        'IsSwimmingPool' => 'Swimming Pool',
-                                        'IsSauna' => 'Sauna',
-                                        'IsJacuzzi' => 'Jacuzzi'
-                                    ];
-
-                                    foreach($bool_features as $field => $label):
-                                        $checked = (!empty($features->$field) && $features->$field == 1) ? 'checked' : '';
-                                    ?>
-                                        <div class="col-md-3 feature-checkbox mb-3">
-                                            <div class="form-check form-switch p-0 d-flex align-items-center">
-                                                <input class="form-check-input ms-0 me-2" type="checkbox" role="switch" name="<?= $field ?>" id="<?= $field ?>" value="1" <?= $checked ?> style="width:2.5em; height:1.25em;">
-                                                <label class="form-check-label ms-2 text-muted" for="<?= $field ?>"><?= $label ?></label>
-                                            </div>
+                                    <?php if(empty($DynamicFeatures)): ?>
+                                        <div class="col-12 text-center text-muted">
+                                            No dynamic features defined for this property type.
                                         </div>
-                                    <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <?php foreach($DynamicFeatures as $feature): 
+                                            // Skip system features
+                                            if (isset($feature->IsSystem) && $feature->IsSystem == 1) continue;
+                                            
+                                            // Skip duplicate manual features if they match structural specification titles
+                                            $skipTitles = ['bedrooms', 'bathrooms', 'built in year', 'year built', 'parking spaces', 'floors', 'kitchens', 'store rooms', 'servant quarters'];
+                                            if (in_array(strtolower(trim($feature->Title)), $skipTitles)) continue;
+
+                                            $val = $MappedValues[$feature->FeatureId] ?? '';
+                                            if ($val === '') continue;
+                                        ?>
+                                            <div class="col-md-4 mb-3">
+                                                <?php if($feature->InputType == 'checkbox'): ?>
+                                                    <div class="form-check form-switch p-0 d-flex align-items-center mt-4">
+                                                        <input class="form-check-input ms-0 me-2" type="checkbox" role="switch" name="feature_<?= $feature->FeatureId ?>" id="feat_<?= $feature->FeatureId ?>" value="1" <?= $val == '1' ? 'checked' : '' ?> style="width:2.5em; height:1.25em;" <?= $feature->IsRequired ? 'required' : '' ?>>
+                                                        <label class="form-check-label ms-2 text-muted fw-bold" for="feat_<?= $feature->FeatureId ?>"><?= htmlspecialchars($feature->Title) ?> <?= $feature->IsRequired ? '<span class="text-danger">*</span>' : '' ?></label>
+                                                    </div>
+                                                <?php elseif($feature->InputType == 'number'): ?>
+                                                    <label class="form-label text-muted fw-bold"><?= htmlspecialchars($feature->Title) ?> <?= $feature->IsRequired ? '<span class="text-danger">*</span>' : '' ?></label>
+                                                    <input type="number" step="any" name="feature_<?= $feature->FeatureId ?>" class="form-control" value="<?= htmlspecialchars($val) ?>" <?= $feature->IsRequired ? 'required' : '' ?>>
+                                                <?php elseif($feature->InputType == 'year'): ?>
+                                                    <label class="form-label text-muted fw-bold"><?= htmlspecialchars($feature->Title) ?> <?= $feature->IsRequired ? '<span class="text-danger">*</span>' : '' ?></label>
+                                                    <select name="feature_<?= $feature->FeatureId ?>" class="form-select" <?= $feature->IsRequired ? 'required' : '' ?>>
+                                                        <option value="">Select Year</option>
+                                                        <?php for($y = date('Y') + 5; $y >= 1800; $y--): ?>
+                                                            <option value="<?= $y ?>" <?= $val == $y ? 'selected' : '' ?>><?= $y ?></option>
+                                                        <?php endfor; ?>
+                                                    </select>
+                                                <?php else: ?>
+                                                    <label class="form-label text-muted fw-bold"><?= htmlspecialchars($feature->Title) ?> <?= $feature->IsRequired ? '<span class="text-danger">*</span>' : '' ?></label>
+                                                    <input type="text" name="feature_<?= $feature->FeatureId ?>" class="form-control" value="<?= htmlspecialchars($val) ?>" <?= $feature->IsRequired ? 'required' : '' ?>>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -498,6 +558,69 @@
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 5: Documents -->
+                    <div class="tab-pane fade" id="documents" role="tabpanel">
+                        <div class="modern-card">
+                            <div class="modern-card-header d-flex justify-content-between align-items-center">
+                                <span>Property Documents</span>
+                                <span class="badge bg-primary rounded-pill"><?= count($documents ?? []) ?> Files</span>
+                            </div>
+                            <div class="modern-card-body bg-light">
+                                <div class="row g-4">
+                                    <?php if(empty($documents)): ?>
+                                        <div class="col-12 text-center py-5">
+                                            <i class="fa-solid fa-file-pdf text-muted" style="font-size: 40px; opacity:0.5;"></i>
+                                            <p class="text-muted mt-3 mb-0">No documents found for this property.</p>
+                                        </div>
+                                    <?php else: ?>
+                                        <?php 
+                                        $typeMap = [];
+                                        foreach($doc_types as $dt) $typeMap[$dt->DocTypeId] = $dt->DocumentTitle;
+                                        
+                                        foreach($documents as $doc): 
+                                            $ext = strtolower(pathinfo($doc->FilePath, PATHINFO_EXTENSION));
+                                            $path = base_url("uploads/PropertyDocs/{$property->PropertyId}/{$doc->FilePath}");
+                                            $title = $typeMap[$doc->DocTypeId] ?? 'Document';
+                                            
+                                            $icon = 'fa-file-alt';
+                                            if (in_array($ext, ['pdf'])) $icon = 'fa-file-pdf text-danger';
+                                            elseif (in_array($ext, ['doc','docx'])) $icon = 'fa-file-word text-primary';
+                                            elseif (in_array($ext, ['xls','xlsx'])) $icon = 'fa-file-excel text-success';
+                                            elseif (in_array($ext, ['jpg','jpeg','png'])) $icon = 'fa-file-image text-info';
+                                        ?>
+                                            <div class="col-md-4 col-lg-3">
+                                                <div class="card shadow-sm h-100 border-0 rounded-3">
+                                                    <div class="card-body text-center p-4">
+                                                        <i class="fa-solid <?= $icon ?>" style="font-size: 40px;"></i>
+                                                        <h6 class="mt-3 mb-1 text-truncate" title="<?= $title ?>"><?= $title ?></h6>
+                                                        <small class="text-muted d-block text-truncate" title="<?= $doc->FilePath ?>"><?= $doc->FilePath ?></small>
+                                                    </div>
+                                                    <div class="card-footer bg-white border-top-0 p-3 text-center">
+                                                        <a href="<?= $path ?>" target="_blank" class="btn btn-sm btn-outline-primary w-100"><i class="fa-solid fa-eye me-1"></i> View</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 6: Preview -->
+                    <div class="tab-pane fade" id="preview" role="tabpanel">
+                        <div class="modern-card">
+                            <div class="modern-card-header d-flex justify-content-between align-items-center">
+                                <span>Property Preview</span>
+                            </div>
+                            <div class="modern-card-body bg-light text-center py-5">
+                                <i class="fa-solid fa-eye text-muted" style="font-size: 40px; opacity:0.5;"></i>
+                                <p class="text-muted mt-3 mb-0">Click the button below to view how this property appears to users.</p>
+                                <a href="<?= site_url('Properties/PropertyDetails/'.$property->PropertyId) ?>" target="_blank" class="btn btn-outline-primary mt-3"><i class="fa-solid fa-external-link-alt me-2"></i> View Property Front-end</a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,1 @@
+﻿<?php $conn = new mysqli("localhost", "root", "", "properties_new", 3307); if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); } $result = $conn->query("DESCRIBE tbl_properties_inspection"); while($row = $result->fetch_row()) { echo implode("\t", $row) . "\n"; } $conn->close(); ?>

@@ -24,9 +24,9 @@
     }
 </style>
 <ul class="nav nav-pills nav-modern mb-4">
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link <?= (isset($active_tab) && $active_tab == 'analytics') ? 'active' : '' ?>" href="<?= site_url('Admin/contract_management') ?>"><i class="fa-solid fa-chart-pie me-2"></i> Analytics</a>
-    </li>
+    </li> -->
     <li class="nav-item">
         <a class="nav-link <?= (isset($active_tab) && $active_tab == 'types') ? 'active' : '' ?>" href="<?= site_url('Admin/contract_types') ?>"><i class="fa-solid fa-tags me-2"></i> Contract Types</a>
     </li>

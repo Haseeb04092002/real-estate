@@ -367,7 +367,13 @@ class Properties extends CI_Controller {
       $this->db->insert('tbl_properties_favourites', $data);
     }
 
-    redirect('Properties');
+    if ($BackPage !== 'Properties') {
+        redirect($BackPage);
+    } else if (!empty($_SERVER['HTTP_REFERER'])) {
+        redirect($_SERVER['HTTP_REFERER']);
+    } else {
+        redirect('Properties');
+    }
   }
 
   public function RemoveFromFavourites($PropertyId='', $BackPage='Properties')
@@ -377,7 +383,13 @@ class Properties extends CI_Controller {
     $this->db->where(['PropertyId' => $PropertyId, 'UserId' => $UserId])
              ->delete('tbl_properties_favourites');
 
-    redirect($BackPage);
+    if ($BackPage !== 'Properties') {
+        redirect($BackPage);
+    } else if (!empty($_SERVER['HTTP_REFERER'])) {
+        redirect($_SERVER['HTTP_REFERER']);
+    } else {
+        redirect('Properties');
+    }
   }
 
   public function chatting($InspectionId='', $PropertyId='', $SellerId='', $BuyerId='')
@@ -570,6 +582,8 @@ class Properties extends CI_Controller {
       $this->db->select('*');
       $this->db->from('tbl_properties');
       $this->db->join('tbl_properties_features', 'tbl_properties.PropertyId = tbl_properties_features.PropertyId', 'left');
+      $this->db->where('tbl_properties.Status', 'Published');
+      $this->db->where('tbl_properties.IsDeleted', 0);
 
       $likeFields = [
           'tbl_properties.PropertyTitle'  => $this->input->post('txtPropertyTitle'),
@@ -647,7 +661,7 @@ class Properties extends CI_Controller {
 
   public function index()
   {
-      $data['Properties'] = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyTypeId > 0 AND IsDeleted = 0 ORDER BY PropertyId DESC LIMIT 0,12");
+      $data['Properties'] = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyTypeId > 0 AND IsDeleted = 0 AND Status = 'Published' ORDER BY PropertyId DESC LIMIT 0,12");
       
       $this->db->where('Status', 'Published');
       $this->db->order_by('CreatedAt', 'DESC');
@@ -658,7 +672,7 @@ class Properties extends CI_Controller {
 
   public function all_properties()
   {
-      $data['Properties'] = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyTypeId > 0 AND IsDeleted = 0 ORDER BY PropertyId DESC");
+      $data['Properties'] = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyTypeId > 0 AND IsDeleted = 0 AND Status = 'Published' ORDER BY PropertyId DESC");
       $this->load->view('all_properties', $data);
   }
 
@@ -777,9 +791,7 @@ class Properties extends CI_Controller {
     } else if ($Case == 'Edit') {
         $this->db->where('PropertyId', $PropertyId);
         $this->db->update('tbl_properties', $ModelDataProperty);
-        if($this->db->affected_rows() > 0) {
-            $Response['Status'] = true;
-        }
+        $Response['Status'] = true;
     }
 
     $Response['url']        = 'Properties/AddListing/'.$PropertyId.'/'.$Case.'/pricing';
@@ -804,8 +816,8 @@ class Properties extends CI_Controller {
 
     $ModelDataProperty = [
         'ListType'            => $this->input->post('selListType'),
-        'TotalPrice'          => $this->input->post('numTotalPrice'),
-        'SecurityBond'        => $this->input->post('numSecurityBond') !== '' ? $this->input->post('numSecurityBond') : null,
+        'TotalPrice'          => (strtolower($this->input->post('selListType')) === 'sale') ? $this->input->post('numTotalPriceSale') : $this->input->post('numTotalPriceRent'),
+        'SecurityBond'        => (strtolower($this->input->post('selListType')) === 'sale') ? null : ($this->input->post('numSecurityBond') !== '' ? $this->input->post('numSecurityBond') : null),
         'Installments'        => $this->input->post('numInstallments') !== '' ? $this->input->post('numInstallments') : null,
         'InstallmentAmount'   => $this->input->post('numInstallmentAmount') !== '' ? $this->input->post('numInstallmentAmount') : null,
         'PossessionDate'      => $this->input->post('dateAvailableFrom') !== '' ? $this->input->post('dateAvailableFrom') : null,
@@ -828,7 +840,31 @@ class Properties extends CI_Controller {
 
   public function AddFeatures($Case='Add', $PropertyId=0, $StationId=0)
   {
-    $data = ['Case' => $Case, 'PropertyId' => $PropertyId, 'StationId' => $StationId];
+    $PropertyData = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'PropertyTypeId', "WHERE PropertyId = '".(int)$PropertyId."'", 2);
+    $PropertyTypeId = $PropertyData->PropertyTypeId ?? 0;
+
+    // Fetch dynamic features for this property type AND system features (PropertyTypeId = 0)
+    $DynamicFeatures = $this->db->where('PropertyTypeId', $PropertyTypeId)
+                                        ->or_where('PropertyTypeId', 0)
+                                        ->get('tbl_properties_features_lists')->result();
+    
+    // Get mapped values
+    $MappedValues = [];
+    if ($PropertyId > 0) {
+        $mappings = $this->db->where('PropertyId', $PropertyId)->get('tbl_property_feature_mapping')->result();
+        foreach($mappings as $m) {
+            $MappedValues[$m->FeatureId] = $m->FeatureValue;
+        }
+    }
+
+    $data = [
+        'Case' => $Case, 
+        'PropertyId' => $PropertyId, 
+        'StationId' => $StationId,
+        'PropertyTypeId' => $PropertyTypeId,
+        'DynamicFeatures' => $DynamicFeatures,
+        'MappedValues' => $MappedValues
+    ];
     $this->load->view('features', $data);
   }
 
@@ -837,76 +873,63 @@ class Properties extends CI_Controller {
     $Response['Status'] = false;
     $UserId             = $this->session->userdata('user_id');
 
-    $ModelDataPropertiesFeatures = [
-        'AddedBy'                   => $UserId,
-        'UpdatedBy'                 => $UserId,
-        'UpdatedOn'                 => date('Y-m-d H:i:s'),
-        'PropertyId'                => $PropertyId,
-        'FlooringTypeId'            => $this->input->post('selFlooring') ?? null,
-        'PowerBackupTypeId'         => $this->input->post('selPowerBackup') ?? null,
-        'View'                      => $this->input->post('txtView') ?? null,
-        'OtherMainFeatures'         => $this->input->post('txtOtherMainFeatures') ?? null,
-        'BuiltInYear'               => $this->input->post('dateBuiltInYear') ? date('Y-m-d', strtotime($this->input->post('dateBuiltInYear'))) : NULL,
-        'ParkingSpaces'             => $this->input->post('txtParkingSpaces') ?? null,
-        'Floors'                    => $this->input->post('txtFloors') ?? null,
-        'OtherRooms'                => $this->input->post('txtOtherRooms') ?? null,
-        'Bedrooms'                  => $this->input->post('numBedrooms') ?? null,
-        'Bathrooms'                 => $this->input->post('numBathrooms') ?? null,
-        'ServantQuarters'           => $this->input->post('txtServantQuarters') ?? null,
-        'Kitchens'                  => $this->input->post('txtKitchens') ?? null,
-        'StoreRooms'                => $this->input->post('txtStoreRooms') ?? null,
-        'IsDoubleGlazedWindows'     => $this->input->post('chkIsDoubleGlazedWindows') ? 1 : 0,
-        'IsCentralAirConditioning'  => $this->input->post('chkIsCentralAirConditioning') ? 1 : 0,
-        'IsCentralHeating'          => $this->input->post('chkIsCentralHeating') ? 1 : 0,
-        'IsWasteDisposal'           => $this->input->post('chkIsWasteDisposal') ? 1 : 0,
-        'IsFurnished'               => $this->input->post('chkIsFurnished') ? 1 : 0,
-        'IsDrawingRoom'             => $this->input->post('chkIsDrawingRoom') ? 1 : 0,
-        'IsDiningRoom'              => $this->input->post('chkIsDiningRoom') ? 1 : 0,
-        'IsStudyRoom'               => $this->input->post('chkIsStudyRoom') ? 1 : 0,
-        'IsPrayerRoom'              => $this->input->post('chkIsPrayerRoom') ? 1 : 0,
-        'IsPowderRoom'              => $this->input->post('chkIsPowderRoom') ? 1 : 0,
-        'IsGym'                     => $this->input->post('chkIsGym') ? 1 : 0,
-        'IsSteamRoom'               => $this->input->post('chkIsSteamRoom') ? 1 : 0,
-        'IsLoungeRoom'              => $this->input->post('chkIsLoungeRoom') ? 1 : 0,
-        'IsLaundryRoom'             => $this->input->post('chkIsLaundryRoom') ? 1 : 0,
-        'CommunicationFacilities'   => $this->input->post('txtCommunicationFacilities') ?? null,
-        'IsBroadbandInternetAccess' => $this->input->post('chkIsBroadbandInternetAccess') ? 1 : 0,
-        'IsTVReady'                 => $this->input->post('chkIsTVReady') ? 1 : 0,
-        'IsIntercom'                => $this->input->post('chkIsIntercom') ? 1 : 0,
-        'IsConferenceRoom'          => $this->input->post('chkIsConferenceRoom') ? 1 : 0,
-        'OtherCommunityFacilities'  => $this->input->post('txtOtherCommunityFacilities') ?? null,
-        'IsCommunityLawn'           => $this->input->post('chkIsCommunityLawn') ? 1 : 0,
-        'IsCommunitySwimmingPool'   => $this->input->post('chkIsCommunitySwimmingPool') ? 1 : 0,
-        'IsCommunityGym'            => $this->input->post('chkIsCommunityGym') ? 1 : 0,
-        'IsMedicalCentre'           => $this->input->post('chkIsMedicalCentre') ? 1 : 0,
-        'IsFirstAid'                => $this->input->post('chkIsFirstAid') ? 1 : 0,
-        'IsDayCareCenter'           => $this->input->post('chkIsDayCareCenter') ? 1 : 0,
-        'IsKidsPlayArea'            => $this->input->post('chkIsKidsPlayArea') ? 1 : 0,
-        'IsBarbequeArea'            => $this->input->post('chkIsBarbequeArea') ? 1 : 0,
-        'IsMosque'                  => $this->input->post('chkIsMosque') ? 1 : 0,
-        'IsCommunityCentre'         => $this->input->post('chkIsCommunityCentre') ? 1 : 0,
-        'OtherHealthcare'           => $this->input->post('txtOtherHealthcare') ?? null,
-        'IsLawnGarden'              => $this->input->post('chkIsLawnGarden') ? 1 : 0,
-        'IsSwimmingPool'            => $this->input->post('chkIsSwimmingPool') ? 1 : 0,
-        'IsSauna'                   => $this->input->post('chkIsSauna') ? 1 : 0,
-        'IsJacuzzi'                 => $this->input->post('chkIsJacuzzi') ? 1 : 0,
-        'NearbySchools'             => $this->input->post('txtNearbySchools') ?? null,
-        'NearbyHospitals'           => $this->input->post('txtNearbyHospitals') ?? null,
-        'NearbyShoppingMalls'       => $this->input->post('txtNearbyShoppingMalls') ?? null,
-        'NearbyRestaurants'         => $this->input->post('txtNearbyRestaurants') ?? null,
-        'DistanceFromAirport'       => $this->input->post('txtDistanceFromAirport') ?? null,
-        'NearbyPublicTransportService' => $this->input->post('txtNearbyPublicTransportService') ?? null,
-        'OtherNearbyPlaces'         => $this->input->post('txtOtherNearbyPlaces') ?? null
+    // Fetch dynamic features submitted in the form
+    // The form will submit fields like name="feature_12" where 12 is FeatureId
+    
+    // Clear old mappings
+    $this->db->where('PropertyId', $PropertyId)->delete('tbl_property_feature_mapping');
+
+    // Fetch all features to identify structural ones
+    $featuresList = $this->db->get('tbl_properties_features_lists')->result();
+    $featureTitles = [];
+    foreach ($featuresList as $fl) {
+        $featureTitles[$fl->FeatureId] = strtolower(trim($fl->Title));
+    }
+
+    $structMap = [
+        'BuiltInYear' => ['built in year', 'year built'],
+        'Bedrooms' => ['bedrooms'],
+        'Bathrooms' => ['bathrooms'],
+        'ParkingSpaces' => ['parking spaces'],
+        'Floors' => ['floors'],
+        'Kitchens' => ['kitchens'],
+        'StoreRooms' => ['store rooms'],
+        'ServantQuarters' => ['servant quarters']
     ];
 
-    $FeatureId = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features', 'FeatureId', "WHERE PropertyId = '" . (int)$PropertyId . "'", 1);
+    $structuralData = [];
 
-    if ($FeatureId > 0) {
-        $this->db->where('FeatureId', $FeatureId);
-        $this->db->where('PropertyId', $PropertyId);
-        $this->db->update('tbl_properties_features', $ModelDataPropertiesFeatures);
-    } else {
-        $this->db->insert('tbl_properties_features', $ModelDataPropertiesFeatures);
+    $postData = $this->input->post();
+    foreach ($postData as $key => $value) {
+        if (strpos($key, 'feature_') === 0 && $value !== '') {
+            $FeatureId = str_replace('feature_', '', $key);
+            $mappingData = [
+                'PropertyId' => $PropertyId,
+                'FeatureId' => $FeatureId,
+                'FeatureValue' => $value
+            ];
+            $this->db->insert('tbl_property_feature_mapping', $mappingData);
+
+            $title = $featureTitles[$FeatureId] ?? '';
+            if ($title) {
+                foreach ($structMap as $structCol => $aliases) {
+                    if (in_array($title, $aliases)) {
+                        $structuralData[$structCol] = $value;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!empty($structuralData)) {
+        $exists = $this->db->where('PropertyId', $PropertyId)->get('tbl_properties_features')->row();
+        if ($exists) {
+            $this->db->where('PropertyId', $PropertyId)->update('tbl_properties_features', $structuralData);
+        } else {
+            $structuralData['PropertyId'] = $PropertyId;
+            $this->db->insert('tbl_properties_features', $structuralData);
+        }
     }
 
     $Response['Status']  = true;
@@ -974,7 +997,7 @@ class Properties extends CI_Controller {
                           'DocTypeId' => $DocTypeId,
                           'PropertyId' => $PropertyId,
                           'SellerId' => $UserId,
-                          'DocumentFile' => $filename,
+                          'FilePath' => $filename,
                           'VerificationStatus' => 'Pending',
                           'UploadedDate' => date('Y-m-d H:i:s')
                       ];
@@ -999,6 +1022,23 @@ class Properties extends CI_Controller {
       }
       
       echo json_encode($Response);
+  }
+
+  public function DeletePropertyDocument($DocumentId = 0)
+  {
+      $Response['Status'] = false;
+      if ($DocumentId > 0) {
+          $doc = $this->db->get_where('tbl_property_documents', ['DocumentId' => $DocumentId])->row();
+          if ($doc) {
+              $filePath = FCPATH . 'uploads/PropertyDocs/' . $doc->PropertyId . '/' . $doc->FilePath;
+              if (file_exists($filePath)) {
+                  unlink($filePath);
+              }
+              $this->db->where('DocumentId', $DocumentId)->delete('tbl_property_documents');
+              $Response['Status'] = true;
+          }
+      }
+      exit(json_encode($Response));
   }
 
   public function PropertyActions($Case = 'Details', $PropertyId = '')
@@ -1099,25 +1139,49 @@ class Properties extends CI_Controller {
     $missing = [];
 
     // 1. General Info Validation
-    if (empty($prop->PropertyTitle) || empty($prop->CoveredArea) || empty($prop->PropertyStatus) || empty($prop->PropertyDescription) || empty($prop->MailingAddress)) {
-        $missing[] = "General Information (Title, Area, Status, Description, Address)";
+    $missingGeneral = [];
+    if (empty(trim($prop->PropertyTitle ?? ''))) $missingGeneral[] = "Property Title";
+    if (empty(trim($prop->CoveredArea ?? ''))) $missingGeneral[] = "Covered Area";
+    if (empty(trim($prop->PropertyStatus ?? ''))) $missingGeneral[] = "Property Status";
+    if (empty(trim($prop->PropertyDescription ?? ''))) $missingGeneral[] = "Description";
+    if (empty(trim($prop->MailingAddress ?? ''))) $missingGeneral[] = "Mailing Address";
+    
+    if (count($missingGeneral) > 0) {
+        $missing[] = "Basic Info Tab: <strong>" . implode(', ', $missingGeneral) . "</strong>";
     }
 
     // 2. Pricing Validation
-    if (empty($prop->TotalPrice)) {
-        $missing[] = "Pricing details (Total Price)";
+    if (empty(trim($prop->TotalPrice ?? ''))) {
+        $missing[] = "Pricing Tab: <strong>Total Price</strong>";
     }
 
     // 3. Features Validation
-    $features = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features', '*', "WHERE PropertyId='$PropertyId'", 2);
-    if (!$features || empty($features->Bedrooms) || empty($features->Bathrooms)) {
-        $missing[] = "Property Features (Bedrooms, Bathrooms)";
+    $reqFeatures = $this->db->where('IsRequired', 1)
+                            ->group_start()
+                            ->where('PropertyTypeId', $prop->PropertyTypeId)
+                            ->or_where('PropertyTypeId', 0)
+                            ->group_end()
+                            ->get('tbl_properties_features_lists')->result();
+                            
+    $mapped = $this->db->where('PropertyId', $PropertyId)->get('tbl_property_feature_mapping')->result();
+    $mappedIds = [];
+    foreach($mapped as $m) $mappedIds[] = $m->FeatureId;
+
+    $missingFeat = [];
+    foreach($reqFeatures as $rf) {
+        if (!in_array($rf->FeatureId, $mappedIds)) {
+            $missingFeat[] = $rf->Title;
+        }
+    }
+
+    if (count($missingFeat) > 0) {
+        $missing[] = "Features Tab: <strong>" . implode(', ', $missingFeat) . "</strong>";
     }
 
     // 4. Media Validation
     $images = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'COUNT(*) as imgCount', "WHERE Reference='Properties' AND ReferenceId='$PropertyId'", 2);
     if (!$images || $images->imgCount == 0) {
-        $missing[] = "At least one property media image";
+        $missing[] = "Media Tab: <strong>At least one property image</strong>";
     }
 
     // 5. Documents Validation
@@ -1142,7 +1206,7 @@ class Properties extends CI_Controller {
     }
     
     if (count($missingDocs) > 0) {
-        $missing[] = "Required Documents (" . implode(', ', $missingDocs) . ")";
+        $missing[] = "Documents Tab: <strong>" . implode(', ', $missingDocs) . "</strong>";
     }
 
     if (count($missing) > 0) {

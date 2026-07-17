@@ -24,6 +24,52 @@ if ($SubView == 'features') {
     $loadURL = "Properties/AddProperty/$Case/$PropertyId";
 }
 
+// Calculate completion states
+$statusInfo = 'empty';
+$statusPrice = 'empty';
+$statusFeatures = 'empty';
+$statusMedia = 'empty';
+$statusDocs = 'empty';
+
+if (isset($PropertyId) && $PropertyId > 0) {
+    // 1. Basic Info
+    $prop = $this->db->get_where('tbl_properties', ['PropertyId' => $PropertyId])->row();
+    if ($prop) {
+        $statusInfo = 'completed';
+        
+        // 2. Pricing
+        if (!empty($prop->TotalPrice) && $prop->TotalPrice > 0) {
+            $statusPrice = 'completed';
+        } else {
+            $statusPrice = 'skipped';
+        }
+
+        // 3. Features
+        $feat = $this->db->get_where('tbl_properties_features', ['PropertyId' => $PropertyId])->row();
+        if ($feat) {
+            $statusFeatures = 'completed';
+        } else {
+            $statusFeatures = 'skipped';
+        }
+
+        // 4. Media
+        $mediaCount = $this->db->get_where('tbl_documents', ['ReferenceId' => $PropertyId, 'Reference' => 'Properties'])->num_rows();
+        if ($mediaCount > 0) {
+            $statusMedia = 'completed';
+        } else {
+            $statusMedia = 'skipped';
+        }
+
+        // 5. Documents
+        $docCount = $this->db->get_where('tbl_property_documents', ['PropertyId' => $PropertyId])->num_rows();
+        if ($docCount > 0) {
+            $statusDocs = 'completed';
+        } else {
+            $statusDocs = 'skipped';
+        }
+    }
+}
+
 $activeInformation = ($SubView == 'information' || $SubView == '') ? 'active' : '';
 $activePricing = ($SubView == 'pricing') ? 'active' : '';
 $activeFeatures = ($SubView == 'features') ? 'active' : '';
@@ -31,21 +77,29 @@ $activeImages = ($SubView == 'media') ? 'active' : '';
 $activeDocuments = ($SubView == 'documents') ? 'active' : '';
 $activePreview = ($SubView == 'preview') ? 'active' : '';
 
-$btnInformation = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeInformation.'" id="btnInformation" '.$lnkInformation.'><i class="fa fa-info-circle icon-left"></i><span>Basic Information</span></button>';
+$tickIcon = '<i class="fa fa-check-circle ms-auto text-success fs-4"></i>';
 
-$btnPricing = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activePricing.'" id="btnPricing" '.$lnkPricing.'><i class="fa fa-tags icon-left"></i><span>Pricing</span></button>';
+$btnInfoTick = ($statusInfo == 'completed') ? $tickIcon : '';
+$btnPriceTick = ($statusPrice == 'completed') ? $tickIcon : '';
+$btnFeaturesTick = ($statusFeatures == 'completed') ? $tickIcon : '';
+$btnMediaTick = ($statusMedia == 'completed') ? $tickIcon : '';
+$btnDocsTick = ($statusDocs == 'completed') ? $tickIcon : '';
 
-$btnFeatures  = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeFeatures.'" id="btnFeatures" '.$lnkFeatures.'><i class="fa fa-money-check-alt icon-left"></i><span>Features</span></button>';
+$btnInformation = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeInformation.'" id="btnInformation" '.$lnkInformation.'><i class="fa fa-info-circle icon-left"></i><span>Basic Info</span>'.$btnInfoTick.'</button>';
 
-$btnImages = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeImages.'" id="btnImages" '.$lnkImages.'><i class="fa fa-photo-video icon-left"></i><span>Media</span></button>';
+$btnPricing = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activePricing.'" id="btnPricing" '.$lnkPricing.'><i class="fa fa-tags icon-left"></i><span>Pricing</span>'.$btnPriceTick.'</button>';
+
+$btnFeatures  = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeFeatures.'" id="btnFeatures" '.$lnkFeatures.'><i class="fa fa-money-check-alt icon-left"></i><span>Features</span>'.$btnFeaturesTick.'</button>';
+
+$btnImages = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeImages.'" id="btnImages" '.$lnkImages.'><i class="fa fa-photo-video icon-left"></i><span>Media</span>'.$btnMediaTick.'</button>';
 
 $PropertyTypeId = 0;
 if (isset($PropertyId) && $PropertyId > 0) {
-    $prop = $this->db->get_where('tbl_properties', ['PropertyId' => $PropertyId])->row();
-    if ($prop) $PropertyTypeId = $prop->PropertyTypeId;
+    $propData = $this->db->get_where('tbl_properties', ['PropertyId' => $PropertyId])->row();
+    if ($propData) $PropertyTypeId = $propData->PropertyTypeId;
 }
 
-$btnDocuments = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeDocuments.'" id="btnDocuments" '.$lnkDocuments.'><i class="fa fa-file-alt icon-left"></i><span>Documents</span></button>';
+$btnDocuments = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activeDocuments.'" id="btnDocuments" '.$lnkDocuments.'><i class="fa fa-file-alt icon-left"></i><span>Documents</span>'.$btnDocsTick.'</button>';
 
 $btnPreview = '<button type="button" class="sidebar-link dashboard-nav-item actLoadLink '.$activePreview.'" id="btnPreview" '.$lnkPreview.'><i class="fa fa-eye icon-left"></i><span>Preview</span></button>';
 
@@ -175,51 +229,6 @@ $this->load->view('components/css_links');
             <!-- end -->
             
             <?php
-            // Calculate completion states
-            $statusInfo = 'empty';
-            $statusPrice = 'empty';
-            $statusFeatures = 'empty';
-            $statusMedia = 'empty';
-            $statusDocs = 'empty';
-
-            if (isset($PropertyId) && $PropertyId > 0) {
-                // 1. Basic Info
-                $prop = $this->db->get_where('tbl_properties', ['PropertyId' => $PropertyId])->row();
-                if ($prop) {
-                    $statusInfo = 'completed';
-                    
-                    // 2. Pricing
-                    if (!empty($prop->ListType)) {
-                        $statusPrice = 'completed';
-                    } else {
-                        $statusPrice = 'skipped';
-                    }
-
-                    // 3. Features
-                    $feat = $this->db->get_where('tbl_properties_features', ['PropertyId' => $PropertyId])->row();
-                    if ($feat) {
-                        $statusFeatures = 'completed';
-                    } else {
-                        $statusFeatures = 'skipped';
-                    }
-
-                    // 4. Media
-                    $mediaCount = $this->db->get_where('tbl_documents', ['ReferenceId' => $PropertyId, 'Reference' => 'Properties'])->num_rows();
-                    if ($mediaCount > 0) {
-                        $statusMedia = 'completed';
-                    } else {
-                        $statusMedia = 'skipped';
-                    }
-
-                    // 5. Documents
-                    $docCount = $this->db->get_where('tbl_property_documents', ['PropertyId' => $PropertyId])->num_rows();
-                    if ($docCount > 0) {
-                        $statusDocs = 'completed';
-                    } else {
-                        $statusDocs = 'skipped';
-                    }
-                }
-            }
 
             $steps = [
                 ['id' => 'information', 'label' => 'Basic Info', 'status' => $statusInfo, 'link' => $lnkInformation],
@@ -348,6 +357,24 @@ $this->load->view('components/css_links');
 
     </div>
 
+    <!-- Validation Modal -->
+    <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title text-white" id="validationModalLabel"><i class="text-white fa-solid fa-triangle-exclamation me-2"></i> Required Fields Missing</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body fs-5 text-center py-4">
+            Please fill in all the required fields before proceeding.
+          </div>
+          <div class="modal-footer border-0 justify-content-center pb-4">
+            <button type="button" class="btn btn-secondary px-4 fw-bold" data-bs-dismiss="modal">OK, I will fill them</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <?php
     
     $this->load->view('components/js_links.php');
@@ -369,6 +396,41 @@ $this->load->view('components/css_links');
    $(document).on('click', '.dashboard-nav-item', function(e){
 
       e.preventDefault();
+      
+      var targetTab = $(this);
+      
+      var tabsOrder = ['btnInformation', 'btnPricing', 'btnFeatures', 'btnImages', 'btnDocuments', 'btnPreview'];
+      var currentTabId = $('.dashboard-nav-item.active').attr('id');
+      var targetTabId = targetTab.attr('id');
+      var currentIndex = tabsOrder.indexOf(currentTabId);
+      var targetIndex = tabsOrder.indexOf(targetTabId);
+
+      // Validate current form before switching tabs (only if moving forward)
+      var currentForm = $("#divContent form");
+      if(currentForm.length > 0 && targetIndex > currentIndex) {
+          currentForm.addClass('apply_parsley');
+          var parsleyInstance = currentForm.parsley();
+          parsleyInstance.validate();
+          
+          var isValid = parsleyInstance.isValid();
+          
+          if (isValid === null || isValid === true) {
+              isValid = true;
+          } else if (isValid === false) {
+              isValid = false;
+          } else if (isValid && isValid.validationResult !== undefined) {
+              isValid = isValid.validationResult;
+          }
+
+          if(!isValid) {
+              if ($('#validationModal').length > 0) {
+                  $('#validationModal').modal('show');
+              }
+              currentForm.removeClass('apply_parsley');
+              return; // stop tab switch
+          }
+          currentForm.removeClass('apply_parsley');
+      }
       
       var loadlink = $(this).attr('loadlink');
       var parts = loadlink.split('/');

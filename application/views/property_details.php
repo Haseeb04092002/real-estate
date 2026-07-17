@@ -19,13 +19,76 @@ switch ($AreaUnitId) {
 }
 
 $PropertyType = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','Title',"WHERE TypeId = '$PropertyTypeId'",1);
-$PropertyFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features','*',"WHERE PropertyId = '$PropertyId'",2);
-if (!is_object($PropertyFeatures)) { $PropertyFeatures = new stdClass(); }
+$PropertyFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features', '*', "WHERE PropertyId = '$PropertyId'", 2);
+if (!$PropertyFeatures) {
+    $PropertyFeatures = new stdClass();
+}
+
+$DynamicFeaturesList = [];
+$mappings = $this->db->select('m.FeatureValue, f.Title, f.InputType')
+                     ->from('tbl_property_feature_mapping m')
+                     ->join('tbl_properties_features_lists f', 'm.FeatureId = f.FeatureId')
+                     ->where('m.PropertyId', $PropertyId)
+                     ->get()->result();
+
+// Known struct fields that we fetch directly from tbl_properties_features
+$structTitles = [
+    'bedrooms', 'bathrooms', 'built in year', 'year built', 
+    'parking spaces', 'floors', 'kitchens', 'store rooms', 'servant quarters'
+];
+
+foreach($mappings as $m) {
+    if(strtolower($m->Title) == 'garages') $PropertyFeatures->Garages = $m->FeatureValue;
+    else if(strtolower($m->Title) == 'garage size sqft') $PropertyFeatures->GarageSize = $m->FeatureValue;
+    else {
+        // If it's a structural field, it's already in $PropertyFeatures from tbl_properties_features,
+        // but if it's missing there, we can fall back to the mapping value.
+        if (in_array(strtolower($m->Title), $structTitles)) {
+            // Already handled via tbl_properties_features (or fallback if empty)
+            if (strtolower($m->Title) == 'bedrooms' && empty($PropertyFeatures->Bedrooms)) $PropertyFeatures->Bedrooms = $m->FeatureValue;
+            if (strtolower($m->Title) == 'bathrooms' && empty($PropertyFeatures->Bathrooms)) $PropertyFeatures->Bathrooms = $m->FeatureValue;
+            if ((strtolower($m->Title) == 'built in year' || strtolower($m->Title) == 'year built') && empty($PropertyFeatures->BuiltInYear)) $PropertyFeatures->BuiltInYear = $m->FeatureValue;
+        } else {
+            if ($m->InputType == 'checkbox' && $m->FeatureValue == '1') {
+                $DynamicFeaturesList[$m->Title] = true;
+            } else if ($m->InputType != 'checkbox' && !empty($m->FeatureValue)) {
+                $DynamicFeaturesList[$m->Title] = $m->FeatureValue;
+            }
+        }
+    }
+}
 $arrProperties = $this->getlist_model->getFieldsMultipleConditions('tbl_properties','*',"WHERE PropertyTypeId > 0 ORDER BY PropertyId DESC LIMIT 0,6");
+
+$Seller = $this->getlist_model->getFieldsMultipleConditions('tbl_clients', '*', "WHERE ClientId = '$ClientId'", 2);
+if (!is_object($Seller)) {
+    $Seller = new stdClass();
+    $Seller->ClientName = 'System Admin';
+    $Seller->ClientId = 0;
+    $Seller->EmailAddress = 'admin@example.com';
+    $Seller->PhoneNumber = '';
+}
+
+$SellerInitials = 'SA';
+if (!empty($Seller->ClientName)) {
+    $names = explode(' ', trim($Seller->ClientName));
+    $SellerInitials = strtoupper($names[0][0]);
+    if (isset($names[1])) {
+        $SellerInitials .= strtoupper($names[1][0]);
+    }
+}
 
 $Message_Box = 'd-none';
 
 $UserId = $this->session->userdata('user_id');
+
+$LoggedInUser = null;
+if (!empty($UserId)) {
+    $LoggedInUser = $this->getlist_model->getFieldsMultipleConditions('tbl_clients', '*', "WHERE ClientId = '$UserId'", 2);
+}
+$autoName  = $LoggedInUser ? htmlspecialchars($LoggedInUser->ClientName ?? '') : '';
+$autoEmail = $LoggedInUser ? htmlspecialchars($LoggedInUser->EmailAddress ?? '') : '';
+$autoPhone = $LoggedInUser ? htmlspecialchars($LoggedInUser->PhoneNumber ?? '') : '';
+$autoReadonly = $LoggedInUser ? 'readonly' : '';
 
 $IsFavourite = $this->getlist_model->getFieldsMultipleConditions(
   'tbl_properties_favourites',
@@ -126,6 +189,7 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
         .btn-primary-custom:hover {
             background-color: #005ce6;
             border-color: #005ce6;
+            color: #fff !important;
         }
         .btn-outline-primary-custom {
             color: #0066ff;
@@ -133,8 +197,9 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
             background-color: #fff;
         }
         .btn-outline-primary-custom:hover {
-            background-color: #f0f7ff;
-            color: #0066ff;
+            background-color: #005ce6;
+            border-color: #005ce6;
+            color: #fff !important;
         }
         .badge-custom {
             background-color: #4da6ff;
@@ -237,6 +302,24 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                     <button type="button" class="btn btn-success fw-bold px-4 shadow-sm" onclick="publishProperty(<?= $PropertyDetails->PropertyId ?>)"><i class="fa-solid fa-paper-plane me-2"></i>Publish Property</button>
                 </div>
                 
+                <!-- Publish Validation Modal -->
+                <div class="modal fade" id="publishValidationModal" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
+                      <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title text-white"><i class="text-white fa-solid fa-triangle-exclamation me-2"></i> Incomplete Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body fs-6 py-4" id="publishValidationMessage">
+                        <!-- message here -->
+                      </div>
+                      <div class="modal-footer border-0 justify-content-center pb-4">
+                        <button type="button" class="btn btn-secondary px-4 fw-bold" data-bs-dismiss="modal">OK, I will fill them</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <script>
                 function publishProperty(propertyId) {
                     Swal.fire({
@@ -259,11 +342,8 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                                             window.location.href = "<?= base_url('Properties/dashboard') ?>";
                                         });
                                     } else {
-                                        Swal.fire({
-                                            title: 'Incomplete Details',
-                                            html: res.Message,
-                                            icon: 'warning'
-                                        });
+                                        $('#publishValidationMessage').html(res.Message);
+                                        $('#publishValidationModal').modal('show');
                                     }
                                 },
                                 error: function() {
@@ -285,21 +365,70 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                     </div>
                     <h1 class="property-title mb-1"><?= $PropertyDetails->PropertyTitle ?? "" ?></h1>
                     <div class="text-muted small">
-                        <i class="fa-solid fa-location-dot me-1"></i> <?= $PropertyDetails->MailingAddress ?? "" ?>
+                        <i class="fa-solid fa-location-dot me-1"></i> 
+                        <?php
+                            $dispAddr = [];
+                            if (!empty($PropertyDetails->MailingAddress)) {
+                                $dispAddr[] = $PropertyDetails->MailingAddress;
+                            } else {
+                                if (!empty($PropertyDetails->UnitNumber)) $dispAddr[] = "Unit " . $PropertyDetails->UnitNumber;
+                                if (!empty($PropertyDetails->StreetNumber) && !empty($PropertyDetails->StreetName)) {
+                                    $dispAddr[] = $PropertyDetails->StreetNumber . ' ' . $PropertyDetails->StreetName;
+                                }
+                                if (!empty($PropertyDetails->Suburb)) $dispAddr[] = $PropertyDetails->Suburb;
+                                if (!empty($PropertyDetails->State)) $dispAddr[] = $PropertyDetails->State;
+                                if (!empty($PropertyDetails->ZipCode)) $dispAddr[] = $PropertyDetails->ZipCode;
+                            }
+                            $fAddr = implode(', ', array_filter($dispAddr));
+                            echo !empty($fAddr) ? htmlspecialchars($fAddr) : "Address not provided";
+                        ?>
                     </div>
                 </div>
                 <div class="text-md-end">
-                    <div class="text-primary-custom fw-bold" style="font-size: 15px;">
-                        $<?= number_format(($PropertyDetails->TotalPrice ?? 0) / (($PropertyDetails->CoveredArea ?? 1) == 0 ? 1 : $PropertyDetails->CoveredArea), 2); ?> <span class="text-muted fw-normal">/<?= $AreaUnit ?></span>
-                    </div>
-                    <div class="text-primary-custom fw-bold" style="font-size: 34px; line-height: 1;">
-                        $<?= number_format($PropertyDetails->TotalPrice ?? 0); ?>
-                    </div>
+                    <?php if (($PropertyDetails->ListType ?? 'Sale') === 'Rent'): ?>
+                        <div class="text-primary-custom fw-bold" style="font-size: 15px;">
+                            <span class="text-muted fw-normal">Rental Price</span>
+                        </div>
+                        <div class="text-primary-custom fw-bold" style="font-size: 34px; line-height: 1;">
+                            $<?= number_format($PropertyDetails->TotalPrice ?? 0); ?> <span style="font-size: 18px;" class="text-muted fw-normal">/Month</span>
+                        </div>
+                    <?php else: ?>
+                        <?php if (!empty($PropertyDetails->CoveredArea) && $PropertyDetails->CoveredArea > 0): ?>
+                        <div class="text-primary-custom fw-bold" style="font-size: 15px;">
+                            $<?= number_format(($PropertyDetails->TotalPrice ?? 0) / $PropertyDetails->CoveredArea, 2); ?> <span class="text-muted fw-normal">/<?= $AreaUnit ?></span>
+                        </div>
+                        <?php endif; ?>
+                        <div class="text-primary-custom fw-bold" style="font-size: 34px; line-height: 1;">
+                            $<?= number_format($PropertyDetails->TotalPrice ?? 0); ?>
+                        </div>
+                    <?php endif; ?>
+                    
                     <div class="mt-3 d-flex justify-content-md-end gap-2">
-                        <button class="action-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
-                        <button class="action-btn"><i class="fa-regular fa-heart"></i> Favorite</button>
-                        <button class="action-btn"><i class="fa-solid fa-print"></i> Print</button>
+                        <button class="action-btn" onclick="copyToClipboard(window.location.href)"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                        
+                        <?php if ($IsFavourite): ?>
+                            <button class="action-btn text-danger border-danger" onclick="window.location.href='<?= base_url('Properties/RemoveFromFavourites/'.$PropertyId) ?>'"><i class="fa-solid fa-heart"></i> Favorite</button>
+                        <?php else: ?>
+                            <button class="action-btn" onclick="window.location.href='<?= base_url('Properties/AddToFavourites/'.$PropertyId) ?>'"><i class="fa-regular fa-heart"></i> Favorite</button>
+                        <?php endif; ?>
+
+                        <button class="action-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
                     </div>
+                    <script>
+                    function copyToClipboard(text) {
+                        var dummy = document.createElement("textarea");
+                        document.body.appendChild(dummy);
+                        dummy.value = text;
+                        dummy.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(dummy);
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({toast: true, position: 'top-end', icon: 'success', title: 'Link copied!', showConfirmButton: false, timer: 1500});
+                        } else {
+                            alert('Link copied to clipboard!');
+                        }
+                    }
+                    </script>
                 </div>
             </div>
 
@@ -407,15 +536,18 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                             <div id="accordion_property_address_collapse" class="accordion-collapse collapse show" aria-labelledby="heading_accordion_property_address_collapse">
                                 <div class="accordion-body text-muted bg-white rounded-bottom-2 border-top">
                                     <div class="row g-3">
-                                        <div class="col-md-4"><strong>Address:</strong> <?= $PropertyDetails->MailingAddress ?? "" ?></div>
-                                        <div class="col-md-4"><strong>City:</strong> <a href="#" class="text-decoration-none text-primary-custom"><?= $PropertyDetails->City ?? "" ?></a></div>
-                                        <div class="col-md-4"><strong>Area:</strong> <a href="#" class="text-decoration-none text-primary-custom"><?= $PropertyDetails->Area ?? "" ?></a></div>
-                                        <div class="col-md-4"><strong>State/County:</strong> <a href="#" class="text-decoration-none text-primary-custom"><?= $PropertyDetails->State ?? "" ?></a></div>
-                                        <div class="col-md-4"><strong>Zip:</strong> <?= $PropertyDetails->ZipCode ?? "" ?></div>
-                                        <div class="col-md-4"><strong>Country:</strong> United States</div>
-                                        <div class="col-md-12 mt-2">
+                                        <div class="col-md-12 mb-2 border-bottom pb-2"><strong>Mailing Address:</strong> <span class="text-dark"><?= $PropertyDetails->MailingAddress ?? "" ?></span></div>
+                                        <div class="col-md-4"><strong>Country:</strong> <?= $PropertyDetails->Country ?? "Australia" ?></div>
+                                        <div class="col-md-4"><strong>State:</strong> <?= $PropertyDetails->State ?? "" ?></div>
+                                        <div class="col-md-4"><strong>Suburb:</strong> <?= $PropertyDetails->Suburb ?? "" ?></div>
+                                        <div class="col-md-4"><strong>Postal Code:</strong> <?= $PropertyDetails->ZipCode ?? "" ?></div>
+                                        <div class="col-md-4"><strong>Unit Number:</strong> <?= $PropertyDetails->UnitNumber ?? "" ?></div>
+                                        <div class="col-md-4"><strong>Street Number:</strong> <?= $PropertyDetails->StreetNumber ?? "" ?></div>
+                                        <div class="col-md-4"><strong>Street Name:</strong> <?= $PropertyDetails->StreetName ?? "" ?></div>
+                                        
+                                        <!-- <div class="col-md-12 mt-3">
                                             <a href="https://maps.google.com/?q=<?= urlencode($PropertyDetails->MailingAddress ?? "") ?>" target="_blank" rel="noopener" class="text-primary-custom text-decoration-none fw-bold"><i class="fa-solid fa-map-location-dot me-2"></i>Open In Google Maps</a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -483,21 +615,20 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                     <div class="bg-white p-4 rounded-2 shadow-sm border mb-4">
                         <h3 class="section-title">Features & Amenities</h3>
                         <div class="features-grid text-muted" style="font-size: 15px;">
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Air Conditioning</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Barbeque</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Dryer</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Gym</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Laundry</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Lawn</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Microwave</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Outdoor Shower</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Refrigerator</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Sauna</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Swimming Pool</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> TV Cable</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Washer</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> WiFi</div>
-                            <div class="feature-item"><i class="far fa-check-circle"></i> Window Coverings</div>
+                            <?php 
+                            $hasAmenities = !empty($DynamicFeaturesList);
+                            ?>
+                            <?php if ($hasAmenities): ?>
+                                <?php foreach($DynamicFeaturesList as $name => $val): ?>
+                                    <?php if ($val === true): ?>
+                                        <div class="feature-item"><i class="far fa-check-circle"></i> <?= htmlspecialchars($name) ?></div>
+                                    <?php else: ?>
+                                        <div class="feature-item"><i class="far fa-check-circle"></i> <?= htmlspecialchars($name) ?>: <strong class="text-dark"><?= htmlspecialchars($val) ?></strong></div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="col-12">No additional features specified.</div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -576,10 +707,13 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                         <!-- Tabs -->
                         <ul class="nav nav-tabs nav-fill" id="sidebarTabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active fw-bold py-3 rounded-0" id="request-info-tab" data-bs-toggle="tab" data-bs-target="#request-info" type="button" role="tab" aria-controls="request-info" aria-selected="true">Request Info</button>
+                                <button class="nav-link active fw-bold py-3 rounded-0 px-2" id="request-info-tab" data-bs-toggle="tab" data-bs-target="#request-info" type="button" role="tab" aria-controls="request-info" aria-selected="true" style="font-size:13px;">Request Info</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link fw-bold py-3 rounded-0" id="schedule-tour-tab" data-bs-toggle="tab" data-bs-target="#schedule-tour" type="button" role="tab" aria-controls="schedule-tour" aria-selected="false">Schedule a tour</button>
+                                <button class="nav-link fw-bold py-3 rounded-0 px-2" id="schedule-tour-tab" data-bs-toggle="tab" data-bs-target="#schedule-tour" type="button" role="tab" aria-controls="schedule-tour" aria-selected="false" style="font-size:13px;">Schedule a tour</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-bold py-3 rounded-0 px-2" id="make-offer-tab" data-bs-toggle="tab" data-bs-target="#make-offer" type="button" role="tab" aria-controls="make-offer" aria-selected="false" style="font-size:13px;">Make Offer</button>
                             </li>
                         </ul>
 
@@ -590,10 +724,17 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                             <div class="tab-pane fade show active p-4" id="request-info" role="tabpanel" aria-labelledby="request-info-tab">
                                 <!-- Agent Info -->
                                 <div class="d-flex align-items-center mb-4">
-                                    <div class="rounded-circle me-3 d-flex align-items-center justify-content-center text-white fw-bold bg-primary-custom shadow-sm" style="width: 65px; height: 65px; font-size: 24px;">JC</div>
+                                    <div class="rounded-circle me-3 d-flex align-items-center justify-content-center text-white fw-bold bg-primary-custom shadow-sm" style="width: 65px; height: 65px; font-size: 24px;"><?= htmlspecialchars($SellerInitials ?? 'SA') ?></div>
                                     <div>
-                                        <h5 class="mb-1 fw-bold text-dark">John Collins</h5>
-                                        <div class="text-muted small">Member ID: 987654321</div>
+                                        <h5 class="mb-1 fw-bold text-dark d-flex align-items-center">
+                                            <?= htmlspecialchars($Seller->ClientName ?? 'System Admin') ?>
+                                            <?php if (($Seller->AccountStatus ?? '') === 'Active' || ($Seller->AccountStatus ?? '') === 'Verified'): ?>
+                                                <span style="border: 1px solid #1b9500c5; background-color: rgba(32, 176, 0, 0.2);" class="badge ms-2 rounded-pill text-dark">Verified</span>
+                                            <?php else: ?>
+                                                <span style="border: 1px solid #95840066; background-color: rgba(255, 191, 0, 0.3);" class="badge text-dark ms-2 rounded-pill">Not Verified</span>
+                                            <?php endif; ?>
+                                        </h5>
+                                        <div class="text-muted small">Member ID: <?= htmlspecialchars($Seller->ClientId ?? '0') ?></div>
                                     </div>
                                 </div>
 
@@ -603,29 +744,35 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                                 </div>
 
                                 <!-- Form -->
-                                <form>
-                                    <input type="text" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Name">
-                                    <input type="email" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Email">
-                                    <input type="tel" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Phone">
+                                <form id="frmRequestInfo">
+                                    <input type="hidden" id="req_PropertyId" value="<?= $PropertyId ?? 0 ?>">
+                                    <input type="hidden" id="req_SellerId" value="<?= $Seller->ClientId ?? 0 ?>">
+                                    <input type="hidden" id="req_RequestedBy" value="<?= $UserId ?? 0 ?>">
+
+                                    <input type="text" id="req_name" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Name" value="<?= $autoName ?>" <?= $autoReadonly ?> required>
+                                    <input type="email" id="req_email" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Email" value="<?= $autoEmail ?>" <?= $autoReadonly ?> required>
+                                    <input type="tel" id="req_phone" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Phone" value="<?= $autoPhone ?>" <?= $autoReadonly ?> required>
                                     
-                                    <select class="form-select mb-3 py-2 rounded-1 text-muted bg-light border-0">
-                                        <option>What are you looking to do?</option>
-                                        <option>I want to schedule a viewing</option>
-                                        <option>I want more details</option>
+                                    <select id="req_action" class="form-select mb-3 py-2 rounded-1 text-muted bg-light border-0">
+                                        <option value="">What are you looking to do?</option>
+                                        <option value="I want to schedule a viewing">I want to schedule a viewing</option>
+                                        <option value="I want more details">I want more details</option>
                                     </select>
 
-                                    <textarea class="form-control mb-4 py-2 rounded-1 text-muted bg-light border-0" rows="3">Hello,
+                                    <textarea id="req_message" class="form-control mb-4 py-2 rounded-1 text-muted bg-light border-0" rows="3">Hello,
 I'm interested in [ <?= $PropertyDetails->PropertyTitle ?? "" ?> ]</textarea>
                                     
                                     <!-- Buttons -->
                                     <div class="d-flex gap-2">
-                                        <button type="button" class="btn btn-primary-custom flex-fill py-2 rounded-1 fw-bold border-0 shadow-sm">Send</button>
-                                        <button type="button" class="btn btn-light flex-fill py-2 rounded-1 fw-bold px-1 border shadow-sm text-primary-custom" style="font-size: 14px;">
+                                        <button type="button" id="btnSendRequestInfo" class="btn btn-primary-custom flex-fill py-2 rounded-2" style="font-size: 14px; border: 1px solid #0066ff;">
+                                            <i class="fa-solid fa-paper-plane me-1"></i> Send Request
+                                        </button>
+                                        <a href="tel:<?= htmlspecialchars($Seller->PhoneNumber ?? '') ?>" class="btn btn-outline-primary-custom flex-fill py-2 rounded-2 d-flex align-items-center justify-content-center text-decoration-none" style="font-size: 14px; border: 1px solid #0066ff;">
                                             <i class="fa-solid fa-phone me-1"></i> Call
-                                        </button>
-                                        <button type="button" class="btn btn-light flex-fill py-2 rounded-1 fw-bold px-1 border shadow-sm text-success" style="font-size: 14px;">
+                                        </a>
+                                        <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $Seller->PhoneNumber ?? '') ?>" target="_blank" class="btn btn-outline-primary-custom flex-fill py-2 rounded-2 d-flex align-items-center justify-content-center text-decoration-none" style="font-size: 14px; border: 1px solid #0066ff;">
                                             <i class="fa-brands fa-whatsapp me-1"></i> WhatsApp
-                                        </button>
+                                        </a>
                                     </div>
                                 </form>
                             </div>
@@ -635,47 +782,14 @@ I'm interested in [ <?= $PropertyDetails->PropertyTitle ?? "" ?> ]</textarea>
                                 <h5 class="fw-bold text-dark mb-4">Schedule a tour</h5>
                                 
                                 <!-- Dates -->
-                                <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
-                                    <button class="btn btn-sm btn-light text-primary-custom bg-white border shadow-sm position-absolute start-0 z-1 translate-middle-x rounded-circle date-prev" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center; left:-10px;"><i class="fa-solid fa-arrow-left"></i></button>
-                                    
-                                    <div class="swiper mySwiperDates w-100 px-1 mx-3">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide text-center border rounded-2 py-2 bg-white cursor-pointer">
-                                                <div class="small text-muted" style="font-size:13px;">Wed</div>
-                                                <div class="fw-bold fs-5 text-dark" style="line-height:1.2;">17</div>
-                                                <div class="small text-muted" style="font-size:13px;">Jun</div>
-                                            </div>
-                                            <div class="swiper-slide text-center border border-primary rounded-2 py-2 bg-white cursor-pointer" style="border-color:#0066ff !important; box-shadow: 0 0 5px rgba(0,102,255,0.2);">
-                                                <div class="small text-primary-custom" style="font-size:13px;">Thu</div>
-                                                <div class="fw-bold fs-5 text-primary-custom" style="line-height:1.2;">18</div>
-                                                <div class="small text-primary-custom" style="font-size:13px;">Jun</div>
-                                            </div>
-                                            <div class="swiper-slide text-center border rounded-2 py-2 bg-white cursor-pointer">
-                                                <div class="small text-muted" style="font-size:13px;">Fri</div>
-                                                <div class="fw-bold fs-5 text-dark" style="line-height:1.2;">19</div>
-                                                <div class="small text-muted" style="font-size:13px;">Jun</div>
-                                            </div>
-                                            <div class="swiper-slide text-center border rounded-2 py-2 bg-white cursor-pointer">
-                                                <div class="small text-muted" style="font-size:13px;">Sat</div>
-                                                <div class="fw-bold fs-5 text-dark" style="line-height:1.2;">20</div>
-                                                <div class="small text-muted" style="font-size:13px;">Jun</div>
-                                            </div>
-                                            <div class="swiper-slide text-center border rounded-2 py-2 bg-white cursor-pointer">
-                                                <div class="small text-muted" style="font-size:13px;">Sun</div>
-                                                <div class="fw-bold fs-5 text-dark" style="line-height:1.2;">21</div>
-                                                <div class="small text-muted" style="font-size:13px;">Jun</div>
-                                            </div>
-                                        </div>
+                                <div class="row g-2 mb-4">
+                                    <div class="col-6">
+                                        <input type="text" id="tour_date" class="form-control py-2 rounded-1 text-muted bg-light border-0 shadow-sm" placeholder="Select Date" required>
                                     </div>
-                                    
-                                    <button class="btn btn-sm btn-light text-primary-custom bg-white border shadow-sm position-absolute end-0 z-1 translate-middle-x rounded-circle date-next" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center; right:-10px;"><i class="fa-solid fa-arrow-right"></i></button>
+                                    <div class="col-6">
+                                        <input type="text" id="tour_time" class="form-control py-2 rounded-1 text-muted bg-light border-0 shadow-sm" placeholder="Select Time" required>
+                                    </div>
                                 </div>
-
-                                <select class="form-select mb-4 py-2 rounded-1 text-muted bg-light border-0 shadow-sm">
-                                    <option>Please select the time</option>
-                                    <option>09:00 AM</option>
-                                    <option>10:00 AM</option>
-                                </select>
 
                                 <div class="d-flex bg-light p-1 rounded-2 mb-4 border">
                                     <input type="radio" class="btn-check" name="tour_type" id="tour_in_person" autocomplete="off" checked>
@@ -688,17 +802,42 @@ I'm interested in [ <?= $PropertyDetails->PropertyTitle ?? "" ?> ]</textarea>
                                 <h6 class="fw-bold text-dark mb-3">Your information</h6>
                                 
                                 <form>
-                                    <input type="text" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Name">
-                                    <input type="email" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Email">
-                                    <input type="tel" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Phone">
+                                    <input type="text" id="tour_name" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Name" value="<?= $autoName ?>" <?= $autoReadonly ?>>
+                                    <input type="email" id="tour_email" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Email" value="<?= $autoEmail ?>" <?= $autoReadonly ?>>
+                                    <input type="tel" id="tour_phone" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Phone" value="<?= $autoPhone ?>" <?= $autoReadonly ?>>
                                     
                                     <select class="form-select mb-3 py-2 rounded-1 text-muted bg-light border-0">
                                         <option>What are you looking to do?</option>
                                     </select>
 
-                                    <textarea class="form-control mb-4 py-2 rounded-1 text-muted bg-light border-0" rows="4">I would like to schedule a tour for [ <?= $PropertyDetails->PropertyTitle ?? "" ?> ].</textarea>
+                                    <textarea id="tour_message" class="form-control mb-4 py-2 rounded-1 text-muted bg-light border-0" rows="4">I would like to schedule a tour for [ <?= $PropertyDetails->PropertyTitle ?? "" ?> ].</textarea>
                                     
-                                    <button type="button" class="btn btn-primary-custom w-100 py-3 rounded-1 fw-bold fs-6 border-0 shadow-sm mt-2">Send Request</button>
+                                    <button type="button" id="btnScheduleTour" class="btn btn-primary-custom w-100 py-2 rounded-2 mt-2" style="font-size: 14px; border: 1px solid #0066ff;"><i class="fa-solid fa-paper-plane me-1"></i> Send Request</button>
+                                </form>
+                            </div>
+
+                            <!-- Make Offer Tab -->
+                            <div class="tab-pane fade p-4" id="make-offer" role="tabpanel" aria-labelledby="make-offer-tab">
+                                <h5 class="fw-bold text-dark mb-4">Make an Offer</h5>
+                                <form id="frmMakeOffer">
+                                    <input type="hidden" id="offer_PropertyId" value="<?= $PropertyId ?? 0 ?>">
+                                    <input type="hidden" id="offer_SellerId" value="<?= $Seller->ClientId ?? 0 ?>">
+                                    <input type="hidden" id="offer_RequestedBy" value="<?= $UserId ?? 0 ?>">
+
+                                    <label class="form-label fw-bold text-dark fs-6">Offer Amount</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-light border-0">$</span>
+                                        <input type="number" id="offer_amount" class="form-control py-2 rounded-end-1 bg-light border-0" placeholder="e.g. 500000" required>
+                                    </div>
+
+                                    <label class="form-label fw-bold text-dark fs-6">Your Information</label>
+                                    <input type="text" id="offer_name" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Name" value="<?= $autoName ?>" <?= $autoReadonly ?> required>
+                                    <input type="email" id="offer_email" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Email" value="<?= $autoEmail ?>" <?= $autoReadonly ?> required>
+                                    <input type="tel" id="offer_phone" class="form-control mb-3 py-2 rounded-1 bg-light border-0" placeholder="Phone" value="<?= $autoPhone ?>" <?= $autoReadonly ?> required>
+                                    
+                                    <textarea id="offer_message" class="form-control mb-4 py-2 rounded-1 text-muted bg-light border-0" rows="3" placeholder="Additional details or terms (optional)"></textarea>
+                                    
+                                    <button type="button" id="btnMakeOffer" class="btn btn-primary-custom w-100 py-2 rounded-2 mt-2" style="font-size: 14px; border: 1px solid #0066ff;"><i class="fa-solid fa-paper-plane me-1"></i> Submit Offer</button>
                                 </form>
                             </div>
                         </div>
@@ -989,6 +1128,273 @@ I'm interested in [ <?= $PropertyDetails->PropertyTitle ?? "" ?> ]</textarea>
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv1FrfWK8d_Z28pT_XtiZW02msCfrC2Rs&amp;libraries=places,geometry&amp;callback=initMap" async="" defer=""></script>
+<?php if (!isset($IsPreview) || !$IsPreview): ?>
+    <?php $this->load->view('components/footer'); ?>
+    <?php $this->load->view('components/js_links'); ?>
+<?php endif; ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        let isLoggedIn = <?= $this->session->userdata('user_id') ? 'true' : 'false' ?>;
+
+        function showLoginModal() {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Log in Required',
+                    text: 'Log in first to do this action.',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Log In',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "<?= site_url('Properties/signin') ?>";
+                    }
+                });
+            } else {
+                alert("Log in first to do this action.");
+                window.location.href = "<?= site_url('Properties/signin') ?>";
+            }
+        }
+
+        $(document).ready(function() {
+            // Initialize flatpickr for Date and Time
+            flatpickr("#tour_date", {
+                minDate: "today",
+                dateFormat: "Y-m-d",
+            });
+            flatpickr("#tour_time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "h:i K",
+                time_24hr: false
+            });
+
+            $('button[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+                if (!isLoggedIn) {
+                    e.preventDefault();
+                    showLoginModal();
+                }
+            });
+
+            $('#btnScheduleTour').click(function(e) {
+                e.preventDefault();
+                if (!isLoggedIn) { showLoginModal(); return; }
+                
+                let date = $('#tour_date').val().trim();
+                let time = $('#tour_time').val().trim();
+                let name = $('#tour_name').val().trim();
+                let email = $('#tour_email').val().trim();
+                let phone = $('#tour_phone').val().trim();
+                let message = $('#tour_message').val().trim();
+                let tourType = $('#tour_in_person').is(':checked') ? 'In Person' : 'Video Chat';
+
+                if (!date || !time || !name || !email || !phone) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire('Warning', 'Please select Date and Time, and fill in your Name, Email, and Phone.', 'warning');
+                    } else {
+                        alert('Please select Date and Time, and fill in your Name, Email, and Phone.');
+                    }
+                    return;
+                }
+
+                let btn = $(this);
+                let originalText = btn.html();
+                btn.html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Sending...').prop('disabled', true);
+
+                let txtRemarks = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAction: Schedule a Tour\nTour Type: ${tourType}\nMessage: ${message}`;
+                
+                let formData = {
+                    PropertyId: $('#req_PropertyId').val(),
+                    SellerId: $('#req_SellerId').val(),
+                    RequestedBy: $('#req_RequestedBy').val(),
+                    txtRemarks: txtRemarks,
+                    txtMeetDate: date,
+                    txtMeetTime: time,
+                    chkTourType: tourType
+                };
+
+                $.ajax({
+                    url: "<?= base_url('Properties/PropertyEnquiry') ?>",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    success: function(res) {
+                        btn.html(originalText).prop('disabled', false);
+                        if (res.Status) {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire('Success', 'Your tour request has been sent successfully.', 'success').then(() => {
+                                    $('#tour_date').val('');
+                                    $('#tour_time').val('');
+                                    if (!isLoggedIn) {
+                                        $('#tour_name').val('');
+                                        $('#tour_email').val('');
+                                        $('#tour_phone').val('');
+                                    }
+                                });
+                            } else {
+                                alert('Your tour request has been sent successfully.');
+                            }
+                        } else {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire('Error', res.Message || 'Failed to schedule tour.', 'error');
+                            } else {
+                                alert(res.Message || 'Failed to schedule tour.');
+                            }
+                        }
+                    },
+                    error: function() {
+                        btn.html(originalText).prop('disabled', false);
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire('Error', 'An error occurred while communicating with the server.', 'error');
+                        } else {
+                            alert('An error occurred while communicating with the server.');
+                        }
+                    }
+                });
+            });
+
+            $('#btnSendRequestInfo').click(function(e) {
+                e.preventDefault();
+                if (!isLoggedIn) { showLoginModal(); return; }
+
+                let name = $('#req_name').val().trim();
+                let email = $('#req_email').val().trim();
+                let phone = $('#req_phone').val().trim();
+                let action = $('#req_action').val();
+                let message = $('#req_message').val().trim();
+
+                if (!name || !email || !phone) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire('Warning', 'Please fill in your Name, Email, and Phone.', 'warning');
+                    } else {
+                        alert('Please fill in your Name, Email, and Phone.');
+                    }
+                    return;
+                }
+
+                let btn = $(this);
+                let originalText = btn.html();
+                btn.html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Sending...').prop('disabled', true);
+
+                let txtRemarks = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAction: ${action}\nMessage: ${message}`;
+                
+                let formData = {
+                    PropertyId: $('#req_PropertyId').val(),
+                    SellerId: $('#req_SellerId').val(),
+                    RequestedBy: $('#req_RequestedBy').val(),
+                    txtRemarks: txtRemarks,
+                    txtMeetDate: '',
+                    txtMeetTime: '',
+                    chkTourType: ''
+                };
+
+                $.ajax({
+                    url: "<?= base_url('Properties/PropertyEnquiry') ?>",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    success: function(res) {
+                        btn.html(originalText).prop('disabled', false);
+                        if (res.Status) {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire('Success', 'Your request has been sent successfully.', 'success').then(() => {
+                                    $('#frmRequestInfo')[0].reset();
+                                });
+                            } else {
+                                alert('Your request has been sent successfully.');
+                                $('#frmRequestInfo')[0].reset();
+                            }
+                        } else {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire('Error', res.Message || 'Failed to send request.', 'error');
+                            } else {
+                                alert(res.Message || 'Failed to send request.');
+                            }
+                        }
+                    },
+                    error: function() {
+                        btn.html(originalText).prop('disabled', false);
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire('Error', 'An error occurred while communicating with the server.', 'error');
+                        } else {
+                            alert('An error occurred while communicating with the server.');
+                        }
+                    }
+                });
+            });
+
+            $('#btnMakeOffer').click(function(e) {
+                e.preventDefault();
+                if (!isLoggedIn) { showLoginModal(); return; }
+
+                let amount = $('#offer_amount').val().trim();
+                let name = $('#offer_name').val().trim();
+                let email = $('#offer_email').val().trim();
+                let phone = $('#offer_phone').val().trim();
+                let message = $('#offer_message').val().trim();
+
+                if (!amount || !name || !email || !phone) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire('Warning', 'Please fill in the Offer Amount, Name, Email, and Phone.', 'warning');
+                    } else {
+                        alert('Please fill in the Offer Amount, Name, Email, and Phone.');
+                    }
+                    return;
+                }
+
+                let btn = $(this);
+                let originalText = btn.html();
+                btn.html('<i class="fa-solid fa-spinner fa-spin me-1"></i> Submitting...').prop('disabled', true);
+
+                let txtRemarks = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAction: Make Offer\nOffer Amount: $${amount}\nMessage: ${message}`;
+                
+                let formData = {
+                    PropertyId: $('#offer_PropertyId').val(),
+                    SellerId: $('#offer_SellerId').val(),
+                    RequestedBy: $('#offer_RequestedBy').val(),
+                    txtRemarks: txtRemarks,
+                    txtMeetDate: '',
+                    txtMeetTime: '',
+                    chkTourType: ''
+                };
+
+                $.ajax({
+                    url: "<?= base_url('Properties/PropertyEnquiry') ?>",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    success: function(res) {
+                        btn.html(originalText).prop('disabled', false);
+                        if (res.Status) {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire('Success', 'Your offer has been submitted successfully.', 'success').then(() => {
+                                    $('#frmMakeOffer')[0].reset();
+                                });
+                            } else {
+                                alert('Your offer has been submitted successfully.');
+                                $('#frmMakeOffer')[0].reset();
+                            }
+                        } else {
+                            if (typeof Swal !== 'undefined') {
+                                Swal.fire('Error', res.Message || 'Failed to submit offer.', 'error');
+                            } else {
+                                alert(res.Message || 'Failed to submit offer.');
+                            }
+                        }
+                    },
+                    error: function() {
+                        btn.html(originalText).prop('disabled', false);
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire('Error', 'An error occurred while communicating with the server.', 'error');
+                        } else {
+                            alert('An error occurred while communicating with the server.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 <?php if (!isset($IsPreview) || !$IsPreview): ?>
 </body>
 </html>

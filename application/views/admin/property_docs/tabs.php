@@ -24,9 +24,9 @@
     }
 </style>
 <ul class="nav nav-pills nav-modern mb-4">
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link <?= (isset($active_tab) && $active_tab == 'analytics') ? 'active' : '' ?>" href="<?= site_url('Admin_Property_Docs/analytics') ?>"><i class="fa-solid fa-chart-pie me-2"></i> Analytics Dashboard</a>
-    </li>
+    </li> -->
     <li class="nav-item">
         <a class="nav-link <?= (isset($active_tab) && $active_tab == 'types') ? 'active' : '' ?>" href="<?= site_url('Admin_Property_Docs/types') ?>"><i class="fa-solid fa-tags me-2"></i> Document Types</a>
     </li>

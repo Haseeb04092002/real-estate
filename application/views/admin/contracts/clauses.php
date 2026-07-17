@@ -48,6 +48,7 @@
                                     <td>
                                         <button class="btn btn-sm btn-outline-secondary me-1" onclick='previewClause(<?= json_encode($c->ClauseTitle) ?>, <?= json_encode($c->ClauseContent) ?>)'><i class="fa-solid fa-eye"></i> Preview</button>
                                         <button class="btn btn-sm btn-outline-primary" onclick='editClause(<?= json_encode($c) ?>)'><i class="fa-solid fa-edit"></i> Edit</button>
+                                        <button class="btn btn-sm btn-outline-danger ms-1" onclick="deleteContractItem(<?= $c->ClauseId ?>, 'clause')"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -147,6 +148,26 @@
             document.getElementById('ClauseId').value = c.ClauseId;
             document.getElementById('ClauseTitle').value = c.ClauseTitle;
             if(theEditor) theEditor.setData(c.ClauseContent || '');
+        }
+
+        function deleteContractItem(id, type) {
+            customConfirm('Delete Confirmation', 'Are you sure you want to delete this clause?', 'warning', function(confirmed) {
+                if(confirmed) {
+                    $.ajax({
+                        url: '<?= site_url('Admin/api_soft_delete_contract_item') ?>',
+                        type: 'POST',
+                        data: { id: id, type: type },
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.success) {
+                                location.reload();
+                            } else {
+                                customAlert('Error', 'Failed to delete.', 'error');
+                            }
+                        }
+                    });
+                }
+            });
         }
     </script>
 </body>

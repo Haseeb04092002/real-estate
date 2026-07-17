@@ -1,0 +1,1080 @@
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+    rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/animate.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/owl.carousel.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/owl.theme.default.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<style>
+.parsley-errors-list {
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+    transition: all .3s ease-in;
+    color: #dc3545;
+}
+.parsley-errors-list.filled {
+    opacity: 1;
+}
+.parsley-type, .parsley-required, .parsley-equalto {
+    color: #dc3545;
+}
+.parsley-error {
+    border-color: #dc3545 !important;
+}
+.parsley-success {
+    border-color: #198754 !important;
+}
+</style>
+<link href="http://localhost/properties_new/assets/js/jquery-ui.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/style.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/property_details.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/add-property.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/side_bar2.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/dashboard.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/tooltip.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Tippy.js Styles -->
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css" />
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        :root {
+            --light-bg: #f5f7fb;
+        }
+
+        body {
+            background: var(--light-bg);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dashboard-container {
+            padding: 30px;
+        }
+
+        @media(max-width:768px) {
+            .dashboard-container { padding: 15px; }
+        }
+
+        .dashboard-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.06);
+            overflow: hidden;
+            background: white;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-card .card-header {
+            background: white;
+            border-bottom: 1px solid #edf0f5;
+            padding: 20px 25px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 0;
+        }
+
+        .admin-sidebar {
+            min-height: 100vh;
+            width: 280px;
+            background: #f4f9fd; /* Light blue background */
+            color: #1a2b4c;
+            border-right: 1px solid #eaeaea;
+        }
+        
+        .admin-sidebar .sidebar-menu {
+            padding: 20px 15px;
+            margin-top: 20px;
+        }
+
+        .sidebar-link {
+            color: #1a2b4c;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 14px 15px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.2s;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: #c7e2fb !important;
+            color: #000 !important;
+            border-radius: 8px;
+        }
+        
+        .sidebar-link .icon-left {
+            width: 25px;
+            text-align: center;
+            margin-right: 15px;
+            font-size: 18px;
+            color: #3b4e68;
+        }
+
+        .sidebar-link.active .icon-left, .sidebar-link:hover .icon-left {
+            color: #000 !important;
+        }
+    </style>
+    <div class="container-fluid bg-white p-0" style="position: sticky; top: 0; z-index: 1020;">
+        <head>
+
+<meta charset="utf-8">
+<title>Free Real Estate</title>
+
+<link rel="icon" type="image/x-icon" href="http://localhost/properties_new/assets/images/Fre-logo.png">
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+    rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/animate.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/owl.carousel.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/owl.theme.default.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<style>
+.parsley-errors-list {
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+    transition: all .3s ease-in;
+    color: #dc3545;
+}
+.parsley-errors-list.filled {
+    opacity: 1;
+}
+.parsley-type, .parsley-required, .parsley-equalto {
+    color: #dc3545;
+}
+.parsley-error {
+    border-color: #dc3545 !important;
+}
+.parsley-success {
+    border-color: #198754 !important;
+}
+</style>
+<link href="http://localhost/properties_new/assets/js/jquery-ui.min.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/style.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/property_details.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/add-property.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/side_bar2.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/dashboard.css" rel="stylesheet">
+<link href="http://localhost/properties_new/assets/css/tooltip.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Tippy.js Styles -->
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css" />
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">  <style>
+    /* Navbar link underline animation */
+    .navbar-nav .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .navbar-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1F509A;
+      transition: width 0.3s ease;
+    }
+    .navbar-nav .nav-link:hover::after,
+    .navbar-nav .nav-link.active::after {
+      width: 80%;
+    }
+  </style>
+
+</head>
+
+<!-- Global Loader -->
+<div id="global-loader" class="d-none justify-content-center align-items-center position-fixed w-100 h-100 bg-white" style="top: 0; left: 0; z-index: 9999; opacity: 0.8;">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- Navbar Start -->
+<div class="container-fluid nav-bar bg-transparent" style="position: sticky; top: 0;">
+  <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+    <a href="http://localhost/properties_new/Properties" class="navbar-brand d-flex align-items-center text-center">
+      <div class="p-1 me-2">
+        <img class="img-fluid" src="http://localhost/properties_new/assets/images/Fre-logo.png" alt="Icon"
+          style="width: 65px; height: 50px; object-fit: contain;">
+      </div>
+      <div>
+        <h1 style="color: #1F509A; font-size: 2rem; line-height: 1;" class="m-0 navbar-h1">Free Real Estate</h1>
+        <span style="font-size: 0.9rem; color: #6c757d; font-weight: 600; display: block; text-align: left; padding-left: 2px; letter-spacing: 1px;">Australia</span>
+      </div>
+    </a>
+    <button class="d-block btn btn-primary d-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Menu</button>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav ms-auto align-items-center">
+                <a href="http://localhost/properties_new/Properties" class="nav-item nav-link ">Home</a>
+        <a href="http://localhost/properties_new/Properties/news_details" class="nav-item nav-link ">News</a>
+        <a href="http://localhost/properties_new/Properties/map" class="nav-item nav-link ">Map</a>
+        <a href="http://localhost/properties_new/Properties/contract" class="nav-item nav-link ">Contract</a>
+
+                  <a href="http://localhost/properties_new/Admin/login" class="nav-item nav-link ">Admin</a>
+          <a href="http://localhost/properties_new/Properties/signin" class="nav-item nav-link ">Sign in</a>
+              </div>
+    </div>
+
+  </nav>
+</div>
+<!-- Navbar End -->
+
+<div id="registration-modal">
+  <!-- signin modal -->
+  <div class="modal fade mt-5" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form action="http://localhost/properties_new/Login" method="post" accept-charset="utf-8">
+        <div class="pt-3 d-flex justify-content-end container-fluid">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center container-fluid">
+          <a href="http://localhost/properties_new/Properties/Home"
+            class="navbar-brand d-flex align-items-center text-center mb-3">
+            <div class="icon p-2 me-2">
+              <img class="img-fluid" src="http://localhost/properties_new/assets/images/Fre-logo.png" alt="Icon"
+                style="width: 40px; height: 40px; object-fit: contain;">
+            </div>
+            <div>
+              <h1 style="color: #1F509A; line-height: 1;" class="m-0">Free Real Estate</h1>
+              <span style="font-size: 0.8rem; color: #6c757d; font-weight: 600; display: block; text-align: left; padding-left: 2px; letter-spacing: 1px;">Australia</span>
+            </div>
+          </a>
+          <h3 class="mb-4">Sign in</h3>
+          <input class="modal-input ps-2 mb-3 w-100" name="UserEmail" type="email" placeholder="Email*" required>
+          <input class="modal-input ps-2 mb-3 w-100" type="password" name="UserPass1" placeholder="Password*" required>
+          <input class="modal-log mb-3 w-100" style="color:white;background-color: #1F509A;" type="submit"
+            value="Continue">
+          <div class="modal-forget w-100 pb-3">
+            <div class="d-flex align-items-center">
+              <input class="custom-checkbox me-3" type="checkbox" name="Remember Me" id=""> Remember Me
+            </div>
+            <p><a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop3" data-bs-dismiss="modal"
+                style="color: #1F509A;">Forgot Password?</a></p>
+          </div>
+          <p class="modal-p2 pb-2">Are you new to Real Estate?
+            <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-bs-dismiss="modal"
+              style="color: #1F509A;">Sign Up</a>
+          </p>
+          <!--  <button class="modal-btn w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-bs-dismiss="modal">
+            Sign Up
+          </button> -->
+          <p class="modal-p fw-bold" style="color:black;">OR</p>
+          <button class="modal-btn mb-3 w-100">
+            <i class="fa-brands fa-facebook" style="color: blue;"></i> Continue with Facebook
+          </button>
+          <button class="modal-btn w-100">
+            <i class="fa-brands fa-google"></i> Continue with Google
+          </button>
+        </div>
+        </form>      </div>
+    </div>
+  </div>
+
+
+  <!-- signup modal  -->
+
+  <div class="modal fade mt-5" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <form action="http://localhost/properties_new/Register/RegisterUser" method="post" accept-charset="utf-8">
+        <div class="pt-3 d-flex justify-content-start container-fluid">
+          <button class="btn btn-link text-decoration-none fs-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            data-bs-dismiss="modal">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+        </div>
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center container-fluid">
+          <button class="modal-btn mb-3 w-100">
+            <i class="fa-brands fa-facebook" style="color: blue;"></i> Continue with Facebook
+          </button>
+          <button class="modal-btn w-100">
+            <i class="fa-brands fa-google"></i> Continue with Google
+          </button>
+          <p class="modal-p">OR</p>
+
+          <!-- method2 -->
+          <!-- <input class="modal-input ps-2 mb-3 w-100" name="txtUserName" type="text" value="" placeholder="UserName*" required> -->
+
+          <input type="text" name="FullName" value="" class="modal-input ps-2 mb-3 w-100" placeholder="Full Name*" required="required"  />
+          <input type="email" name="UserEmail" value="" class="modal-input ps-2 mb-3 w-100" placeholder="Email*" required="required"  />
+          <input type="password" name="UserPass1" value="" class="modal-input ps-2 mb-3 w-100" placeholder="Password*" required="required"  />
+          <input type="password" name="UserPass2" value="" class="modal-input ps-2 mb-3 w-100" placeholder="Confirm Password*" required="required"  />
+
+
+
+
+          <!-- <input class="modal-input ps-2 mb-3 w-100" type="email" placeholder="Email*" required>
+          <input class="modal-input ps-2 mb-3 w-100" type="password" name="" placeholder="Password*" required>
+          <input class="modal-input ps-2 mb-3 w-100" type="password" name="" placeholder="Confirm Password*" required> -->
+          <!-- <input class="modal-input ps-2 mb-3 w-100" type="text" placeholder="Name*" required> -->
+          <div class="phone-input-container modal-input w-100 ps-2 mb-3 d-flex align-items-center">
+            <div class="flag-icon">PK</div>
+            <span class="country-code">+61</span>
+
+            <input type="number" name="UserPhone" value="" class="phone-input" placeholder="Enter your phone number" required="required"  />
+
+            <!-- <input class="phone-input" type="tel" placeholder="Enter your phone number"> -->
+
+          </div>
+          <div class="modal-check w-100 pb-3">
+            <input class="custom-checkbox me-3" type="checkbox" name="Remember Me" id="">
+            <p>I have read and I agree to the Real State.com <br> <a href="#">Terms and Conditions</a></p>
+          </div>
+          <input type="submit" name="mysubmit" value="Continue"  class='modal-btn w-100' />
+          <!-- <input type="submit" value="Continue" class="modal-btn w-100"> -->
+        </div>
+        </form>      </div>
+    </div>
+  </div>
+  <!-- forgot password modal -->
+  <!-- <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="pt-3 d-flex justify-content-start container-fluid">
+          <button class="btn btn-link text-decoration-none fs-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-dismiss="modal">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button> 
+        </div>
+        <p class="text-center fw-bold">FORGOT PASSWORD</p>
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center container-fluid">
+          <input class="modal-input ps-2 mb-3 w-100" type="email" placeholder="Email*" required>
+          <button class="modal-btn w-100">Send</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>    </div>
+
+    <div class="d-flex">
+        <!-- side menu bar starts -->
+        <div class="admin-sidebar d-none d-lg-block">
+            <div class="sidebar-menu">
+                <button type="button" class="sidebar-link dashboard-nav-item actLoadLink active" id="btnInformation" loadlink="Properties/AddProperty/Add/0"><i class="fa fa-info-circle icon-left"></i><span>Basic Information</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnPricing" loadlink="Properties/AddPrice/Add/0"><i class="fa fa-tags icon-left"></i><span>Pricing</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnFeatures" loadlink="Properties/AddFeatures/Add/0"><i class="fa fa-money-check-alt icon-left"></i><span>Features</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnImages" loadlink="Properties/AddMedia/Add/0"><i class="fa fa-photo-video icon-left"></i><span>Media</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnDocuments" loadlink="Properties/AddDocuments/Add/0"><i class="fa fa-file-alt icon-left"></i><span>Documents</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnPreview" loadlink="Properties/PreviewProperty/Add/0"><i class="fa fa-eye icon-left"></i><span>Preview</span></button>            </div>
+        </div>
+        <!-- side menu bar ends -->
+
+        <!-- inner section starts -->
+        <div style="width: 100%;">
+          <div class="border-0 mx-1 px-2">
+
+            <!-- mobile screen menu bar -->
+            
+            <div class="offcanvas offcanvas-top mt-5 bg-light h-50" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+              <div class="offcanvas-header mt-5">
+                <h5 class="offcanvas-title text-dark" id="offcanvasTopLabel">Menu</h5>
+                <button type="button" class="text-dark border-0 bg-light" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-xmark fs-3"></i></button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="sidebar-menu w-100 mx-auto" style="max-width: 400px;">
+                    <button type="button" class="sidebar-link dashboard-nav-item actLoadLink active" id="btnInformation" loadlink="Properties/AddProperty/Add/0"><i class="fa fa-info-circle icon-left"></i><span>Basic Information</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnPricing" loadlink="Properties/AddPrice/Add/0"><i class="fa fa-tags icon-left"></i><span>Pricing</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnFeatures" loadlink="Properties/AddFeatures/Add/0"><i class="fa fa-money-check-alt icon-left"></i><span>Features</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnImages" loadlink="Properties/AddMedia/Add/0"><i class="fa fa-photo-video icon-left"></i><span>Media</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnDocuments" loadlink="Properties/AddDocuments/Add/0"><i class="fa fa-file-alt icon-left"></i><span>Documents</span></button><button type="button" class="sidebar-link dashboard-nav-item actLoadLink " id="btnPreview" loadlink="Properties/PreviewProperty/Add/0"><i class="fa fa-eye icon-left"></i><span>Preview</span></button>                </div>
+              </div>
+            </div>
+            <!-- end -->
+            
+            
+            <style>
+                .progress-bar-container {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    margin-bottom: 25px;
+                    padding: 30px 20px 20px;
+                    background: #fff;
+                    border-radius: 20px;
+                    box-shadow: 0 5px 20px rgba(0,0,0,.06);
+                    position: relative;
+                }
+
+                .progress-line-bg {
+                    position: absolute;
+                    top: 49px;
+                    left: 10%;
+                    right: 10%;
+                    height: 3px;
+                    background-color: #808080;
+                    z-index: 0;
+                }
+
+                .progress-step {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    position: relative;
+                    z-index: 1;
+                    flex: 1;
+                    cursor: pointer;
+                    text-decoration: none;
+                }
+
+                .step-circle {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #808080; /* empty */
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                    transition: all 0.3s;
+                }
+
+                .step-circle.completed {
+                    background-color: #28a745;
+                }
+
+                .step-circle.skipped {
+                    background-color: #dc3545;
+                }
+
+                .step-circle.active-step {
+                    box-shadow: 0 0 0 6px rgba(128, 128, 128, 0.2);
+                }
+                .step-circle.active-step.completed {
+                    box-shadow: 0 0 0 6px rgba(40, 167, 69, 0.2);
+                }
+                .step-circle.active-step.skipped {
+                    box-shadow: 0 0 0 6px rgba(220, 53, 69, 0.2);
+                }
+
+                .step-label {
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: #6c757d;
+                    text-align: center;
+                    max-width: 100px;
+                    line-height: 1.2;
+                }
+            </style>
+
+            <!-- <div class="progress-bar-container">
+                <div class="progress-line-bg"></div>
+                
+                                                        <div class="progress-step dashboard-nav-item actLoadLink" loadlink="Properties/AddProperty/Add/0">
+                        <div class="step-circle empty active-step">
+                            1                        </div>
+                        <div class="step-label">
+                            Basic Info                        </div>
+                    </div>
+                                                        <div class="progress-step dashboard-nav-item actLoadLink" loadlink="Properties/AddPrice/Add/0">
+                        <div class="step-circle empty ">
+                            2                        </div>
+                        <div class="step-label">
+                            Pricing                        </div>
+                    </div>
+                                                        <div class="progress-step dashboard-nav-item actLoadLink" loadlink="Properties/AddFeatures/Add/0">
+                        <div class="step-circle empty ">
+                            3                        </div>
+                        <div class="step-label">
+                            Features                        </div>
+                    </div>
+                                                        <div class="progress-step dashboard-nav-item actLoadLink" loadlink="Properties/AddMedia/Add/0">
+                        <div class="step-circle empty ">
+                            4                        </div>
+                        <div class="step-label">
+                            Media                        </div>
+                    </div>
+                                                        <div class="progress-step dashboard-nav-item actLoadLink" loadlink="Properties/AddDocuments/Add/0">
+                        <div class="step-circle empty ">
+                            5                        </div>
+                        <div class="step-label">
+                            Documents                        </div>
+                    </div>
+                                                        <div class="progress-step dashboard-nav-item actLoadLink" loadlink="Properties/PreviewProperty/Add/0">
+                        <div class="step-circle empty ">
+                            6                        </div>
+                        <div class="step-label">
+                            Preview                        </div>
+                    </div>
+                            </div> -->
+
+            <div id="divContent" class="body">
+                <div class="tab-content padding-0">
+                    <div class="tab-pane active" id="divGeneralInformation">
+
+                    </div>
+                </div>
+            </div>
+            <div class="text-center d-none" id="loadSpin" style="padding: 25% 0 25% 0;">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+          </div>
+          <div id="divFunctions">
+</div>
+
+<script src="http://localhost/properties_new/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    var base_url = "http://localhost/properties_new/" ;
+    $("#divFunctions").load(base_url+'Properties/LoadFunctions');
+
+});
+</script>
+
+
+<!-- Footer Start -->
+<div class="d-none container-fluid bg-dark text-white-50 footer pt-5 mt-0 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">Get In Touch</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">Quick Links</h5>
+                <a class="btn btn-link text-white-50" href="">About Us</a>
+                <a class="btn btn-link text-white-50" href="http://localhost/properties_new/Properties/contact">Contact Us</a>
+                <a class="btn btn-link text-white-50" href="">Our Services</a>
+                <a class="btn btn-link text-white-50" href="http://localhost/properties_new/Properties/PrivacyPolicy">Privacy Policy</a>
+                <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">Newsletter</h5>
+                <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                <div class="position-relative mx-auto" style="max-width: 400px;">
+                    <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                    <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="#">RealEstate</a>, All Right Reserved.
+                    Designed By <a class="border-bottom" href="https://jauntsolutions.com/">Jaunts Solutions</a>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-menu">
+                        <a href="">Home</a>
+                        <a href="">Cookies</a>
+                        <a href="">Help</a>
+                        <a href="">FAQs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+
+<footer class="d-none bg-dark text-light py-5">
+  <div class="container-fluid py-3 px-5">
+    <!-- Social Icons and Menu Links -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center border-bottom pb-3">
+      <div class="mb-3 mb-md-0">
+        <a href="#" class="text-reset me-3"><i class="bi bi-facebook fs-4"></i></a>
+        <a href="#" class="text-reset me-3"><i class="bi bi-twitter fs-4"></i></a>
+        <a href="#" class="text-reset me-3"><i class="bi bi-pinterest fs-4"></i></a>
+        <a href="#" class="text-reset me-3"><i class="bi bi-linkedin fs-4"></i></a>
+        <a href="#" class="text-reset"><i class="bi bi-youtube fs-4"></i></a>
+      </div>
+      <div class="d-flex flex-wrap justify-content-center gap-4 small">
+        <a href="http://localhost/properties_new/Properties/PrivacyPolicy" class="fs-5 text-reset">Privacy Policy</a>
+        <a href="#" class="fs-5 text-reset">Contact us</a>
+        <a href="#" class="fs-5 text-reset">Ignite</a>
+        <a href="#" class="fs-5 text-reset">Agent admin</a>
+        <a href="#" class="fs-5 text-reset">Media sales</a>
+        <a href="#" class="fs-5 text-reset">Legal</a>
+        <a href="#" class="fs-5 text-reset">Privacy settings</a>
+        <a href="#" class="fs-5 text-reset">Privacy centre</a>
+        <a href="#" class="fs-5 text-reset">Site map</a>
+        <a href="#" class="fs-5 text-reset">Careers</a>
+      </div>
+    </div>
+
+    <!-- Company Logos -->
+    <div class="d-flex flex-wrap align-items-center gap-5 py-4 border-bottom">
+      <div class="d-flex h6 align-items-center gap-1">
+        <i class="bi bi-house-door-fill text-light"></i>
+        <span class="text-muted">REA Group</span>
+      </div>
+      <div class="d-flex h6 align-items-center gap-1 text-primary">
+        <i class="bi bi-globe2 text-light"></i>
+        <span class="text-muted">realestate.com.au</span>
+      </div>
+      <div class="d-flex h6 align-items-center gap-1 text-primary">
+        <i class="bi bi-building text-light"></i>
+        <span class="text-muted">realcommercial.com.au</span>
+      </div>
+      <div class="d-flex h6 align-items-center gap-1 text-dark">
+        <i class="bi bi-circle-fill text-light"></i>
+        <span class="text-muted">PropTrack</span>
+      </div>
+      <div class="d-flex h6 align-items-center gap-1 text-dark">
+        <i class="bi bi-box-seam text-light"></i>
+        <span class="text-muted">Flatmates</span>
+      </div>
+      <div class="d-flex h6 align-items-center gap-1 text-info">
+        <i class="bi bi-piggy-bank text-light"></i>
+        <span class="text-muted">Mortgage Choice</span>
+      </div>
+      <div class="d-flex h6 align-items-center gap-1 text-danger">
+        <i class="bi bi-house-heart-fill text-light"></i>
+        <span class="text-muted">property</span>
+      </div>
+    </div>
+
+    <!-- International and Partner Sites -->
+    <div class="py-4">
+      <!-- <p class="mb-1 fw-bold  fs-4 text-light">International sites</p>
+      <p class="mb-2 ">
+        <a href="#" class="text-reset me-2">India</a> |
+        <a href="#" class="text-reset mx-2">United States</a> |
+        <a href="#" class="text-reset ms-2">International properties</a>
+      </p>
+
+      <p class="mb-1 fw-bold  fs-4 text-light">Partner sites</p>
+      <p class="mb-2 ">
+        <a href="#" class="text-reset me-2">news.com.au</a> |
+        <a href="#" class="text-reset mx-2">foxsports.com.au</a> |
+        <a href="#" class="text-reset mx-2">Mansion Global</a> |
+        <a href="#" class="text-reset mx-2">askizzy.org.au</a> |
+        <a href="#" class="text-reset ms-2">proptiger.com</a>
+      </p>
+      <hr>
+ -->      <!-- Footer Note -->
+      <p class="mt-4 text-muted">
+        realestate.com.au is owned and operated by ASX-listed REA Group Ltd (REA:ASX) © REA Group Ltd.
+        By accessing or using our platform, you agree to our
+        <a href="#" class="text-decoration-underline text-reset">Terms of Use</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<!-- Back to Top -->
+<a href="#" class="border border-2 rounded-circle border-light btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa-solid fa-arrow-up"></i></a>        </div>
+        <!-- inner section ends -->
+
+    </div>
+
+    <!-- Validation Modal -->
+    <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="validationModalLabel"><i class="fa-solid fa-triangle-exclamation me-2"></i> Required Fields Missing</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body fs-5 text-center py-4">
+            Please fill in all the required fields before proceeding.
+          </div>
+          <div class="modal-footer border-0 justify-content-center pb-4">
+            <button type="button" class="btn btn-secondary px-4 fw-bold" data-bs-dismiss="modal">OK, I will fill them</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Cropper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<!-- Other vendor libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<!-- Utilities and plugins -->
+<script src="http://localhost/properties_new/assets/js/search_box.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<script src="http://localhost/properties_new/assets/js/custom-alerts.js"></script>
+<script src="http://localhost/properties_new/assets/js/main.js"></script>
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+<!-- Tippy.js Script -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+
+<!-- Global Loader Script -->
+<script>
+$(document).ready(function() {
+    // Show loader for AJAX requests
+    $(document).ajaxStart(function() {
+        $('#global-loader').removeClass('d-none').addClass('d-flex');
+    });
+    // Hide loader on AJAX complete
+    $(document).ajaxStop(function() {
+        $('#global-loader').removeClass('d-flex').addClass('d-none');
+    });
+
+    // Show loader on normal form submissions
+    $(document).on('submit', 'form:not(.no-loader)', function() {
+        $('#global-loader').removeClass('d-none').addClass('d-flex');
+    });
+
+    // Show loader on normal link navigation
+    $(document).on('click', 'a[href]:not([href^="#"]):not([href^="javascript:"]):not([target="_blank"]):not(.no-loader)', function(e) {
+        if (e.isDefaultPrevented()) return;
+        $('#global-loader').removeClass('d-none').addClass('d-flex');
+    });
+    
+    // Hide loader if returning via back/forward cache
+    $(window).on('pageshow', function(event) {
+        if (event.originalEvent && event.originalEvent.persisted) {
+            $('#global-loader').removeClass('d-flex').addClass('d-none');
+        }
+    });
+});
+</script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    var base_url = "http://localhost/properties_new/" ;
+
+    $(document).on('click', '.actSubmitForm', function(e) {
+        e.preventDefault();
+        $(this).attr('disabled',true);
+
+        var href = $(this).attr('href');
+        var frm = $(this).attr('frm');
+        var Ref = $(this).attr('ref');
+        var btn = $(this);
+       // Execute Parsley Validation Safely
+       var isValid = false;
+       try {
+           var formInstance = $('#'+frm).parsley();
+           formInstance.validate(); // Explicitly trigger UI messages
+           
+           // In Parsley 2.x, isValid() returns true/false or null
+           var validResult = formInstance.isValid();
+           if (validResult === null || validResult === true) {
+               isValid = true;
+           } else {
+               isValid = false;
+           }
+       } catch (e) {
+           console.error("Parsley validation error: ", e);
+           isValid = false; // Fallback to invalid to show modal and prevent submission
+       }
+       
+       if(isValid)
+       {
+            $("#divContent").hide();
+            //$('#loadSpin').show().removeClass('d-none');
+            var formData = new FormData($("#"+frm)[0]);
+            $.ajax({
+                type        : 'POST',
+                url         : base_url+href,
+                data        : formData,
+                dataType    : 'json',
+                cache       : false,
+                contentType : false,
+                processData : false,
+                success: function(data) {
+                    btn.attr('disabled', false);
+                    if (data.Status == true) 
+                    {
+                     // $('#loadSpin').hide().addClass('d-none');
+                      //$('#ModalDialog').modal('hide');
+                      $("#divContent").show();
+
+                      if (data.Message) 
+                      {
+                        toastr['success'](data.Message,'',{
+                            'positionClass': 'toast-center-center',
+                        });
+                      }
+                      else
+                      {
+                        toastr['success']("Request processed successfully.",'',{
+                            'positionClass': 'toast-center-center',
+                        });
+                      }
+
+                      $.each($(".actLoadLink"), function () 
+                      {
+                          var linkURL = $(this).attr('loadlink');
+                          linkURL = linkURL.replace("/0", "/"+data.PropertyId);
+                          $(this).attr('loadlink',linkURL);
+                      });
+
+                      var NextTab = data.NextTab;
+                      console.log('NextTab = '+NextTab);
+                      if(NextTab) {
+                          $('#'+NextTab).prop('disabled',false);
+                          if(NextTab == 'btnDashboard')
+                          {
+                            window.location.href = base_url + "Properties/dashboard";
+                          }
+                          else
+                          {
+                            $('#'+NextTab).trigger('click');
+                          }
+                      }
+
+
+
+
+
+                    }
+                    else if (data.Status == false) 
+                    {
+                        $("#divContent").show();
+                        $('#loadSpin').hide().addClass('d-none');
+                        
+                        if (data.Message) 
+                        {
+                          toastr['error'](data.Message,'',{
+                              'positionClass': 'toast-center-center',
+                          });
+                        }
+                        else
+                        {
+                          toastr['error']("Please contact System Administrator",'',{
+                              'positionClass': 'toast-center-center',
+                          });
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    btn.attr('disabled', false);
+                    $("#divContent").show();
+                    $('#loadSpin').hide().addClass('d-none');
+                    toastr['error']("A server error occurred. Please try again.",'',{
+                        'positionClass': 'toast-center-center',
+                    });
+                }
+              });
+       }
+       else
+       {
+           btn.attr('disabled', false);
+           if ($('#validationModal').length > 0) {
+               $('#validationModal').modal('show');
+           }
+       }
+       $('#'+frm).removeClass('apply_parsley');
+       }
+        
+        $('.actSubmitForm').attr('disabled',false);
+        
+    });
+    // 
+
+$(document).off('keyup','.actGetAddresses');
+$(document).on('keyup','.actGetAddresses',function(e)
+{
+  var formId  = "#"+$(this).closest('form').attr('id');
+  var Ref = 'Home/LoadAddress';
+  $(this).autocomplete({
+
+    source: function(request, response) {
+    $.ajax({
+    url: base_url+Ref,
+    dataType: "jsonp",
+    data: {
+    str: request.term
+    },
+    
+    success: function(data) {
+    response(data);
+    }
+    });
+    },
+   focus: function( event, ui ) {
+return false;
+},
+    minLength: 3,
+    select: function( event, ui ) {
+      if(ui.item.label == 'No Record Found')
+      {
+
+      }
+      else
+      {
+        $("#txtPropertyAddress").val(ui.item.label);
+        $("#numZipCode").val(ui.item.postcode);
+        $("#txtStreetName").val(ui.item.streetName);
+        $("#txtStreetNumber").val(ui.item.streetNumber);
+        $("#txtUnitNumber").val(ui.item.lotNumber);
+        return false;
+      }
+    }
+  }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+return $( "<li>" )
+.append( "<a>" + item.label +"</a>" )
+.appendTo( ul );
+};
+
+});
+
+
+jQuery.fn.apply_parsley = function(validate){
+    if ($('.apply_parsley').length == 1) {
+        $('#' + $('.apply_parsley').attr('id')).parsley();
+        if (validate) {
+            $('#' + $('.apply_parsley').attr('id')).parsley().validate();
+        }
+    }
+};
+
+});
+
+</script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+   var base_url = "http://localhost/properties_new/";
+   var loadURL = "Properties/AddProperty/Add/0";
+
+   $("#divGeneralInformation").load(base_url+loadURL) ;
+
+
+   $(document).off('click','.dashboard-nav-item');
+   $(document).on('click', '.dashboard-nav-item', function(e){
+
+      e.preventDefault();
+      
+      var targetTab = $(this);
+      
+      // Validate current form before switching tabs
+      var currentForm = $("#divContent form");
+      if(currentForm.length > 0) {
+          currentForm.addClass('apply_parsley');
+          var parsleyInstance = currentForm.parsley();
+          parsleyInstance.validate();
+          
+          var isValid = parsleyInstance.isValid();
+          
+          if (isValid === null || isValid === true) {
+              isValid = true;
+          } else if (isValid === false) {
+              isValid = false;
+          } else if (isValid && isValid.validationResult !== undefined) {
+              isValid = isValid.validationResult;
+          }
+
+          if(!isValid) {
+              if ($('#validationModal').length > 0) {
+                  $('#validationModal').modal('show');
+              }
+              currentForm.removeClass('apply_parsley');
+              return; // stop tab switch
+          }
+          currentForm.removeClass('apply_parsley');
+      }
+      
+      var loadlink = $(this).attr('loadlink');
+      var parts = loadlink.split('/');
+      var propertyId = parts[parts.length - 1];
+      
+      if ((propertyId == 0 || propertyId == '') && $(this).attr('id') != 'btnInformation') {
+          var targetTab = $(this);
+          Swal.fire({
+              icon: 'warning',
+              title: 'Hold On!',
+              text: 'Please save the initial Property Information before proceeding to other tabs.',
+              showCancelButton: true,
+              confirmButtonText: 'Skip & Next',
+              cancelButtonText: 'Stay Here'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  $('.dashboard-nav-item').removeClass('active');
+                  targetTab.addClass('active');
+                  var nextLink = targetTab.attr('loadlink');
+                  $("#divGeneralInformation").html('<div class="text-center py-5"><i class="fa fa-spinner fa-spin fa-3x text-primary"></i></div>');
+                  $("#divGeneralInformation").load(base_url + nextLink);
+              }
+          });
+          return;
+      }
+
+      $('.dashboard-nav-item').removeClass('active');
+      $(this).addClass('active');
+
+      $("#divGeneralInformation").html('<div class="text-center py-5"><i class="fa fa-spinner fa-spin fa-3x text-primary"></i></div>');
+      $("#divGeneralInformation").load(base_url+loadlink) ;
+
+   });
+  });
+
+</script>

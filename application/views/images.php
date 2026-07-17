@@ -1,5 +1,19 @@
 <?php
 $UserId = $this->session->userdata('user_id');
+
+$ExistingDocs = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', '*', "WHERE Reference='Properties' AND ReferenceId='$PropertyId'", 0);
+if (!is_array($ExistingDocs)) $ExistingDocs = [];
+
+$existingImages = [];
+$existingVideos = [];
+foreach ($ExistingDocs as $doc) {
+    $ext = strtolower(pathinfo($doc->FileName, PATHINFO_EXTENSION));
+    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+        $existingImages[] = $doc;
+    } else if (in_array($ext, ['mp4', 'webm', 'ogg', 'mov', 'avi'])) {
+        $existingVideos[] = $doc;
+    }
+}
 ?>
 
 <style>
@@ -106,10 +120,27 @@ $UserId = $this->session->userdata('user_id');
                             <div class="upload-text">Browse files to upload</div>
                             <div class="upload-subtext">Drag and drop images here</div>
                         </div>
-                        <input type="file" id="imageInput" name="images[]" accept="image/*" multiple class="hidden-file-input" required data-parsley-required-message="At least one image is required">
+                        <input type="file" id="imageInput" name="images[]" accept="image/*" multiple class="hidden-file-input" <?= count($existingImages) > 0 ? '' : 'required data-parsley-required-message="At least one image is required"' ?>>
                         <input type="hidden" class="form-control" name="txtReferenceId" value="<?= $UserId; ?>">
-                        
-                        <div id="preview-container-image" class="file-list mt-4"></div>
+                        <div id="preview-container-image" class="file-list mt-4">
+                            <?php foreach($existingImages as $idx => $img): ?>
+                                <div class="file-item" id="doc_<?= $img->DocumentId ?>">
+                                    <div class="file-item-left">
+                                        <img src="<?= base_url('uploads/Properties/'.$PropertyId.'/images/'.$img->FileName) ?>" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                                        <div class="file-info">
+                                            <div class="file-name" title="<?= $img->FileName ?>"><?= $img->FileName ?></div>
+                                            <div class="file-meta">
+                                                <span><?= number_format($img->FileSize, 2) ?> KB</span>
+                                                <span class="text-success"><i class="fa-solid fa-check me-1"></i> Uploaded</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-item-right">
+                                        <button type="button" class="btn btn-sm btn-light text-danger remove-existing-doc" data-id="<?= $img->DocumentId ?>"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
 
                     <!-- Videos Upload Section -->
@@ -122,8 +153,25 @@ $UserId = $this->session->userdata('user_id');
                             <div class="upload-subtext">Drag and drop videos here</div>
                         </div>
                         <input type="file" id="videoInput" name="videos[]" accept="video/*" multiple class="hidden-file-input">
-                        
-                        <div id="preview-container-video" class="file-list mt-4"></div>
+                        <div id="preview-container-video" class="file-list mt-4">
+                            <?php foreach($existingVideos as $idx => $vid): ?>
+                                <div class="file-item" id="doc_<?= $vid->DocumentId ?>">
+                                    <div class="file-item-left">
+                                        <div class="file-icon"><i class="fa-solid fa-file-video"></i></div>
+                                        <div class="file-info">
+                                            <div class="file-name" title="<?= $vid->FileName ?>"><?= $vid->FileName ?></div>
+                                            <div class="file-meta">
+                                                <span><?= number_format($vid->FileSize, 2) ?> KB</span>
+                                                <span class="text-success"><i class="fa-solid fa-check me-1"></i> Uploaded</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-item-right">
+                                        <button type="button" class="btn btn-sm btn-light text-danger remove-existing-doc" data-id="<?= $vid->DocumentId ?>"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -145,9 +193,9 @@ $UserId = $this->session->userdata('user_id');
           <div class="modal-body text-center">
             <img id="cropImage" style="max-width: 100%; max-height: 75vh;" class="img-fluid">
           </div>
-          <div class="modal-footer justify-content-between">
-            <button type="button" id="skipCrop" class="btn btn-secondary">Skip</button>
-            <button type="button" id="cropAndAdd" class="btn btn-success">Crop & Add</button>
+          <div class="modal-footer justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="cropAndSave" class="btn btn-success">Crop & Save</button>
           </div>
         </div>
       </div>
@@ -250,20 +298,25 @@ $UserId = $this->session->userdata('user_id');
     // Image Logic & Cropping
     var cropper;
     var currentFile;
-    var remainingFiles = [];
+    var currentItemElement;
     var previewIndex = 0;
     var imageFileTransfer = new DataTransfer();
 
     document.getElementById('imageInput').addEventListener('change', function (e) {
         var files = Array.from(e.target.files);
         if (files.length > 0) {
-            loadImageForCropping(files.shift(), files);
+            files.forEach(file => {
+                imageFileTransfer.items.add(file);
+                previewIndex++;
+                showImagePreview(URL.createObjectURL(file), file, previewIndex);
+            });
+            document.getElementById('imageInput').files = imageFileTransfer.files;
         }
     });
 
-    function loadImageForCropping(file, restFiles) {
+    function openCropperForFile(file, itemElement) {
         currentFile = file;
-        remainingFiles = restFiles;
+        currentItemElement = itemElement;
         var reader = new FileReader();
 
         reader.onload = function (event) {
@@ -278,7 +331,7 @@ $UserId = $this->session->userdata('user_id');
             var cropModal = new bootstrap.Modal(cropModalElement);
             cropModal.show();
 
-            cropModalElement.addEventListener('shown.bs.modal', function handleShown() {
+            var handleShown = function () {
                 cropModalElement.removeEventListener('shown.bs.modal', handleShown);
                 if (cropper) cropper.destroy();
 
@@ -296,13 +349,14 @@ $UserId = $this->session->userdata('user_id');
                         });
                     }
                 });
-            });
+            };
+            cropModalElement.addEventListener('shown.bs.modal', handleShown);
         };
 
         reader.readAsDataURL(file);
     }
 
-    function showImagePreview(src, file) {
+    function showImagePreview(src, file, idx) {
         var fileSize = (file.size / 1024).toFixed(2) + ' KB';
         if (file.size > 1024 * 1024) fileSize = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
         var isFirst = document.querySelectorAll('input[name="featureImage"]').length === 0;
@@ -313,21 +367,22 @@ $UserId = $this->session->userdata('user_id');
         
         item.innerHTML = `
             <div class="file-item-left">
-                <img src="${src}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
+                <img src="${src}" class="rounded preview-img" style="width: 40px; height: 40px; object-fit: cover;">
                 <div class="file-info">
                     <div class="file-name" title="${file.name}">${file.name}</div>
                     <div class="file-meta">
-                        <span>${fileSize}</span>
+                        <span class="file-size-text">${fileSize}</span>
                         <span class="text-success"><i class="fa-solid fa-check me-1"></i> Ready</span>
                     </div>
                 </div>
             </div>
             <div class="file-item-right">
                 <div class="form-check m-0 d-flex align-items-center gap-2" title="Set as Feature Image">
-                    <input class="form-check-input feature-radio" type="radio" name="featureImage" id="featImg${previewIndex}" value="${file.name}" ${isFirst ? 'checked' : ''}>
-                    <label class="form-check-label small text-muted mb-0" for="featImg${previewIndex}">Feature</label>
+                    <input class="form-check-input feature-radio" type="radio" name="featureImage" id="featImg${idx}" value="${file.name}" ${isFirst ? 'checked' : ''}>
+                    <label class="form-check-label small text-muted mb-0" for="featImg${idx}">Feature</label>
                 </div>
-                <button type="button" class="btn btn-sm btn-light text-danger remove-image"><i class="fa-solid fa-trash"></i></button>
+                <button type="button" class="btn btn-sm btn-light text-primary crop-image" title="Crop Image"><i class="fa-solid fa-crop"></i></button>
+                <button type="button" class="btn btn-sm btn-light text-danger remove-image" title="Remove Image"><i class="fa-solid fa-trash"></i></button>
             </div>
         `;
         
@@ -344,49 +399,104 @@ $UserId = $this->session->userdata('user_id');
             Array.from(dt.files).forEach(f => imageFileTransfer.items.add(f));
             document.getElementById('imageInput').files = imageFileTransfer.files;
             
-            // Check if feature image was deleted and reassign if necessary
             if (item.querySelector('.feature-radio').checked) {
                 var firstRadio = document.querySelector('input[name="featureImage"]');
                 if (firstRadio) firstRadio.checked = true;
             }
+            
+            checkImageRequired();
+        });
+
+        item.querySelector('.crop-image').addEventListener('click', function() {
+            var fileName = item.dataset.filename;
+            var fileToCrop = null;
+            Array.from(imageFileTransfer.files).forEach(f => {
+                if(f.name === fileName) fileToCrop = f;
+            });
+            
+            if (fileToCrop) {
+                openCropperForFile(fileToCrop, item);
+            }
         });
 
         document.getElementById('preview-container-image').appendChild(item);
+        checkImageRequired();
+    }
+    
+    function checkImageRequired() {
+        var count = document.querySelectorAll('#preview-container-image .file-item').length;
+        var input = $('#imageInput');
+        if(input.length && input.parsley()) {
+            input.parsley().destroy();
+        }
+        
+        if(count > 0) {
+            input.removeAttr('required');
+            input.removeAttr('data-parsley-required-message');
+        } else {
+            input.attr('required', 'required');
+            input.attr('data-parsley-required-message', 'At least one image is required');
+        }
     }
 
-    document.getElementById('cropAndAdd').addEventListener('click', function () {
+    document.getElementById('cropAndSave').addEventListener('click', function () {
+        if (!cropper || !currentFile || !currentItemElement) return;
+
         var canvas = cropper.getCroppedCanvas();
         var mimeType = currentFile.type || 'image/png';
 
         canvas.toBlob(blob => {
             var croppedFile = new File([blob], currentFile.name, { type: mimeType });
-            imageFileTransfer.items.add(croppedFile);
+            
+            // Replace in imageFileTransfer
+            var dt = new DataTransfer();
+            Array.from(imageFileTransfer.files).forEach(f => {
+                if (f.name === currentFile.name) {
+                    dt.items.add(croppedFile);
+                } else {
+                    dt.items.add(f);
+                }
+            });
+            imageFileTransfer.items.clear();
+            Array.from(dt.files).forEach(f => imageFileTransfer.items.add(f));
             document.getElementById('imageInput').files = imageFileTransfer.files;
 
-            previewIndex++;
-            showImagePreview(URL.createObjectURL(croppedFile), croppedFile);
+            // Update preview card
+            var newSrc = URL.createObjectURL(croppedFile);
+            currentItemElement.querySelector('.preview-img').src = newSrc;
+            
+            var fileSize = (croppedFile.size / 1024).toFixed(2) + ' KB';
+            if (croppedFile.size > 1024 * 1024) fileSize = (croppedFile.size / (1024 * 1024)).toFixed(2) + ' MB';
+            currentItemElement.querySelector('.file-size-text').innerText = fileSize;
 
             bootstrap.Modal.getInstance(document.getElementById('cropModal')).hide();
-
-            if (remainingFiles.length > 0) {
-                loadImageForCropping(remainingFiles.shift(), remainingFiles);
-            }
         }, mimeType);
     });
 
-    document.getElementById('skipCrop').addEventListener('click', function () {
-        var file = currentFile;
-        imageFileTransfer.items.add(file);
-        document.getElementById('imageInput').files = imageFileTransfer.files;
-
-        previewIndex++;
-        showImagePreview(URL.createObjectURL(file), file);
-
-        bootstrap.Modal.getInstance(document.getElementById('cropModal')).hide();
-
-        if (remainingFiles.length > 0) {
-            loadImageForCropping(remainingFiles.shift(), remainingFiles);
-        }
+    document.querySelectorAll('.remove-existing-doc').forEach(btn => {
+        btn.addEventListener('click', function () {
+            if(!confirm("Are you sure you want to delete this media?")) return;
+            var docId = this.dataset.id;
+            
+            fetch('<?= base_url("Documents/DeleteDocument/") ?>' + docId, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.Status) {
+                    var item = document.getElementById('doc_' + docId);
+                    if(item) {
+                        item.remove();
+                        checkImageRequired();
+                    }
+                } else {
+                    alert('Error deleting file');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Error deleting file');
+            });
+        });
     });
-
 </script>

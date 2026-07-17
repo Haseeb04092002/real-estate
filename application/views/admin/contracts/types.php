@@ -28,6 +28,7 @@
                             <tr>
                                 <th class="fw-semibold">ID</th>
                                 <th class="fw-semibold">Title</th>
+                                <th class="fw-semibold">Property Type</th>
                                 <th class="fw-semibold">Status</th>
                                 <th class="fw-semibold">Created</th>
                                 <th class="fw-semibold">Actions</th>
@@ -40,6 +41,13 @@
                                     <td><?= $t->TypeId ?></td>
                                     <td class="fw-bold"><?= $t->Title ?></td>
                                     <td>
+                                        <?php if($t->PropertyTypeTitle): ?>
+                                            <span class="badge bg-info text-dark"><?= $t->PropertyTypeTitle ?></span>
+                                        <?php else: ?>
+                                            <span class="text-muted">-</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
                                         <?php if($t->IsActive == 1): ?>
                                             <span class="badge bg-success">Active</span>
                                         <?php else: ?>
@@ -48,12 +56,13 @@
                                     </td>
                                     <td><?= date('d M Y', strtotime($t->AddedOn)) ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="editType(<?= $t->TypeId ?>, '<?= addslashes($t->Title) ?>', <?= $t->IsActive ?>)">Edit</button>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="editType(<?= $t->TypeId ?>, '<?= addslashes($t->Title) ?>', <?= $t->IsActive ?>, <?= $t->PropertyTypeId ?: 'null' ?>)">Edit</button>
+                                        <button class="btn btn-sm btn-outline-danger ms-1" onclick="deleteContractItem(<?= $t->TypeId ?>, 'type')"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <tr><td colspan="5" class="text-center text-muted">No contract types found.</td></tr>
+                                <tr><td colspan="6" class="text-center text-muted">No contract types found.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
@@ -80,6 +89,15 @@
                             <input type="text" class="form-control" name="Title" id="TypeTitle" required placeholder="e.g. Property Sale Agreement">
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Property Type (Optional)</label>
+                            <select class="form-select" name="PropertyTypeId" id="PropertyTypeId">
+                                <option value="">General (All Property Types)</option>
+                                <?php if(!empty($property_types)): foreach($property_types as $pt): ?>
+                                    <option value="<?= $pt->TypeId ?>"><?= $pt->Title ?></option>
+                                <?php endforeach; endif; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select class="form-select" name="IsActive" id="TypeStatus">
                                 <option value="1">Active</option>
@@ -102,16 +120,38 @@
             document.getElementById('modalTitle').innerText = 'Create Contract Type';
             document.getElementById('TypeId').value = '';
             document.getElementById('TypeTitle').value = '';
+            document.getElementById('PropertyTypeId').value = '';
             document.getElementById('TypeStatus').value = '1';
         }
 
-        function editType(id, title, status) {
+        function editType(id, title, status, propertyTypeId) {
             document.getElementById('modalTitle').innerText = 'Edit Contract Type';
             document.getElementById('TypeId').value = id;
             document.getElementById('TypeTitle').value = title;
+            document.getElementById('PropertyTypeId').value = propertyTypeId || '';
             document.getElementById('TypeStatus').value = status;
             var myModal = new bootstrap.Modal(document.getElementById('typeModal'));
             myModal.show();
+        }
+
+        function deleteContractItem(id, type) {
+            customConfirm('Delete Confirmation', 'Are you sure you want to delete this item?', 'warning', function(confirmed) {
+                if(confirmed) {
+                    $.ajax({
+                        url: '<?= site_url('Admin/api_soft_delete_contract_item') ?>',
+                        type: 'POST',
+                        data: { id: id, type: type },
+                        dataType: 'json',
+                        success: function(res) {
+                            if(res.success) {
+                                location.reload();
+                            } else {
+                                customAlert('Error', 'Failed to delete.', 'error');
+                            }
+                        }
+                    });
+                }
+            });
         }
     </script>
 </body>

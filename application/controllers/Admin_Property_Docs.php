@@ -18,7 +18,7 @@ class Admin_Property_Docs extends CI_Controller {
     }
 
     public function index() {
-        redirect('Admin_Property_Docs/analytics');
+        redirect('Admin_Property_Docs/types');
     }
 
     public function analytics() {

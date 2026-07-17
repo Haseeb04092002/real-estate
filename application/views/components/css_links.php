@@ -10,8 +10,31 @@
 <link href="<?php echo base_url('assets/css/animate.min.css'); ?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/css/owl.carousel.min.css'); ?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/css/owl.theme.default.min.css'); ?>" rel="stylesheet">
-<link href="<?php echo base_url('assets/toastr/toastr.min.css');?>" rel="stylesheet">
-<link href="<?php echo base_url('assets/parsleyjs/css/parsley.css');?>" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<style>
+.parsley-errors-list {
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+    transition: all .3s ease-in;
+    color: #dc3545;
+}
+.parsley-errors-list.filled {
+    opacity: 1;
+}
+.parsley-type, .parsley-required, .parsley-equalto {
+    color: #dc3545;
+}
+.parsley-error {
+    border-color: #dc3545 !important;
+}
+.parsley-success {
+    border-color: #198754 !important;
+}
+</style>
 <link href="<?php echo base_url('assets/js/jquery-ui.min.css');?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/css/style.css'); ?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/css/property_details.css'); ?>" rel="stylesheet">

@@ -40,12 +40,12 @@
                                 <tr>
                                     <td>
                                         <small class="text-muted d-block">ID: <?= $d->PropertyId ?></small>
-                                        <span class="fw-bold text-truncate d-inline-block" style="max-width:200px;" title="<?= htmlspecialchars($d->PropertyTitle) ?>"><?= htmlspecialchars($d->PropertyTitle) ?></span>
+                                        <span class="fw-bold text-truncate d-inline-block" style="max-width:200px;" title="<?= htmlspecialchars($d->PropertyTitle ?? '') ?>"><?= htmlspecialchars($d->PropertyTitle ?? '') ?></span>
                                     </td>
                                     <td>
-                                        <a href="<?= site_url('Admin/user_details/'.$d->SellerId) ?>" class="text-decoration-none fw-bold" target="_blank"><?= htmlspecialchars($d->SellerName) ?></a>
+                                        <a href="<?= site_url('Admin/user_details/'.$d->SellerId) ?>" class="text-decoration-none fw-bold" target="_blank"><?= htmlspecialchars($d->SellerName ?? '') ?></a>
                                     </td>
-                                    <td><span class="badge bg-secondary"><?= htmlspecialchars($d->TypeTitle) ?></span></td>
+                                    <td><span class="badge bg-secondary"><?= htmlspecialchars($d->TypeTitle ?? '') ?></span></td>
                                     <td><?= date('d M Y, H:i', strtotime($d->UploadedDate)) ?></td>
                                     <td>
                                         <?php if($d->ExpiryDate): ?>
@@ -69,7 +69,7 @@
                                         <span class="badge <?= $sc ?>"><?= $d->VerificationStatus ?></span>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url($d->FilePath) ?>" target="_blank" class="btn btn-sm btn-outline-info me-1" title="View Document"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="<?= base_url('uploads/PropertyDocs/' . $d->PropertyId . '/' . $d->FilePath) ?>" target="_blank" class="btn btn-sm btn-outline-info me-1" title="View Document"><i class="fa-solid fa-eye"></i></a>
                                         <button class="btn btn-sm btn-outline-primary" onclick='reviewDoc(<?= json_encode($d) ?>)' title="Review & Action"><i class="fa-solid fa-gavel"></i></button>
                                     </td>
                                 </tr>
