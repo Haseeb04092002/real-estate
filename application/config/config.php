@@ -16,9 +16,12 @@
 // $root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 // $config['base_url']    = $root; 
 // $config['base_url'] = 'http://localhost/properties_new/';   
-$root = "https://".$_SERVER['HTTP_HOST'];
-$root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-$config['base_url']    = $root;
+// $root = "https://".$_SERVER['HTTP_HOST'];
+// $root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+// $config['base_url']    = $root;
+$config['base_url']    = "https://softwares.itimium.com.pk/real-estate";
+
+
 //$config['send_to_mail']	=   'abbasmsyed@gmail.com';
 
 /*
