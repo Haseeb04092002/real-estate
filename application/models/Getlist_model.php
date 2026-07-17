@@ -1,6 +1,6 @@
 <?php
 
-class getlist_model extends CI_Model {
+class Getlist_model extends CI_Model {
 
     var $title   = '';
     var $content = '';
