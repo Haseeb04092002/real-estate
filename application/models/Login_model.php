@@ -39,20 +39,20 @@ class Login_model extends CI_Model {
         $post_user_name 	= $this->input->post('txtUserEmail');   
         $post_user_pass  	= $this->input->post('txtUserPassword');
 
-    	$UserData = ($post_user_name)?$this->getlist_model->getFieldsMultipleConditions('clients_view','ClientId, CompanyId, StationParentId, StationId, ClientName, Password, EmailAddress'," WHERE EmailAddress = '$post_user_name' AND IsDeleted = '0'",2):'';
+    	$UserData = ($post_user_name)?$this->getlist_model->getFieldsMultipleConditions('tbl_clients','*'," WHERE EmailAddress = '$post_user_name'",2):'';
 
 		if($UserData)
 		{
-			$user_id  			= $UserData->ClientId;
-			$user_name			= $UserData->ClientName;
-		    $user_email     	= $UserData->EmailAddress;
-		    $user_password     	= $UserData->Password;
-			$client_id			= $UserData->ClientId;
-			$client_name		= $UserData->ClientName;
-			$user_company		= $UserData->CompanyId;
-			$user_station		= $UserData->StationId;
+			$user_id  			= isset($UserData->ClientId) ? $UserData->ClientId : (isset($UserData->id) ? $UserData->id : '');
+			$user_name			= isset($UserData->ClientName) ? $UserData->ClientName : '';
+		    $user_email     	= isset($UserData->EmailAddress) ? $UserData->EmailAddress : '';
+		    $user_password     	= isset($UserData->Password) ? $UserData->Password : '';
+			$client_id			= $user_id;
+			$client_name		= $user_name;
+			$user_company		= isset($UserData->CompanyId) ? $UserData->CompanyId : '';
+			$user_station		= isset($UserData->StationId) ? $UserData->StationId : '';
 			$user_thumb     	= '';
-			$parent_station 	= $UserData->StationParentId;
+			$parent_station 	= isset($UserData->StationParentId) ? $UserData->StationParentId : '';
 			$logo				= '';
 		}
 

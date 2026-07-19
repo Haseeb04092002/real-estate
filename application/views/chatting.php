@@ -12,8 +12,8 @@ if (empty($arrProperties)) {
 $StationId = $this->session->userdata('user_station');
 
 $PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties','*',"WHERE PropertyId = '$PropertyId'", 2);
-$SellerDetails = $this->getlist_model->getFieldsMultipleConditions('clients_view','*',"WHERE ClientId = '$SellerId'", 2);
-$BuyerDetails = $this->getlist_model->getFieldsMultipleConditions('clients_view','*',"WHERE ClientId = '$BuyerId'", 2);
+$SellerDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_clients','*',"WHERE ClientId = '$SellerId'", 2);
+$BuyerDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_clients','*',"WHERE ClientId = '$BuyerId'", 2);
 
 $data = array();
 $data['IsRead'] = 1;
