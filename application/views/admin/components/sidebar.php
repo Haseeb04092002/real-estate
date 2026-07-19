@@ -77,19 +77,19 @@ $is_contract_mgmt = in_array($current_page, ['contract_management', 'contract_ty
         </li>
 
         <!-- 4. Payment and Billing -->
-        <a href="#" class="sidebar-link <?= ($current_page == 'payment_billing') ? 'active' : '' ?>">
+        <a href="<?= site_url('Admin/payment_billing') ?>" class="sidebar-link <?= ($current_page == 'payment_billing') ? 'active' : '' ?>">
             <i class="fa-solid fa-file-invoice-dollar icon-left"></i>
             <span>Payment and Billing</span>
         </a>
 
         <!-- 7. Review Rating -->
-        <a href="#" class="sidebar-link <?= ($current_page == 'review_rating') ? 'active' : '' ?>">
+        <a href="<?= site_url('Admin/review_rating') ?>" class="sidebar-link <?= ($current_page == 'review_rating') ? 'active' : '' ?>">
             <i class="fa-solid fa-star icon-left"></i>
             <span>Review Rating</span>
         </a>
 
         <!-- 8. Support Ticket -->
-        <a href="#" class="sidebar-link <?= ($current_page == 'support_ticket') ? 'active' : '' ?>">
+        <a href="<?= site_url('Admin/support_ticket') ?>" class="sidebar-link <?= ($current_page == 'support_ticket') ? 'active' : '' ?>">
             <i class="fa-solid fa-headset icon-left"></i>
             <span>Support Ticket</span>
         </a>

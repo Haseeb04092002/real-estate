@@ -691,4 +691,22 @@ class Admin extends CI_Controller {
         echo json_encode(['success' => true]);
     }
 
+    public function payment_billing() {
+        $this->check_auth();
+        $data['page_title'] = 'Payment and Billing';
+        $this->load->view('admin/under_development', $data);
+    }
+
+    public function review_rating() {
+        $this->check_auth();
+        $data['page_title'] = 'Review Rating';
+        $this->load->view('admin/under_development', $data);
+    }
+
+    public function support_ticket() {
+        $this->check_auth();
+        $data['page_title'] = 'Support Ticket';
+        $this->load->view('admin/under_development', $data);
+    }
+
 }
