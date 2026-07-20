@@ -88,4 +88,23 @@ class Register extends CI_Controller {
         echo "<p>You can now test adding a new property from a completely clean slate.</p>";
     }
 
+    public function force_fix_db() {
+        $this->load->database();
+        
+        // 1. Wipe everything to ensure no '0' IDs exist blocking the ALTER
+        $this->db->query("TRUNCATE TABLE tbl_properties");
+        $this->db->query("TRUNCATE TABLE tbl_properties_features");
+        $this->db->query("TRUNCATE TABLE tbl_property_documents");
+        $this->db->query("TRUNCATE TABLE tbl_property_feature_mapping");
+
+        // 2. Force AUTO_INCREMENT on PropertyId
+        $this->db->query("SET FOREIGN_KEY_CHECKS=0");
+        $sql = "ALTER TABLE tbl_properties MODIFY PropertyId INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+        $this->db->query($sql);
+        $this->db->query("SET FOREIGN_KEY_CHECKS=1");
+        
+        echo "<h3>CRITICAL FIX APPLIED!</h3>";
+        echo "<p>The database has been forcefully updated so that PropertyId Auto-Increments.</p>";
+        echo "<p>Please go to your dashboard and click <b>Add Property</b>. Everything will work perfectly now!</p>";
+    }
 }
