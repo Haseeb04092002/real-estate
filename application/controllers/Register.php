@@ -43,4 +43,14 @@ class Register extends CI_Controller {
 		}
 	}
 
+	public function alter_db()
+	{
+		$sql = "ALTER TABLE tbl_clients MODIFY ClientId INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+		if($this->db->query($sql)) {
+			echo "Success: ClientId is now a Primary Key and Auto Increment.";
+		} else {
+			echo "Error: " . $this->db->error()['message'];
+		}
+	}
+
 }
