@@ -1019,6 +1019,7 @@ class Properties extends CI_Controller {
       
       $Response['Status'] = true;
       $Response['Message'] = 'Documents saved successfully.';
+      $Response['PropertyId'] = $PropertyId;
       
       if ($Response['Status']) {
           $Response['NextTab'] = 'btnPreview';
