@@ -82,8 +82,10 @@ class Register extends CI_Controller {
         $this->db->query("TRUNCATE TABLE tbl_properties");
         $this->db->query("TRUNCATE TABLE tbl_properties_features");
         $this->db->query("TRUNCATE TABLE tbl_property_documents");
-        // Also truncate pricing/images tables if they exist
-        $this->db->query("TRUNCATE TABLE tbl_property_media"); // if applicable, ignoring errors if it doesn't exist
+        // Also truncate images tables if they exist
+        if ($this->db->table_exists('tbl_documents')) {
+            $this->db->query("TRUNCATE TABLE tbl_documents"); 
+        }
         echo "<h3>Database successfully reset! All ghost properties and documents cleared.</h3>";
         echo "<p>You can now test adding a new property from a completely clean slate.</p>";
     }
