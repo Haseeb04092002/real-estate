@@ -67,12 +67,10 @@ class Register extends CI_Controller {
 
     public function test_property($id = 1) {
         $this->load->database();
-        $q = $this->db->query("SELECT * FROM tbl_properties WHERE PropertyId = $id");
-        echo "<pre>";
-        if($q->num_rows() > 0) {
-            print_r($q->row_array());
-        } else {
-            echo "Property $id does NOT exist.";
+        $q = $this->db->query("SELECT * FROM tbl_properties");
+        echo "<pre>Total Properties: " . $q->num_rows() . "\n";
+        foreach($q->result_array() as $row) {
+            print_r($row);
         }
         echo "</pre>";
     }
