@@ -436,26 +436,7 @@ $this->load->view('components/css_links');
       var parts = loadlink.split('/');
       var propertyId = parts[parts.length - 1];
       
-      if ((propertyId == 0 || propertyId == '') && $(this).attr('id') != 'btnInformation') {
-          var targetTab = $(this);
-          Swal.fire({
-              icon: 'warning',
-              title: 'Hold On!',
-              text: 'Please save the initial Property Information before proceeding to other tabs.',
-              showCancelButton: true,
-              confirmButtonText: 'Skip & Next',
-              cancelButtonText: 'Stay Here'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  $('.dashboard-nav-item').removeClass('active');
-                  targetTab.addClass('active');
-                  var nextLink = targetTab.attr('loadlink');
-                  $("#divGeneralInformation").html('<div class="text-center py-5"><i class="fa fa-spinner fa-spin fa-3x text-primary"></i></div>');
-                  $("#divGeneralInformation").load(base_url + nextLink);
-              }
-          });
-          return;
-      }
+
 
       $('.dashboard-nav-item').removeClass('active');
       $(this).addClass('active');
