@@ -715,14 +715,12 @@ class Properties extends CI_Controller {
   public function ListProperty($Case='Add', $encData='Jaunt', $PropertyId=0, $SubView='information')
   {
     $data = [
-        'PageReference' => "Properties/AddListing/$encData/$PropertyId/$SubView",
-        'PageTitle'     => 'List Property',
-        'StationId'     => '9',
-        'CountryId'     => '6',
-        'RegionId'      => '6',
-        'Case'          => $Case
+        'StationId'  => '9',
+        'PropertyId' => $PropertyId,
+        'Case'       => $Case,
+        'SubView'    => $SubView
     ];
-    $this->load->view('index_external', $data);
+    $this->load->view('list_property_form', $data);
   } 
 
   public function AddListing($PropertyId=0, $Case = 'Add', $SubView='information' )
