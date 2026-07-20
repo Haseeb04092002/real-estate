@@ -45,12 +45,24 @@ class Register extends CI_Controller {
 
 	public function alter_db()
 	{
-		$sql = "ALTER TABLE tbl_clients MODIFY ClientId INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
-		if($this->db->query($sql)) {
-			echo "Success: ClientId is now a Primary Key and Auto Increment.";
+		$sql1 = "ALTER TABLE tbl_clients MODIFY ClientId INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+		$sql2 = "ALTER TABLE tbl_properties MODIFY PropertyId INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+		
+		if($this->db->query($sql1) && $this->db->query($sql2)) {
+			echo "Success: ClientId and PropertyId are now Primary Keys and Auto Increment.";
 		} else {
 			echo "Error: " . $this->db->error()['message'];
 		}
 	}
+
+    public function check_prop_zero() {
+        $this->load->database();
+        $q = $this->db->query("SELECT * FROM tbl_properties WHERE PropertyId = 0");
+        if($q->num_rows() > 0) {
+            echo "Property 0 exists! Title: " . $q->row()->PropertyTitle;
+        } else {
+            echo "Property 0 does NOT exist.";
+        }
+    }
 
 }

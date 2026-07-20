@@ -840,8 +840,11 @@ class Properties extends CI_Controller {
 
   public function AddFeatures($Case='Add', $PropertyId=0, $StationId=0)
   {
-    $PropertyData = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'PropertyTypeId', "WHERE PropertyId = '".(int)$PropertyId."'", 2);
-    $PropertyTypeId = $PropertyData->PropertyTypeId ?? 0;
+    $PropertyTypeId = 0;
+    if ($PropertyId > 0) {
+        $PropertyData = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'PropertyTypeId', "WHERE PropertyId = '".(int)$PropertyId."'", 2);
+        $PropertyTypeId = $PropertyData->PropertyTypeId ?? 0;
+    }
 
     // Fetch dynamic features for this property type AND system features (PropertyTypeId = 0)
     $DynamicFeatures = $this->db->where('PropertyTypeId', $PropertyTypeId)

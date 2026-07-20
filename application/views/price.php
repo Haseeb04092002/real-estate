@@ -1,7 +1,11 @@
 <?php
 $PropertyId = $PropertyId ?? '0';
 
-$PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyId = '$PropertyId'", 2);
+if($PropertyId > 0) {
+    $PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', "WHERE PropertyId = '$PropertyId'", 2);
+} else {
+    $PropertyDetails = false;
+}
 
 $ListType = '';
 $TotalPrice = '';

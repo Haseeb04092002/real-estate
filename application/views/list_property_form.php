@@ -461,7 +461,23 @@ $this->load->view('components/css_links');
       $(this).addClass('active');
 
       $("#divGeneralInformation").html('<div class="text-center py-5"><i class="fa fa-spinner fa-spin fa-3x text-primary"></i></div>');
-      $("#divGeneralInformation").load(base_url+loadlink) ;
+      $("#divGeneralInformation").load(base_url+loadlink);
+
+      // Update browser URL
+      var tabMapping = {
+          'btnInformation': 'information',
+          'btnPricing': 'pricing',
+          'btnFeatures': 'features',
+          'btnImages': 'media',
+          'btnDocuments': 'documents',
+          'btnPreview': 'preview'
+      };
+      var subView = tabMapping[targetTabId];
+      if (subView) {
+          var currentCase = "<?= $Case ?>";
+          var newBrowserUrl = base_url + "Properties/ListProperty/" + currentCase + "/Jaunt/" + propertyId + "/" + subView;
+          window.history.pushState({path:newBrowserUrl}, '', newBrowserUrl);
+      }
 
    });
   });

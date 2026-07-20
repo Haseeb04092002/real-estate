@@ -18,7 +18,11 @@ $arrRegion      = $this->getlist_model->getDropDownArray('tbl_regions','Title','
 $arrTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','TypeId,Title,PropertyIcon',"ORDER BY SortOrder");
 if(!is_array($arrTypes)) $arrTypes = [];
 
-$PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties','*',"WHERE PropertyId = '$PropertyId'",2);
+if($PropertyId > 0) {
+    $PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties','*',"WHERE PropertyId = '$PropertyId'",2);
+} else {
+    $PropertyDetails = false;
+}
 
 $PropertyTypeId = '1';
 
