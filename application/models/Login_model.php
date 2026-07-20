@@ -121,9 +121,12 @@ class Login_model extends CI_Model {
 				$UserId = $this->db->insert_id();
 				// $UserId = true;
 				return $UserId;
-			}
+			} else {
+                return $this->db->error()['message'];
+            }
 
 		}
+        return 'Validation failed';
 	}
 	
 	

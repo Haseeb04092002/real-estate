@@ -19,12 +19,12 @@ class Register extends CI_Controller {
 		$PostData = $this->input->post();
 		$UserId = $this->Login_model->register_user($PostData);
 		//$this->load->view('dashboard');
-		if($UserId > 0 )
+		if(is_numeric($UserId) && $UserId > 0 )
 		{
 			redirect('Properties/signin');
 		}
-		elseif ($UserId <= 0) {
-			echo 'error';
+		else {
+			echo 'error: ' . $UserId;
 		}
 	}
 
@@ -34,12 +34,12 @@ class Register extends CI_Controller {
 		$PostData = $this->input->post();
 		$UserId = $this->Login_model->register_user($PostData);
 		//$this->load->view('dashboard');
-		if($UserId > 0 )
+		if(is_numeric($UserId) && $UserId > 0 )
 		{
 			redirect('Properties/signin');
 		}
-		elseif ($UserId <= 0) {
-			echo 'error';
+		else {
+			echo 'error: ' . $UserId;
 		}
 	}
 
