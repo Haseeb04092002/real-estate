@@ -977,7 +977,6 @@ class Properties extends CI_Controller {
   public function SavePropertyDocuments($PropertyId=0)
   {
       $Response['Status'] = false;
-      $Response['Message'] = 'No files selected.';
       $UserId = $this->session->userdata('user_id');
       
       $uploadDir = "uploads/PropertyDocs/$PropertyId";
@@ -1010,12 +1009,13 @@ class Properties extends CI_Controller {
                       } else {
                           $this->db->insert('tbl_property_documents', $data);
                       }
-                      $Response['Status'] = true;
-                      $Response['Message'] = 'Documents uploaded successfully.';
                   }
               }
           }
       }
+      
+      $Response['Status'] = true;
+      $Response['Message'] = 'Documents saved successfully.';
       
       if ($Response['Status']) {
           $Response['NextTab'] = 'btnPreview';
@@ -1032,7 +1032,7 @@ class Properties extends CI_Controller {
           if ($doc) {
               $filePath = FCPATH . 'uploads/PropertyDocs/' . $doc->PropertyId . '/' . $doc->FilePath;
               if (file_exists($filePath)) {
-                  unlink($filePath);
+                  @unlink($filePath);
               }
               $this->db->where('DocumentId', $DocumentId)->delete('tbl_property_documents');
               $Response['Status'] = true;

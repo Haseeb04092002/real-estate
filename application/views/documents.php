@@ -151,9 +151,7 @@ $UserId = $this->session->userdata('user_id');
                                                         <div class="file-info">
                                                             <div class="file-name" title="<?= $fileName ?>"><?= $fileName ?></div>
                                                             <div class="file-meta">
-                                                                <span class="badge bg-<?= ($status=='Approved')?'success':(($status=='Pending')?'warning':'danger') ?> px-2 py-1" style="font-size: 10px;">
-                                                                    Status: <?= $status ?>
-                                                                </span>
+                                                                <!-- Status badge removed -->
                                                             </div>
                                                         </div>
                                                     </div>
