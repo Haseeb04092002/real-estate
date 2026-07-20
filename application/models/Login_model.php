@@ -98,7 +98,7 @@ class Login_model extends CI_Model {
 
     function register_user($PostData='')
 	{
-		// $PostData 		= $this->input->post();
+		$PostData 		= $this->input->post();
 
 	 	$encKey = $this->config->item('encryption_key');
 		$ClientName		= $PostData['FullName'];
