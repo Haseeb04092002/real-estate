@@ -51,15 +51,15 @@ if (empty($arrProperties)) {
 
                     <?php foreach ($arrProperties as $key => $value) {
 
-                        $PropertyId     = $value->PropertyId;
-                        $IsDeleted      = $value->IsDeleted;
-                        $PropertyTitle  = $value->PropertyTitle ?: "Property Title";
-                        $PropertyType   = $value->PropertyType ?: "Property Type";
-                        $ListType       = $value->ListType ?: "Sale";
-                        $TotalPrice     = $value->TotalPrice ?: "0";
-                        $MailingAddress = $value->MailingAddress ?: "Mailing Address";
-                        $CoveredArea    = $value->CoveredArea ?: "0";
-                        $AreaUnitId     = $value->AreaUnitId ?: "1";
+                        $PropertyId     = $value->PropertyId ?? '';
+                        $IsDeleted      = $value->IsDeleted ?? 0;
+                        $PropertyTitle  = $value->PropertyTitle ?? "Property Title";
+                        $PropertyTypeId = $value->PropertyTypeId ?? '';
+                        $ListType       = $value->ListType ?? "Sale";
+                        $TotalPrice     = $value->TotalPrice ?? "0";
+                        $MailingAddress = $value->MailingAddress ?? "Mailing Address";
+                        $CoveredArea    = $value->CoveredArea ?? "0";
+                        $AreaUnitId     = $value->AreaUnitId ?? "1";
                         $AddedOn        = $value->AddedOn ? date('d - M - Y', strtotime($value->AddedOn)) : "";
 
                         $PropertyFeatures = $this->getlist_model
