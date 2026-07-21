@@ -360,6 +360,9 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
                 <div>
                     <div class="mb-2">
+                        <?php
+                        print_r($PropertyDetails);
+                        ?>
                         <span class="badge badge-custom rounded-1 me-1"><?= $PropertyDetails->TransactionTypeName ?? "" ?></span>
                         <span class="badge badge-custom rounded-1"><?= $PropertyDetails->PropertyTypeName ?? "" ?></span>
                     </div>
