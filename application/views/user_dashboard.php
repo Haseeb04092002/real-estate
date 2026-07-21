@@ -749,7 +749,7 @@ if (empty($arrProperties)) {
                         <div class="col-12"><div class="text-muted text-center p-4">No Recent Listings Found. Start adding some properties!</div></div>
                     <?php else: ?>
                         <?php foreach ($arrProperties as $key => $value): 
-                              $this->load->view('components/property_card', ['value' => $value, 'UserId' => $UserId]);
+                              $this->load->view('components/property_card', ['value' => $value, 'UserId' => $UserId, 'ShowStatusBadge' => true]);
                         endforeach; ?>
                     <?php endif; ?>
                 </div>
