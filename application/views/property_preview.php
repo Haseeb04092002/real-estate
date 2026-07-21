@@ -157,8 +157,8 @@ if (!is_array($PropertyDocs)) {
     $PropertyDocs = [];
 }
 
-$Latitude = $PropertyDetails->Latitude ?? '-33.8674';
-$Longitude = $PropertyDetails->Longitude ?? '151.213';
+$Latitude = $PropertyDetails->Latitude ?? '';
+$Longitude = $PropertyDetails->Longitude ?? '';
 ?>
 
 <?php if (!isset($IsPreview) || !$IsPreview): ?>

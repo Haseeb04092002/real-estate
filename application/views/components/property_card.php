@@ -364,13 +364,70 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
                       <i class="fa fa-vector-square"></i> <?= $CoveredArea . ' ' . $AreaUnit; ?>
                   </div>
               </div>
-              <div class="d-flex gap-2 justify-content-start">
+              <div class="d-flex gap-2 justify-content-start flex-wrap">
                   <?php if(isset($UserId) && isset($value->AddedBy) && $UserId == $value->AddedBy): ?>
                   <a href="<?= site_url('Properties/AddListing/' . $PropertyId . '/Edit'); ?>" class="btn btn-outline-primary btn-sm px-4 rounded-pill" style="font-weight: 500;" onclick="event.stopPropagation();">Edit</a>
+                  <button type="button" class="btn btn-outline-secondary btn-sm px-4 rounded-pill" style="font-weight: 500;" data-bs-toggle="modal" data-bs-target="#statusModal_<?= $PropertyId ?>" onclick="event.stopPropagation();">Change Status</button>
                   <?php endif; ?>
                   <span class="btn btn-primary btn-sm px-4 rounded-pill" style="font-weight: 500;">Details</span>
               </div>
           </div>
+          
+          <?php if(isset($UserId) && isset($value->AddedBy) && $UserId == $value->AddedBy): ?>
+          <!-- Status Modal -->
+          <div class="modal fade" id="statusModal_<?= $PropertyId ?>" tabindex="-1" aria-hidden="true" onclick="event.stopPropagation();">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+                <div class="modal-header bg-light border-bottom-0">
+                  <h5 class="modal-title fw-bold">Change Status</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="statusForm_<?= $PropertyId ?>">
+                        <input type="hidden" name="PropertyId" value="<?= $PropertyId ?>">
+                        
+                        <div class="form-check mb-3">
+                          <input class="form-check-input" type="radio" name="Status" id="status_pub_<?= $PropertyId ?>" value="Published" <?= (isset($value->Status) && strtolower($value->Status) == 'published') ? 'checked' : '' ?>>
+                          <label class="form-check-label fw-bold text-success" for="status_pub_<?= $PropertyId ?>">
+                            <i class="fa fa-check-circle me-1"></i> Published
+                          </label>
+                          <div class="text-muted small ms-4">Visible to everyone in public search results.</div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                          <input class="form-check-input" type="radio" name="Status" id="status_unpub_<?= $PropertyId ?>" value="Not Published" <?= (!isset($value->Status) || strtolower($value->Status) == 'not published') ? 'checked' : '' ?>>
+                          <label class="form-check-label fw-bold text-warning" style="color: #d39e00 !important;" for="status_unpub_<?= $PropertyId ?>">
+                            <i class="fa fa-clock me-1"></i> Not Published
+                          </label>
+                          <div class="text-muted small ms-4">Hidden from public listings, visible only to you.</div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                          <input class="form-check-input" type="radio" name="Status" id="status_sold_<?= $PropertyId ?>" value="Sold" <?= (isset($value->Status) && strtolower($value->Status) == 'sold') ? 'checked' : '' ?>>
+                          <label class="form-check-label fw-bold text-danger" for="status_sold_<?= $PropertyId ?>">
+                            <i class="fa fa-handshake me-1"></i> Sold
+                          </label>
+                          <div class="text-muted small ms-4">Mark as sold.</div>
+                        </div>
+                        
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="Status" id="status_rented_<?= $PropertyId ?>" value="Rented" <?= (isset($value->Status) && strtolower($value->Status) == 'rented') ? 'checked' : '' ?>>
+                          <label class="form-check-label fw-bold text-info" for="status_rented_<?= $PropertyId ?>">
+                            <i class="fa fa-key me-1"></i> Rented
+                          </label>
+                          <div class="text-muted small ms-4">Mark as rented out.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 bg-light rounded-bottom">
+                  <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary px-4 rounded-pill fw-bold" onclick="savePropertyStatus(<?= $PropertyId ?>)">Save Status</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php endif; ?>
+          
           <?php else: ?>
           <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
               <div class="prop-features mb-0 mt-0">
@@ -408,3 +465,36 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
 
   </div>
 </div>
+
+<?php if (!defined('PROP_CARD_STATUS_SCRIPT')): define('PROP_CARD_STATUS_SCRIPT', 1); ?>
+<script>
+function savePropertyStatus(PropertyId) {
+    if (typeof $ === 'undefined' || typeof Swal === 'undefined') {
+        alert('Required libraries not loaded.');
+        return;
+    }
+    
+    var form = $('#statusForm_' + PropertyId);
+    var status = form.find('input[name="Status"]:checked').val();
+    
+    $.ajax({
+        url: '<?= site_url("Properties/UpdateStatus") ?>',
+        type: 'POST',
+        data: { PropertyId: PropertyId, Status: status },
+        dataType: 'json',
+        success: function(response) {
+            if (response.Status) {
+                Swal.fire('Success', response.Message, 'success').then(() => {
+                    location.reload();
+                });
+            } else {
+                Swal.fire('Error', response.Message, 'error');
+            }
+        },
+        error: function() {
+            Swal.fire('Error', 'An error occurred while updating the status.', 'error');
+        }
+    });
+}
+</script>
+<?php endif; ?>

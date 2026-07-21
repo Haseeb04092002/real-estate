@@ -1227,4 +1227,34 @@ class Properties extends CI_Controller {
     exit(json_encode($Response));
   }
 
+  public function UpdateStatus() {
+      $Response = ['Status' => false, 'Message' => ''];
+      
+      $PropertyId = $this->input->post('PropertyId');
+      $Status = $this->input->post('Status');
+      $UserId = $this->session->userdata('user_id');
+      
+      if (!$UserId) {
+          $Response['Message'] = 'Please log in to perform this action.';
+          exit(json_encode($Response));
+      }
+      
+      if ($PropertyId && in_array($Status, ['Published', 'Not Published', 'Sold', 'Rented', 'Archived'])) {
+          $this->db->where('PropertyId', $PropertyId);
+          $this->db->where('AddedBy', $UserId);
+          $this->db->update('tbl_properties', ['Status' => $Status]);
+          
+          if ($this->db->affected_rows() > 0 || $this->db->error()['code'] == 0) {
+              $Response['Status'] = true;
+              $Response['Message'] = 'Status updated successfully!';
+          } else {
+              $Response['Message'] = 'Failed to update status. Please try again.';
+          }
+      } else {
+          $Response['Message'] = 'Invalid request or status.';
+      }
+      
+      exit(json_encode($Response));
+  }
+
 }
