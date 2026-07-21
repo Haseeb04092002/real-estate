@@ -53,7 +53,9 @@ if (empty($arrProperties)) {
                         $this->load->view('components/property_card', [
                             'value' => $value, 
                             'UserId' => $UserId, 
-                            'GridClass' => 'col-lg-3 col-md-4 col-sm-6 mb-4'
+                            'GridClass' => 'col-lg-3 col-md-4 col-sm-6 mb-4',
+                            'ShowStatusBadge' => true,
+                            'DashboardLayout' => true
                         ]);
                     } ?>
                 </div> <!-- end row -->

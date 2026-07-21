@@ -355,6 +355,7 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
 
           <div class="prop-desc"><?= $PropertyDescription; ?></div>
           
+          <?php if(isset($DashboardLayout) && $DashboardLayout): ?>
           <div class="d-flex flex-column mt-auto mb-3">
               <div class="prop-features mb-3 mt-0">
                   <div><i class="fa fa-bed"></i> <?= is_numeric($Bedrooms) && $Bedrooms > 0 ? $Bedrooms : '0'; ?></div>
@@ -370,6 +371,20 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
                   <span class="btn btn-primary btn-sm px-4 rounded-pill" style="font-weight: 500;">Details</span>
               </div>
           </div>
+          <?php else: ?>
+          <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
+              <div class="prop-features mb-0 mt-0">
+                  <div><i class="fa fa-bed"></i> <?= is_numeric($Bedrooms) && $Bedrooms > 0 ? $Bedrooms : '0'; ?></div>
+                  <div><i class="fa fa-bath"></i> <?= is_numeric($Bathrooms) && $Bathrooms > 0 ? $Bathrooms : '0'; ?></div>
+                  <div class="tooltipBtn" data-unit="<?= $AreaUnit; ?>" value="<?= $CoveredArea; ?>">
+                      <i class="fa fa-vector-square"></i> <?= $CoveredArea . ' ' . $AreaUnit; ?>
+                  </div>
+              </div>
+              <div class="d-flex gap-2">
+                  <span class="btn btn-primary btn-sm px-3 rounded-pill" style="font-weight: 500;">Details</span>
+              </div>
+          </div>
+          <?php endif; ?>
       </div>
 
       <div class="prop-divider"></div>
