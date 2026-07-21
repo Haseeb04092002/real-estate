@@ -458,6 +458,7 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                     </div>
 
                     <!-- Thumbnails Row -->
+                    <?php if (count($PropertyImages) > 0): ?>
                     <div class="swiper mySwiper mb-4" style="height: 90px; cursor: pointer;">
                         <div class="swiper-wrapper">
                             <?php foreach($PropertyImages as $value): ?>
@@ -465,6 +466,7 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                             <?php endforeach; ?>
                         </div>
                     </div>
+                    <?php endif; ?>
 
                     <!-- Overview Section -->
                     <div class="bg-white p-4 rounded-2 shadow-sm border mb-4">
