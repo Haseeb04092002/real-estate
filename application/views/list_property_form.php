@@ -53,7 +53,7 @@ if (isset($PropertyId) && $PropertyId > 0) {
         }
 
         // 4. Media
-        $mediaCount = $this->db->get_where('tbl_documents', ['ReferenceId' => $PropertyId, 'Reference' => 'Properties'])->num_rows();
+        $mediaCount = $this->db->get_where('tbl_property_media', ['PropertyId' => $PropertyId])->num_rows();
         if ($mediaCount > 0) {
             $statusMedia = 'completed';
         } else {

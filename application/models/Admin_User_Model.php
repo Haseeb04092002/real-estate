@@ -50,9 +50,8 @@ class Admin_User_Model extends CI_Model {
         $logs = $this->db->get('tbl_user_activity_logs')->result();
 
         // Documents
-        $this->db->where('Reference', 'Client');
-        $this->db->where('ReferenceId', $user_id);
-        $documents = $this->db->get('tbl_documents')->result();
+        $this->db->where('ClientId', $user_id);
+        $documents = $this->db->get('tbl_client_documents')->result();
 
         // Properties
         $this->db->where('AddedBy', $user_id);

@@ -7,7 +7,7 @@ $UserName = $this->session->userdata('user_name');
 $UserInfo = $this->getlist_model->getFieldsMultipleConditions('tbl_clients', 'AccountStatus', "WHERE ClientId = '$UserId'", 1);
 $isVerified = ($UserInfo === 'Active');
 
-$UserDocStatus = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', '*', "WHERE ReferenceId = '$UserId' AND Reference = 'Client'", 2);
+$UserDocStatus = $this->getlist_model->getFieldsMultipleConditions('tbl_client_documents', '*', "WHERE ClientId = '$UserId'", 2);
 
 // --------- all favourites properties ------//
 $arrFavProperties = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_favourites', '*', "WHERE UserId = '$UserId' AND IsFavourite = 1");
@@ -425,7 +425,7 @@ if (empty($arrProperties)) {
                                         $propTitle = $propDetails ? $propDetails->PropertyTitle : 'Unknown Property';
                                         $propPrice = $propDetails ? number_format($propDetails->TotalPrice) : '0';
 
-                                        $propImage = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'FileName', "WHERE Reference = 'Properties' AND ReferenceId = '{$req->PropertyId}'", 1);
+                                        $propImage = $this->getlist_model->getFieldsMultipleConditions('tbl_property_media', 'FileName', "WHERE PropertyId = '{$req->PropertyId}'", 1);
                                         $propImgSrc = (!empty($propImage) && is_string($propImage)) ? base_url('uploads/Properties/'.$req->PropertyId.'/images/'.$propImage) : base_url('assets/images/property-1.jpg');
                                     ?>
                                         <?php
@@ -711,7 +711,7 @@ if (empty($arrProperties)) {
                                         $favTitle = $favProp->PropertyTitle ? $favProp->PropertyTitle : "Property Title";
                                         $favPrice = $favProp->TotalPrice ? $favProp->TotalPrice : "0";
                                         $favAddress = $favProp->MailingAddress ? $favProp->MailingAddress : "Mailing Address";
-                                        $favImage = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'FileName', "WHERE Reference = 'Properties' AND ReferenceId = '$favPropertyId'", 1);
+                                        $favImage = $this->getlist_model->getFieldsMultipleConditions('tbl_property_media', 'FileName', "WHERE PropertyId = '$favPropertyId'", 1);
                                         $favImgSrc = (!empty($favImage) && is_string($favImage)) ? base_url('uploads/Properties/'.$favPropertyId.'/images/'.$favImage) : base_url('assets/images/property-1.jpg');
                                 ?>
                                 <div class="col-md-6">

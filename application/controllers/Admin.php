@@ -95,7 +95,7 @@ class Admin extends CI_Controller {
         $doc_id = $this->input->post('document_id');
         $status = $this->input->post('status');
         if($doc_id && $status) {
-            $this->db->where('DocumentId', $doc_id)->update('tbl_documents', ['VerificationStatus' => $status]);
+            $this->db->where('DocumentId', $doc_id)->update('tbl_client_documents', ['VerificationStatus' => $status]);
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false]);

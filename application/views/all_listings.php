@@ -71,9 +71,9 @@ if (empty($arrProperties)) {
                         $AreaUnit = ["Sqft", "Sqyd", "Kanal", "Marla"][$AreaUnitId - 1];
 
                         $ImageName = $this->getlist_model->getFieldsMultipleConditions(
-                            'tbl_documents',
+                            'tbl_property_media',
                             'FileName',
-                            "WHERE Reference = 'Properties' AND ReferenceId = '$PropertyId'",
+                            "WHERE PropertyId = '$PropertyId'",
                             1
                         );
                     ?>

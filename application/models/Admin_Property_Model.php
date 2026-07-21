@@ -24,7 +24,7 @@ class Admin_Property_Model extends CI_Model {
             t.Title as PropertyType,
             city.CityName,
             (SELECT COUNT(*) FROM tbl_properties_analytics pa WHERE pa.PropertyId = p.PropertyId AND pa.UserAction = \'View\') as Views,
-            (SELECT COUNT(*) FROM tbl_documents d WHERE d.ReferenceId = p.PropertyId AND d.Reference = \'Property\') as DocsCompletion
+            (SELECT COUNT(*) FROM tbl_property_media d WHERE d.PropertyId = p.PropertyId) as DocsCompletion
         ');
         $this->db->from('tbl_properties p');
         $this->db->join('tbl_clients c', 'c.ClientId = p.ClientId', 'left');
@@ -57,7 +57,7 @@ class Admin_Property_Model extends CI_Model {
             t.Title as PropertyType,
             city.CityName,
             (SELECT COUNT(*) FROM tbl_properties_analytics pa WHERE pa.PropertyId = p.PropertyId AND pa.UserAction = \'View\') as Views,
-            (SELECT COUNT(*) FROM tbl_documents d WHERE d.ReferenceId = p.PropertyId AND d.Reference = \'Property\') as DocsCompletion
+            (SELECT COUNT(*) FROM tbl_property_media d WHERE d.PropertyId = p.PropertyId) as DocsCompletion
         ');
         $this->db->from('tbl_properties p');
         $this->db->join('tbl_clients c', 'c.ClientId = p.ClientId', 'left');
@@ -97,9 +97,8 @@ class Admin_Property_Model extends CI_Model {
     }
 
     public function get_property_media($property_id) {
-        $this->db->where('Reference', 'Properties');
-        $this->db->where('ReferenceId', $property_id);
-        return $this->db->get('tbl_documents')->result();
+        $this->db->where('PropertyId', $property_id);
+        return $this->db->get('tbl_property_media')->result();
     }
 
     public function get_all_property_types() {

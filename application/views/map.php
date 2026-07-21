@@ -16,9 +16,9 @@ $properties = $this->db->get('tbl_properties')->result();
 foreach ($properties as $value) {
   $PropertyId = $value->PropertyId;
   $ImageName = $this->getlist_model->getFieldsMultipleConditions(
-      'tbl_documents',
+      'tbl_property_media',
       'FileName',
-      "WHERE Reference = 'Properties' AND ReferenceId = '$value->PropertyId'",
+      "WHERE PropertyId = '$PropertyId'",
       1
   );
   $Bedrooms = $this->getlist_model->getFieldsMultipleConditions(

@@ -44,12 +44,12 @@ if (isset($UserId) && $UserId > 0) {
 }
 
 // Check how many images exist
-$ImagesCount = $this->db->where('Reference', 'Properties')->where('ReferenceId', $PropertyId)->count_all_results('tbl_documents');
+$ImagesCount = $this->db->where('PropertyId', $PropertyId)->count_all_results('tbl_property_media');
 
 $ImageName = $this->getlist_model->getFieldsMultipleConditions(
-  'tbl_documents',
+  'tbl_property_media',
   'FileName',
-  "WHERE Reference = 'Properties' AND ReferenceId = '$PropertyId'",
+  "WHERE PropertyId = '$PropertyId'",
   1
 );
 
@@ -85,14 +85,12 @@ if ($ClientId > 0) {
     // Check Verification Status
     if ($this->db->table_exists('tbl_user_verification_rules')) {
         $mandatoryRulesCount = $this->db->where('IsMandatory', 1)->count_all_results('tbl_user_verification_rules');
-        $approvedDocsCount = $this->db->where('ReferenceId', $ClientId)
-                                      ->where('Reference', 'Client')
+        $approvedDocsCount = $this->db->where('ClientId', $ClientId)
                                       ->where('VerificationStatus', 'Approved')
-                                      ->count_all_results('tbl_documents');
-        $notApprovedCount = $this->db->where('ReferenceId', $ClientId)
-                                     ->where('Reference', 'Client')
+                                      ->count_all_results('tbl_client_documents');
+        $notApprovedCount = $this->db->where('ClientId', $ClientId)
                                      ->where('VerificationStatus !=', 'Approved')
-                                     ->count_all_results('tbl_documents');
+                                     ->count_all_results('tbl_client_documents');
                                      
         if ($mandatoryRulesCount > 0) {
             if ($approvedDocsCount >= $mandatoryRulesCount && $notApprovedCount == 0) {

@@ -1,7 +1,7 @@
 <?php
 $UserId = $this->session->userdata('user_id');
 
-$ExistingDocs = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', '*', "WHERE Reference='Properties' AND ReferenceId='$PropertyId'", 0);
+$ExistingDocs = $this->getlist_model->getFieldsMultipleConditions('tbl_property_media', '*', "WHERE PropertyId='$PropertyId'", 0);
 if (!is_array($ExistingDocs)) $ExistingDocs = [];
 
 $existingImages = [];
@@ -124,7 +124,7 @@ foreach ($ExistingDocs as $doc) {
                         <input type="hidden" class="form-control" name="txtReferenceId" value="<?= $UserId; ?>">
                         <div id="preview-container-image" class="file-list mt-4">
                             <?php foreach($existingImages as $idx => $img): ?>
-                                <div class="file-item" id="doc_<?= $img->DocumentId ?>">
+                                <div class="file-item" id="doc_<?= $img->MediaId ?>">
                                     <div class="file-item-left">
                                         <img src="<?= base_url('uploads/Properties/'.$PropertyId.'/images/'.$img->FileName) ?>" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">
                                         <div class="file-info">
@@ -136,7 +136,7 @@ foreach ($ExistingDocs as $doc) {
                                         </div>
                                     </div>
                                     <div class="file-item-right">
-                                        <button type="button" class="btn btn-sm btn-light text-danger remove-existing-doc" data-id="<?= $img->DocumentId ?>"><i class="fa-solid fa-trash"></i></button>
+                                        <button type="button" class="btn btn-sm btn-light text-danger remove-existing-doc" data-id="<?= $img->MediaId ?>"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -155,7 +155,7 @@ foreach ($ExistingDocs as $doc) {
                         <input type="file" id="videoInput" name="videos[]" accept="video/*" multiple class="hidden-file-input">
                         <div id="preview-container-video" class="file-list mt-4">
                             <?php foreach($existingVideos as $idx => $vid): ?>
-                                <div class="file-item" id="doc_<?= $vid->DocumentId ?>">
+                                <div class="file-item" id="doc_<?= $vid->MediaId ?>">
                                     <div class="file-item-left">
                                         <div class="file-icon"><i class="fa-solid fa-file-video"></i></div>
                                         <div class="file-info">
@@ -167,7 +167,7 @@ foreach ($ExistingDocs as $doc) {
                                         </div>
                                     </div>
                                     <div class="file-item-right">
-                                        <button type="button" class="btn btn-sm btn-light text-danger remove-existing-doc" data-id="<?= $vid->DocumentId ?>"><i class="fa-solid fa-trash"></i></button>
+                                        <button type="button" class="btn btn-sm btn-light text-danger remove-existing-doc" data-id="<?= $vid->MediaId ?>"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

@@ -103,9 +103,9 @@ $IsFavourite = $this->getlist_model->getFieldsMultipleConditions(
 
 <?php
 $ImageNames = $this->getlist_model->getFieldsMultipleConditions(
-    'tbl_documents',
+    'tbl_property_media',
     'FileName',
-    "WHERE Reference = 'Properties' AND ReferenceId = '$PropertyId'"
+    "WHERE PropertyId = '$PropertyId'"
 );
 if (!is_array($ImageNames) && !is_object($ImageNames)) {
     $ImageNames = [];

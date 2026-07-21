@@ -196,9 +196,8 @@ class Properties extends CI_Controller {
     $UserId = $this->session->userdata('user_id');
     $this->load->model('Admin_User_Verifications_Model');
     $data['verification_rules'] = $this->Admin_User_Verifications_Model->get_rules();
-    $data['uploaded_docs'] = $this->db->where('ReferenceId', $UserId)
-                                      ->where('Reference', 'Client')
-                                      ->get('tbl_documents')->result();
+    $data['uploaded_docs'] = $this->db->where('ClientId', $UserId)
+                                      ->get('tbl_client_documents')->result();
     $this->load->view('user_docs', $data);
   }
 
@@ -245,8 +244,7 @@ class Properties extends CI_Controller {
             $val = $this->input->post($inputName);
             if (!empty($val)) {
                 $data = [
-                    'ReferenceId' => $UserId,
-                    'Reference' => 'Client',
+                    'ClientId' => $UserId,
                     'Remarks' => $rule->DocumentTitle,
                     'FileName' => $val, // storing text data here
                     'UploadedBy' => $UserId,
@@ -259,7 +257,7 @@ class Properties extends CI_Controller {
                     $data['ExpiryDate'] = $val;
                 }
                 
-                $this->db->insert('tbl_documents', $data);
+                $this->db->insert('tbl_client_documents', $data);
             }
         }
     }
@@ -282,8 +280,7 @@ class Properties extends CI_Controller {
       if ($this->upload->do_upload($fieldName)) {
           $uploadData = $this->upload->data();
           $data = [
-              'ReferenceId' => $UserId,
-              'Reference' => 'Client',
+              'ClientId' => $UserId,
               'Remarks' => $docTitle,
               'FileName' => $uploadData['file_name'],
               'FileSize' => $uploadData['file_size'],
@@ -291,7 +288,7 @@ class Properties extends CI_Controller {
               'UploadTime' => date('Y-m-d H:i:s'),
               'VerificationStatus' => 'Pending'
           ];
-          $this->db->insert('tbl_documents', $data);
+          $this->db->insert('tbl_client_documents', $data);
       }
   }
 
@@ -518,9 +515,7 @@ class Properties extends CI_Controller {
             $ModelData = [
                 'FileName'      => $fileData['file_name'],
                 'FileSize'      => $fileData['file_size'],
-                'ReferenceId'   => $ReferenceId,
-                'Reference'     => ucwords(str_replace("_", " ", $Reference)),
-                'ReferenceName' => $AdminName,
+                'ClientId'      => $ReferenceId,
                 'StationId'     => $StationId,
                 'UploadedBy'    => $AdminId,
                 'UploadTime'    => $varNow
@@ -552,7 +547,7 @@ class Properties extends CI_Controller {
                 break;
             }
 
-            $this->db->insert('tbl_documents', $ModelData);
+            $this->db->insert('tbl_client_documents', $ModelData);
 
             $DOB            = $this->input->post('txtDOB');
             $CardNumber     = $this->input->post('txtCardNumber');
@@ -1188,8 +1183,8 @@ class Properties extends CI_Controller {
         $missing[] = "Features Tab: <strong>" . implode(', ', $missingFeat) . "</strong>";
     }
 
-    // 4. Media Validation
-    $images = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', 'COUNT(*) as imgCount', "WHERE Reference='Properties' AND ReferenceId='$PropertyId'", 2);
+    // 4. Media
+    $images = $this->getlist_model->getFieldsMultipleConditions('tbl_property_media', 'COUNT(*) as imgCount', "WHERE PropertyId='$PropertyId'", 2);
     if (!$images || $images->imgCount == 0) {
         $missing[] = "Media Tab: <strong>At least one property image</strong>";
     }

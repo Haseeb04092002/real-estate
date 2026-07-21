@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-// $documents = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', '*', "WHERE DocumentId > 1", 2);
+// $documents = $this->getlist_model->getFieldsMultipleConditions('tbl_client_documents', '*', "WHERE DocumentId > 1", 2);
 // $clients = $this->getlist_model->getFieldsMultipleConditions('tbl_clients', '*', "WHERE ClientId > 1", 2);
 // echo "<pre>";
 // print_r($documents);
 
 $UserId = $this->session->userdata('user_id');
-$documents = $this->getlist_model->getFieldsMultipleConditions('tbl_documents', '*', "WHERE ClientId = $UserId", 2);
+$documents = $this->getlist_model->getFieldsMultipleConditions('tbl_client_documents', '*', "WHERE ClientId = $UserId", 2);
 $clients = $this->getlist_model->getFieldsMultipleConditions('tbl_clients', '*', "WHERE ClientId = $UserId", 2);
 
 $dob                 = $clients->DOB??'';

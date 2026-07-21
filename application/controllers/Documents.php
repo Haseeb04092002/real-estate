@@ -154,7 +154,7 @@ class Documents extends CI_Controller {
             if ($this->upload->do_upload('file_temp')) {
                 $fileData = $this->upload->data();
 
-                $this->db->insert('tbl_documents', [
+                $this->db->insert('tbl_property_media', [
                     'ReferenceId'   => $ReferenceId,
                     'Reference'     => ucwords(str_replace("_", " ", $Reference)),
                     'ReferenceName' => $ReferenceName,
@@ -261,14 +261,11 @@ class Documents extends CI_Controller {
 
           if ($this->upload->do_upload('file')) {
               $fileData = $this->upload->data();
-              $this->db->insert('tbl_documents', [
-                'ReferenceId'   => $ReferenceId,
-                'Reference'     => ucwords(str_replace("_", " ", $Reference)),
-                'ReferenceName' => $Reference,
-                'StationId'     => $StationId,
+              $this->db->insert('tbl_property_media', [
+                'PropertyId'    => $ReferenceId,
                 'FileName'      => $fileData['file_name'],
                 'FileSize'      => $fileData['file_size'],
-                // 'DocumentTitle' => $files['name'][$i],
+                'MediaType'     => 'Image',
                 'UploadedBy'    => $AdminId,
                 'UploadTime'    => $varNow
               ]);
@@ -326,14 +323,11 @@ class Documents extends CI_Controller {
 
           if ($this->upload->do_upload('file')) {
               $fileData = $this->upload->data();
-              $this->db->insert('tbl_documents', [
-                'ReferenceId'   => $ReferenceId,
-                'Reference'     => ucwords(str_replace("_", " ", $Reference)),
-                'ReferenceName' => $ReferenceName,
-                'StationId'     => $StationId,
+              $this->db->insert('tbl_property_media', [
+                'PropertyId'    => $ReferenceId,
                 'FileName'      => $fileData['file_name'],
                 'FileSize'      => $fileData['file_size'],
-                // 'DocumentTitle' => $files['name'][$i],
+                'MediaType'     => 'Video',
                 'UploadedBy'    => $AdminId,
                 'UploadTime'    => $varNow
               ]);
@@ -350,8 +344,8 @@ class Documents extends CI_Controller {
   {
       $Response['Status'] = false;
       if ($DocumentId > 0) {
-          $this->db->where('DocumentId', $DocumentId);
-          $this->db->delete('tbl_documents');
+          $this->db->where('MediaId', $DocumentId);
+          $this->db->delete('tbl_property_media');
           if($this->db->affected_rows() > 0) {
               $Response['Status'] = true;
           }

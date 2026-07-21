@@ -103,9 +103,9 @@ $IsFavourite = $this->getlist_model->getFieldsMultipleConditions(
 
 <?php
 $ImageNames = $this->getlist_model->getFieldsMultipleConditions(
-    'tbl_documents',
+    'tbl_property_media',
     'FileName',
-    "WHERE Reference = 'Properties' AND ReferenceId = '$PropertyId'"
+    "WHERE PropertyId = '$PropertyId'"
 );
 if (!is_array($ImageNames) && !is_object($ImageNames)) {
     $ImageNames = [];
@@ -544,14 +544,14 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                             <div id="accordion_property_address_collapse" class="accordion-collapse collapse show" aria-labelledby="heading_accordion_property_address_collapse">
                                 <div class="accordion-body text-muted bg-white rounded-bottom-2 border-top">
                                     <div class="row g-3">
-                                        <div class="col-md-12 mb-2 border-bottom pb-2"><strong>Mailing Address:</strong> <span class="text-dark"><?= $PropertyDetails->MailingAddress ?? "" ?></span></div>
+                                        <div class="col-md-12 mb-2 border-bottom pb-2"><strong>Mailing Address:</strong> <span class="text-dark"><?= $PropertyDetails->MailingAddress ?? "Not Provided" ?></span></div>
                                         <div class="col-md-4"><strong>Country:</strong> <?= $PropertyDetails->Country ?? "Australia" ?></div>
-                                        <div class="col-md-4"><strong>State:</strong> <?= $PropertyDetails->State ?? "" ?></div>
-                                        <div class="col-md-4"><strong>Suburb:</strong> <?= $PropertyDetails->Suburb ?? "" ?></div>
-                                        <div class="col-md-4"><strong>Postal Code:</strong> <?= $PropertyDetails->ZipCode ?? "" ?></div>
-                                        <div class="col-md-4"><strong>Unit Number:</strong> <?= $PropertyDetails->UnitNumber ?? "" ?></div>
-                                        <div class="col-md-4"><strong>Street Number:</strong> <?= $PropertyDetails->StreetNumber ?? "" ?></div>
-                                        <div class="col-md-4"><strong>Street Name:</strong> <?= $PropertyDetails->StreetName ?? "" ?></div>
+                                        <div class="col-md-4"><strong>State:</strong> <?= $PropertyDetails->State ?? "Not Provided" ?></div>
+                                        <div class="col-md-4"><strong>Suburb:</strong> <?= $PropertyDetails->Suburb ?? "Not Provided" ?></div>
+                                        <div class="col-md-4"><strong>Postal Code:</strong> <?= $PropertyDetails->ZipCode ?? "Not Provided" ?></div>
+                                        <div class="col-md-4"><strong>Unit Number:</strong> <?= $PropertyDetails->UnitNumber ?? "Not Provided" ?></div>
+                                        <div class="col-md-4"><strong>Street Number:</strong> <?= $PropertyDetails->StreetNumber ?? "Not Provided" ?></div>
+                                        <div class="col-md-4"><strong>Street Name:</strong> <?= $PropertyDetails->StreetName ?? "Not Provided" ?></div>
                                         
                                         <!-- <div class="col-md-12 mt-3">
                                             <a href="https://maps.google.com/?q=<?= urlencode($PropertyDetails->MailingAddress ?? "") ?>" target="_blank" rel="noopener" class="text-primary-custom text-decoration-none fw-bold"><i class="fa-solid fa-map-location-dot me-2"></i>Open In Google Maps</a>
