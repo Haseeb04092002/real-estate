@@ -386,36 +386,24 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
                     <form id="statusForm_<?= $PropertyId ?>">
                         <input type="hidden" name="PropertyId" value="<?= $PropertyId ?>">
                         
-                        <div class="form-check mb-3">
-                          <input class="form-check-input" type="radio" name="Status" id="status_pub_<?= $PropertyId ?>" value="Published" <?= (isset($value->Status) && strtolower($value->Status) == 'published') ? 'checked' : '' ?>>
-                          <label class="form-check-label fw-bold text-success" for="status_pub_<?= $PropertyId ?>">
-                            <i class="fa fa-check-circle me-1"></i> Published
-                          </label>
-                          <div class="text-muted small ms-4">Visible to everyone in public search results.</div>
+                        <div class="mb-4 d-flex align-items-start">
+                          <input type="radio" name="Status" id="status_pub_<?= $PropertyId ?>" value="Published" <?= (isset($value->Status) && strtolower($value->Status) == 'published') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
+                          <div>
+                              <label class="fw-bold text-success mb-1" for="status_pub_<?= $PropertyId ?>" style="cursor: pointer;">
+                                <i class="fa fa-check-circle me-1"></i> Published
+                              </label>
+                              <div class="text-muted small">Visible to everyone in public search results.</div>
+                          </div>
                         </div>
                         
-                        <div class="form-check mb-3">
-                          <input class="form-check-input" type="radio" name="Status" id="status_unpub_<?= $PropertyId ?>" value="Not Published" <?= (!isset($value->Status) || strtolower($value->Status) == 'not published') ? 'checked' : '' ?>>
-                          <label class="form-check-label fw-bold text-warning" style="color: #d39e00 !important;" for="status_unpub_<?= $PropertyId ?>">
-                            <i class="fa fa-clock me-1"></i> Not Published
-                          </label>
-                          <div class="text-muted small ms-4">Hidden from public listings, visible only to you.</div>
-                        </div>
-
-                        <div class="form-check mb-3">
-                          <input class="form-check-input" type="radio" name="Status" id="status_sold_<?= $PropertyId ?>" value="Sold" <?= (isset($value->Status) && strtolower($value->Status) == 'sold') ? 'checked' : '' ?>>
-                          <label class="form-check-label fw-bold text-danger" for="status_sold_<?= $PropertyId ?>">
-                            <i class="fa fa-handshake me-1"></i> Sold
-                          </label>
-                          <div class="text-muted small ms-4">Mark as sold.</div>
-                        </div>
-                        
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="Status" id="status_rented_<?= $PropertyId ?>" value="Rented" <?= (isset($value->Status) && strtolower($value->Status) == 'rented') ? 'checked' : '' ?>>
-                          <label class="form-check-label fw-bold text-info" for="status_rented_<?= $PropertyId ?>">
-                            <i class="fa fa-key me-1"></i> Rented
-                          </label>
-                          <div class="text-muted small ms-4">Mark as rented out.</div>
+                        <div class="mb-2 d-flex align-items-start">
+                          <input type="radio" name="Status" id="status_unpub_<?= $PropertyId ?>" value="Not Published" <?= (!isset($value->Status) || strtolower($value->Status) == 'not published') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
+                          <div>
+                              <label class="fw-bold text-warning mb-1" style="color: #d39e00 !important; cursor: pointer;" for="status_unpub_<?= $PropertyId ?>">
+                                <i class="fa fa-clock me-1"></i> Not Published
+                              </label>
+                              <div class="text-muted small">Hidden from public listings, visible only to you.</div>
+                          </div>
                         </div>
                     </form>
                 </div>
