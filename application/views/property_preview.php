@@ -148,13 +148,12 @@ if (!empty($PropertyVideos)) {
 
 $urlImage = $PropertyId;
 
-$PropertyDocs = $this->getlist_model->getFieldsMultipleConditions(
-    'tbl_property_documents',
-    '*',
-    "WHERE PropertyId = '$PropertyId'",
-    0
-);
-if (!is_array($PropertyDocs) && !is_object($PropertyDocs)) {
+$PropertyDocs = $this->db->select('d.*, t.DocumentTitle')
+                         ->from('tbl_property_documents d')
+                         ->join('tbl_property_document_types t', 'd.DocTypeId = t.DocTypeId', 'left')
+                         ->where('d.PropertyId', $PropertyId)
+                         ->get()->result();
+if (!is_array($PropertyDocs)) {
     $PropertyDocs = [];
 }
 
@@ -666,9 +665,9 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                         <div class="row g-3">
                             <?php foreach ($PropertyDocs as $doc): ?>
                                 <?php 
-                                    $docPath = base_url('uploads/Properties/' . $PropertyId . '/documents/' . ($doc->FileName ?? '')); 
+                                    $docPath = base_url('uploads/PropertyDocs/' . $PropertyId . '/' . ($doc->FilePath ?? '')); 
                                     $icon = 'fa-file-lines';
-                                    $ext = pathinfo($doc->FileName ?? '', PATHINFO_EXTENSION);
+                                    $ext = pathinfo($doc->FilePath ?? '', PATHINFO_EXTENSION);
                                     if (in_array(strtolower($ext), ['pdf'])) $icon = 'fa-file-pdf text-danger';
                                     elseif (in_array(strtolower($ext), ['doc', 'docx'])) $icon = 'fa-file-word text-primary';
                                     elseif (in_array(strtolower($ext), ['xls', 'xlsx'])) $icon = 'fa-file-excel text-success';
@@ -678,8 +677,8 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                                     <div class="d-flex align-items-center p-3 border rounded-2 bg-light shadow-sm">
                                         <i class="fa-solid <?= $icon ?> fs-2 me-3"></i>
                                         <div class="flex-grow-1 overflow-hidden">
-                                            <a href="<?= $docPath ?>" target="_blank" class="text-dark text-decoration-none fw-bold d-block text-truncate" title="<?= htmlspecialchars($doc->FileName ?? '') ?>">
-                                                <?= !empty($doc->DocumentTitle) ? htmlspecialchars($doc->DocumentTitle) : htmlspecialchars($doc->FileName ?? 'Document') ?>
+                                            <a href="<?= $docPath ?>" target="_blank" class="text-dark text-decoration-none fw-bold d-block text-truncate" title="<?= htmlspecialchars($doc->FilePath ?? '') ?>">
+                                                <?= !empty($doc->DocumentTitle) ? htmlspecialchars($doc->DocumentTitle) : htmlspecialchars($doc->FilePath ?? 'Document') ?>
                                             </a>
                                             <div class="text-muted small"><?= strtoupper($ext) ?> Document</div>
                                         </div>
