@@ -361,7 +361,10 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                 <div>
                     <div class="mb-2">
                         <?php
+                        echo "<pre>";
+                        echo "<br>";
                         print_r($PropertyDetails);
+                        echo "<pre>";
                         ?>
                         <span class="badge badge-custom rounded-1 me-1"><?= $PropertyDetails->TransactionTypeName ?? "" ?></span>
                         <span class="badge badge-custom rounded-1"><?= $PropertyDetails->PropertyTypeName ?? "" ?></span>
