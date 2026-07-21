@@ -1120,7 +1120,7 @@ class Properties extends CI_Controller {
           'PropertyDetails' => $PropertyDetails,
           'IsPreview'       => true
       ];
-      $this->load->view('property_details', $data);
+      $this->load->view('property_preview', $data);
     }
     else
     {

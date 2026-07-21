@@ -113,7 +113,7 @@ foreach ($ExistingDocs as $doc) {
                 <div class="row g-4">
                     <!-- Images Upload Section -->
                     <div class="col-md-6">
-                        <label class="fw-bold mb-3 fs-5"><i class="fa-regular fa-image me-2 text-primary"></i>Upload Images</label>
+                        <label class="fw-bold mb-3 fs-5"><i class="fa-regular fa-image me-2 text-primary"></i>Upload Images <span class="text-danger">(atleast 1 image is required)</span></label>
                         
                         <div class="upload-box" id="imageDropzone">
                             <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
