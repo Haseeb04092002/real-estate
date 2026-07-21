@@ -915,7 +915,15 @@ class Properties extends CI_Controller {
             if ($title) {
                 foreach ($structMap as $structCol => $aliases) {
                     if (in_array($title, $aliases)) {
-                        $structuralData[$structCol] = $value;
+                        if ($structCol == 'BuiltInYear') {
+                            if (strlen(trim($value)) == 4 && is_numeric(trim($value))) {
+                                $structuralData[$structCol] = trim($value) . '-01-01';
+                            } else {
+                                $structuralData[$structCol] = date('Y-m-d', strtotime($value));
+                            }
+                        } else {
+                            $structuralData[$structCol] = $value;
+                        }
                         break;
                     }
                 }
