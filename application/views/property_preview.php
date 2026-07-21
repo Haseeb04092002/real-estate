@@ -148,6 +148,16 @@ if (!empty($PropertyVideos)) {
 
 $urlImage = $PropertyId;
 
+$PropertyDocs = $this->getlist_model->getFieldsMultipleConditions(
+    'tbl_property_documents',
+    '*',
+    "WHERE PropertyId = '$PropertyId'",
+    0
+);
+if (!is_array($PropertyDocs) && !is_object($PropertyDocs)) {
+    $PropertyDocs = [];
+}
+
 $Latitude = $PropertyDetails->Latitude ?? '-33.8674';
 $Longitude = $PropertyDetails->Longitude ?? '151.213';
 ?>
@@ -645,6 +655,38 @@ $Longitude = $PropertyDetails->Longitude ?? '151.213';
                                     <source src="<?= $vid->path ?>" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if(!empty($PropertyDocs)): ?>
+                    <!-- Documents -->
+                    <div class="bg-white p-4 rounded-2 shadow-sm border mb-4">
+                        <h3 class="section-title mb-4">Property Documents</h3>
+                        <div class="row g-3">
+                            <?php foreach ($PropertyDocs as $doc): ?>
+                                <?php 
+                                    $docPath = base_url('uploads/Properties/' . $PropertyId . '/documents/' . ($doc->FileName ?? '')); 
+                                    $icon = 'fa-file-lines';
+                                    $ext = pathinfo($doc->FileName ?? '', PATHINFO_EXTENSION);
+                                    if (in_array(strtolower($ext), ['pdf'])) $icon = 'fa-file-pdf text-danger';
+                                    elseif (in_array(strtolower($ext), ['doc', 'docx'])) $icon = 'fa-file-word text-primary';
+                                    elseif (in_array(strtolower($ext), ['xls', 'xlsx'])) $icon = 'fa-file-excel text-success';
+                                    elseif (in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif'])) $icon = 'fa-file-image text-info';
+                                ?>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center p-3 border rounded-2 bg-light shadow-sm">
+                                        <i class="fa-solid <?= $icon ?> fs-2 me-3"></i>
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <a href="<?= $docPath ?>" target="_blank" class="text-dark text-decoration-none fw-bold d-block text-truncate" title="<?= htmlspecialchars($doc->FileName ?? '') ?>">
+                                                <?= !empty($doc->DocumentTitle) ? htmlspecialchars($doc->DocumentTitle) : htmlspecialchars($doc->FileName ?? 'Document') ?>
+                                            </a>
+                                            <div class="text-muted small"><?= strtoupper($ext) ?> Document</div>
+                                        </div>
+                                        <a href="<?= $docPath ?>" download class="btn btn-sm btn-outline-primary ms-2"><i class="fa-solid fa-download"></i></a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <?php endif; ?>
