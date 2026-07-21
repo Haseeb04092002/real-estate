@@ -127,7 +127,8 @@ if (count($words) > 5) {
 if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
 ?>
 
-<div class="col-lg-4 col-md-6 wow fadeInUp property-item-box <?= htmlspecialchars($ListType); ?>" 
+<?php $GridClass = $GridClass ?? 'col-lg-4 col-md-6'; ?>
+<div class="<?= $GridClass ?> wow fadeInUp property-item-box <?= htmlspecialchars($ListType); ?>" 
      data-wow-delay="0.1s"
      data-search="<?= strtolower(
         $PropertyTitle . ' ' . 
@@ -362,7 +363,12 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
                       <i class="fa fa-vector-square"></i> <?= $CoveredArea . ' ' . $AreaUnit; ?>
                   </div>
               </div>
-              <span class="btn btn-primary btn-sm px-3 rounded-pill" style="font-weight: 500;">Details</span>
+              <div class="d-flex gap-2">
+                  <?php if(isset($UserId) && isset($value->AddedBy) && $UserId == $value->AddedBy): ?>
+                  <a href="<?= site_url('Properties/AddListing/' . $PropertyId . '/Edit'); ?>" class="btn btn-outline-primary btn-sm px-3 rounded-pill" style="font-weight: 500;" onclick="event.stopPropagation();">Edit</a>
+                  <?php endif; ?>
+                  <span class="btn btn-primary btn-sm px-3 rounded-pill" style="font-weight: 500;">Details</span>
+              </div>
           </div>
       </div>
 
