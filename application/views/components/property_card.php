@@ -387,7 +387,7 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
                         <input type="hidden" name="PropertyId" value="<?= $PropertyId ?>">
                         
                         <div class="mb-4 d-flex align-items-start">
-                          <input type="radio" name="Status" id="status_pub_<?= $PropertyId ?>" value="Published" <?= (isset($value->Status) && strtolower($value->Status) == 'published') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
+                          <input type="radio" name="Status_<?= $PropertyId ?>" id="status_pub_<?= $PropertyId ?>" value="Published" <?= (isset($value->Status) && strtolower($value->Status) == 'published') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
                           <div>
                               <label class="fw-bold text-success mb-1" for="status_pub_<?= $PropertyId ?>" style="cursor: pointer;">
                                 <i class="fa fa-check-circle me-1"></i> Published
@@ -396,13 +396,33 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
                           </div>
                         </div>
                         
-                        <div class="mb-2 d-flex align-items-start">
-                          <input type="radio" name="Status" id="status_unpub_<?= $PropertyId ?>" value="Not Published" <?= (!isset($value->Status) || strtolower($value->Status) == 'not published') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
+                        <div class="mb-4 d-flex align-items-start">
+                          <input type="radio" name="Status_<?= $PropertyId ?>" id="status_unpub_<?= $PropertyId ?>" value="Not Published" <?= (!isset($value->Status) || empty(trim($value->Status)) || in_array(strtolower($value->Status), ['not published', 'draft', 'pending'])) ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
                           <div>
                               <label class="fw-bold text-warning mb-1" style="color: #d39e00 !important; cursor: pointer;" for="status_unpub_<?= $PropertyId ?>">
                                 <i class="fa fa-clock me-1"></i> Not Published
                               </label>
                               <div class="text-muted small">Hidden from public listings, visible only to you.</div>
+                          </div>
+                        </div>
+
+                        <div class="mb-4 d-flex align-items-start">
+                          <input type="radio" name="Status_<?= $PropertyId ?>" id="status_sold_<?= $PropertyId ?>" value="Sold" <?= (isset($value->Status) && strtolower($value->Status) == 'sold') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
+                          <div>
+                              <label class="fw-bold text-danger mb-1" for="status_sold_<?= $PropertyId ?>" style="cursor: pointer;">
+                                <i class="fa fa-tag me-1"></i> Sold
+                              </label>
+                              <div class="text-muted small">Property has been sold.</div>
+                          </div>
+                        </div>
+
+                        <div class="mb-2 d-flex align-items-start">
+                          <input type="radio" name="Status_<?= $PropertyId ?>" id="status_rented_<?= $PropertyId ?>" value="Rented" <?= (isset($value->Status) && strtolower($value->Status) == 'rented') ? 'checked' : '' ?> style="margin-top: 4px; margin-right: 12px; transform: scale(1.2); appearance: radio !important; opacity: 1 !important; position: static !important; cursor: pointer; display: block !important; visibility: visible !important;">
+                          <div>
+                              <label class="fw-bold text-info mb-1" for="status_rented_<?= $PropertyId ?>" style="cursor: pointer;">
+                                <i class="fa fa-key me-1"></i> Rented
+                              </label>
+                              <div class="text-muted small">Property has been rented out.</div>
                           </div>
                         </div>
                     </form>
@@ -463,7 +483,7 @@ function savePropertyStatus(PropertyId) {
     }
     
     var form = $('#statusForm_' + PropertyId);
-    var status = form.find('input[name="Status"]:checked').val();
+    var status = form.find('input[name="Status_' + PropertyId + '"]:checked').val();
     
     $.ajax({
         url: '<?= site_url("Properties/UpdateStatus") ?>',
