@@ -145,6 +145,8 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
      data-state="<?= strtolower($value->State ?? ''); ?>"
      data-suburb="<?= strtolower($value->Suburb ?? ''); ?>"
      data-coveredarea="<?= $CoveredArea; ?>"
+     data-listtype="<?= strtolower($ListType); ?>"
+     data-status="<?= strtolower($value->Status ?? 'not published'); ?>"
 >
   <style>
     .prop-card {

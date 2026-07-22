@@ -737,14 +737,35 @@ if (empty($arrProperties)) {
 
         <!-- My Listings -->
         <div class="card dashboard-card mt-5">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <span>My Recent Listings</span>
-                <a href="<?= site_url('Properties/AddListing'); ?>" class="btn btn-primary">
-                    <i class="bi bi-plus-lg"></i> Add Property
-                </a>
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <input type="text" id="listingSearch" class="form-control" placeholder="Search by title, type, location..." style="max-width: 250px;">
+                    <a href="<?= site_url('Properties/AddListing'); ?>" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i> Add Property
+                    </a>
+                </div>
             </div>
             <div class="card-body">
-                <div class="row g-4">
+                <ul class="nav nav-pills mb-4" id="listingFilters">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-filter="all">All</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-filter="sale">For Sale</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-filter="rent">For Rent</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-filter="published">Published</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-filter="not_published">Not Published</button>
+                    </li>
+                </ul>
+
+                <div class="row g-4" id="listingsContainer">
                     <?php if(empty($arrProperties)): ?>
                         <div class="col-12"><div class="text-muted text-center p-4">No Recent Listings Found. Start adding some properties!</div></div>
                     <?php else: ?>
@@ -819,6 +840,53 @@ if (empty($arrProperties)) {
         if (chatBody) {
             chatBody.scrollTop = chatBody.scrollHeight;
         }
+    });
+
+    // Real-time filtering and searching for listings
+    $(document).ready(function() {
+        function filterListings() {
+            var searchTerm = $('#listingSearch').val().toLowerCase().trim();
+            var activeFilter = $('#listingFilters .nav-link.active').data('filter');
+            
+            $('#listingsContainer .property-item-box').each(function() {
+                var card = $(this);
+                var searchData = card.data('search') ? card.data('search').toString().toLowerCase() : '';
+                var listType = card.data('listtype') ? card.data('listtype').toString().toLowerCase() : '';
+                var status = card.data('status') ? card.data('status').toString().toLowerCase() : '';
+                
+                var matchesSearch = true;
+                if (searchTerm !== '') {
+                    var words = searchTerm.split(/\s+/);
+                    for (var i=0; i<words.length; i++) {
+                        if (searchData.indexOf(words[i]) === -1) {
+                            matchesSearch = false;
+                            break;
+                        }
+                    }
+                }
+                
+                var matchesFilter = true;
+                if (activeFilter === 'sale' && listType !== 'sale') matchesFilter = false;
+                if (activeFilter === 'rent' && listType !== 'rent') matchesFilter = false;
+                if (activeFilter === 'published' && status !== 'published') matchesFilter = false;
+                if (activeFilter === 'not_published' && status === 'published') matchesFilter = false; 
+                
+                if (matchesSearch && matchesFilter) {
+                    card.show(); 
+                } else {
+                    card.hide();
+                }
+            });
+        }
+        
+        $('#listingSearch').on('keyup input', filterListings);
+        
+        $('#listingFilters .nav-link').on('click', function(e) {
+            e.preventDefault();
+            $('#listingFilters .nav-link').removeClass('active');
+            $(this).addClass('active');
+            filterListings();
+        });
     });
     </script>
 </body>
