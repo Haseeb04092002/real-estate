@@ -739,7 +739,7 @@ if (empty($arrProperties)) {
         <div class="card dashboard-card mt-5">
             <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <span>My Recent Listings</span>
-                <div class="d-flex align-items-center gap-3 flex-wrap">
+                <div class="d-flex align-items-center gap-3">
                     <input type="text" id="listingSearch" class="form-control" placeholder="Search by title, type, location..." style="max-width: 250px;">
                     <a href="<?= site_url('Properties/AddListing'); ?>" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i> Add Property
