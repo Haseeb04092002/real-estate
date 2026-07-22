@@ -327,6 +327,19 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
       
       <div class="prop-card-img-wrap">
           <img src="<?= $imageSrc; ?>" alt="Property Image">
+          
+          <div class="prop-badge-top-left"><?= $PropertyTypeName; ?></div>
+          
+          <div class="prop-badge-top-right d-flex flex-row align-items-end">
+              <span>For <?= $ListType; ?></span>
+              <?php if(isset($ShowStatusBadge) && $ShowStatusBadge): ?>
+                  <?php if(isset($value->Status) && strtolower($value->Status) == 'published'): ?>
+                      <span style="background-color: #198754;"><i class="fa fa-check-circle me-1"></i> Published</span>
+                  <?php else: ?>
+                      <span style="background-color: #ffc107; color: #000;"><i class="fa fa-clock me-1"></i> Not Published</span>
+                  <?php endif; ?>
+              <?php endif; ?>
+          </div>
 
           <div class="prop-badge-bottom-left">
               <i class="fa fa-map-marker-alt"></i> <?= $displayAddress; ?>
@@ -335,26 +348,12 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
 
       <!-- Body Section -->
       <div class="prop-card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="prop-title" style="max-width: 65%;" title="<?= $PropertyTitle; ?>"><?= $PropertyTitle; ?></div>
+              <div class="prop-price">$<?= number_format($TotalPrice); ?><?= (strtolower($ListType) == 'rent') ? '/week' : '' ?></div>
+          </div>
 
-        <div class="prop-badge-top-left"><?= $PropertyTypeName; ?></div>
-        
-        <div class="prop-badge-top-right d-flex flex-row align-items-end">
-            <span>For <?= $ListType; ?></span>
-            <?php if(isset($ShowStatusBadge) && $ShowStatusBadge): ?>
-                <?php if(isset($value->Status) && strtolower($value->Status) == 'published'): ?>
-                    <span style="background-color: #198754;"><i class="fa fa-check-circle me-1"></i> Published</span>
-                <?php else: ?>
-                    <span style="background-color: #ffc107; color: #000;"><i class="fa fa-clock me-1"></i> Not Published</span>
-                <?php endif; ?>
-            <?php endif; ?>
-        </div>
-        
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="prop-title" style="max-width: 65%;" title="<?= $PropertyTitle; ?>"><?= $PropertyTitle; ?></div>
-            <div class="prop-price">$<?= number_format($TotalPrice); ?><?= (strtolower($ListType) == 'rent') ? '/week' : '' ?></div>
-        </div>
-
-        <div class="prop-desc"><?= $PropertyDescription; ?></div>
+          <div class="prop-desc"><?= $PropertyDescription; ?></div>
           
           <?php if(isset($DashboardLayout) && $DashboardLayout): ?>
           <div class="d-flex flex-column mt-auto mb-3">
