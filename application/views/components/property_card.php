@@ -330,7 +330,7 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
           
           <div class="prop-badge-top-left"><?= $PropertyTypeName; ?></div>
           
-          <div class="prop-badge-top-right d-flex flex-column align-items-end" style="gap: 5px;">
+          <div class="prop-badge-top-right d-flex flex-row align-items-end">
               <span>For <?= $ListType; ?></span>
               <?php if(isset($ShowStatusBadge) && $ShowStatusBadge): ?>
                   <?php if(isset($value->Status) && strtolower($value->Status) == 'published'): ?>
