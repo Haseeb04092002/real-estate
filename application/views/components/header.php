@@ -72,7 +72,7 @@
         <a href="<?= site_url('Properties'); ?>" class="nav-item nav-link <?= ($class == 'Properties' && ($method == 'index' || $method == 'Home')) ? 'active' : ''; ?>">Home</a>
         <a href="<?= site_url('Properties/news_details'); ?>" class="nav-item nav-link <?= ($method == 'news_details') ? 'active' : ''; ?>">News</a>
         <a href="<?= site_url('Properties/map'); ?>" class="nav-item nav-link <?= ($method == 'map') ? 'active' : ''; ?>">Map</a>
-        <button class="nav-item nav-link">Calculator</button>
+        
 
         <a href="<?= site_url('Properties/contract'); ?>" class="nav-item nav-link <?= ($method == 'contract') ? 'active' : ''; ?>">Contract</a>
 
@@ -85,6 +85,28 @@
           <a href="<?= site_url('Admin/login'); ?>" class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
           <a href="<?= site_url('Properties/signin'); ?>" class="nav-item nav-link <?= ($method == 'signin') ? 'active' : ''; ?>">Sign in</a>
         <?php endif; ?>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Calculator">
+          Calculator
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="Calculator" tabindex="-1" aria-labelledby="CalculatorLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="CalculatorModalLabel">Area Unit Converter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                this is our calculator
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
