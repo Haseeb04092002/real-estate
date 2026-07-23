@@ -98,7 +98,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                this is our calculator
+                <div class="container">
+
+<h2>Area Converter</h2>
+
+<form method="POST">
+
+<label>Enter Area</label>
+
+<input
+type="number"
+step="any"
+name="area"
+required>
+
+<label>Select Unit</label>
+
+<select name="unit">
+
+<option value="sqft">Square Feet</option>
+
+<option value="sqyd">Square Yard</option>
+
+<option value="marla">Marla</option>
+
+<option value="kanal">Kanal</option>
+
+</select>
+
+<button name="convert">
+Convert
+</button>
+
+</form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
