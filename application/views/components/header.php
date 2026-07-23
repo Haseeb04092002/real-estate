@@ -239,11 +239,7 @@
         // }
         success: function (res) {
 
-          $('#result').html(
-            "Area: " + res.area + "<br>" +
-            "From: " + res.from + "<br>" +
-            "To: " + res.to
-          );
+          $('#result').html(res);
 
           console.log(res);
         },
