@@ -225,12 +225,13 @@
       e.preventDefault();
 
       $.ajax({
-        url: base_url + "Calculator/calculator/" + $(this),
+        url: base_url + "Calculator/calculator",
         type: 'POST',
-        // data: $(this).serialize(),
+        data: $(this).serialize(),
         success: function (response) {
-          $('#result').html(response);
-          console.log(response);
+          const res = JSON.parse(response);
+          $('#result').html(res);
+          console.log(res);
         },
         error: function (err) {
           $('#result').html(err);
