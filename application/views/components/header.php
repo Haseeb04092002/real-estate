@@ -1,6 +1,6 @@
 <head>
 
-<?php 
+  <?php
 
   $this->load->view('components/header_meta');
   $this->load->view('components/css_links');
@@ -8,18 +8,18 @@
   $UserName = $this->session->userdata('user_name');
 
   $side_menu = 'd-none';
-  if ($ListingPages == 'yes')
-  {
+  if ($ListingPages == 'yes') {
     $side_menu = 'd-block';
   }
 
-?>
+  ?>
   <style>
     /* Navbar link underline animation */
     .navbar-nav .nav-link {
       position: relative;
       transition: color 0.3s ease;
     }
+
     .navbar-nav .nav-link::after {
       content: '';
       position: absolute;
@@ -31,6 +31,7 @@
       background-color: #1F509A;
       transition: width 0.3s ease;
     }
+
     .navbar-nav .nav-link:hover::after,
     .navbar-nav .nav-link.active::after {
       width: 80%;
@@ -40,10 +41,11 @@
 </head>
 
 <!-- Global Loader -->
-<div id="global-loader" class="d-none justify-content-center align-items-center position-fixed w-100 h-100 bg-white" style="top: 0; left: 0; z-index: 9999; opacity: 0.8;">
-    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
-    </div>
+<div id="global-loader" class="d-none justify-content-center align-items-center position-fixed w-100 h-100 bg-white"
+  style="top: 0; left: 0; z-index: 9999; opacity: 0.8;">
+  <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+    <span class="visually-hidden">Loading...</span>
+  </div>
 </div>
 
 <!-- Navbar Start -->
@@ -56,91 +58,160 @@
       </div>
       <div>
         <h1 style="color: #1F509A; font-size: 2rem; line-height: 1;" class="m-0 navbar-h1">Free Real Estate</h1>
-        <span style="font-size: 0.9rem; color: #6c757d; font-weight: 600; display: block; text-align: left; padding-left: 2px; letter-spacing: 1px;">Australia</span>
+        <span
+          style="font-size: 0.9rem; color: #6c757d; font-weight: 600; display: block; text-align: left; padding-left: 2px; letter-spacing: 1px;">Australia</span>
       </div>
     </a>
-    <button class="<?= $side_menu; ?> btn btn-primary d-block d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Menu</button>
+    <button class="<?= $side_menu; ?> btn btn-primary d-block d-lg-none" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Menu</button>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="navbar-nav ms-auto align-items-center">
-        <?php 
-          $class = $this->router->fetch_class();
-          $method = $this->router->fetch_method();
+        <?php
+        $class = $this->router->fetch_class();
+        $method = $this->router->fetch_method();
         ?>
-        <a href="<?= site_url('Properties'); ?>" class="nav-item nav-link <?= ($class == 'Properties' && ($method == 'index' || $method == 'Home')) ? 'active' : ''; ?>">Home</a>
-        <a href="<?= site_url('Properties/news_details'); ?>" class="nav-item nav-link <?= ($method == 'news_details') ? 'active' : ''; ?>">News</a>
-        <a href="<?= site_url('Properties/map'); ?>" class="nav-item nav-link <?= ($method == 'map') ? 'active' : ''; ?>">Map</a>
-        
+        <a href="<?= site_url('Properties'); ?>"
+          class="nav-item nav-link <?= ($class == 'Properties' && ($method == 'index' || $method == 'Home')) ? 'active' : ''; ?>">Home</a>
+        <a href="<?= site_url('Properties/news_details'); ?>"
+          class="nav-item nav-link <?= ($method == 'news_details') ? 'active' : ''; ?>">News</a>
+        <a href="<?= site_url('Properties/map'); ?>"
+          class="nav-item nav-link <?= ($method == 'map') ? 'active' : ''; ?>">Map</a>
 
-        <a href="<?= site_url('Properties/contract'); ?>" class="nav-item nav-link <?= ($method == 'contract') ? 'active' : ''; ?>">Contract</a>
 
-        <?php if($UserId > 0): ?>
-          <a href="<?= site_url('Properties/user_dashboard'); ?>" class="nav-item nav-link <?= ($method == 'user_dashboard') ? 'active' : ''; ?>"><i class="mx-1 fa-solid fa-user"></i><?= $UserName; ?></a>
-          <a href="<?= site_url('Properties/AddListing'); ?>" class="nav-item nav-link <?= ($method == 'AddListing') ? 'active' : ''; ?>">Post Property</a>
-          <a href="<?= site_url('Admin/login'); ?>" class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
+        <a href="<?= site_url('Properties/contract'); ?>"
+          class="nav-item nav-link <?= ($method == 'contract') ? 'active' : ''; ?>">Contract</a>
+
+        <?php if ($UserId > 0): ?>
+          <a href="<?= site_url('Properties/user_dashboard'); ?>"
+            class="nav-item nav-link <?= ($method == 'user_dashboard') ? 'active' : ''; ?>"><i
+              class="mx-1 fa-solid fa-user"></i><?= $UserName; ?></a>
+          <a href="<?= site_url('Properties/AddListing'); ?>"
+            class="nav-item nav-link <?= ($method == 'AddListing') ? 'active' : ''; ?>">Post Property</a>
+          <a href="<?= site_url('Admin/login'); ?>"
+            class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
           <a href="<?= site_url('Login/Logout'); ?>" class="nav-item nav-link">Logout</a>
         <?php else: ?>
-          <a href="<?= site_url('Admin/login'); ?>" class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
-          <a href="<?= site_url('Properties/signin'); ?>" class="nav-item nav-link <?= ($method == 'signin') ? 'active' : ''; ?>">Sign in</a>
+          <a href="<?= site_url('Admin/login'); ?>"
+            class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
+          <a href="<?= site_url('Properties/signin'); ?>"
+            class="nav-item nav-link <?= ($method == 'signin') ? 'active' : ''; ?>">Sign in</a>
         <?php endif; ?>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Calculator">
           Calculator
         </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="Calculator" tabindex="-1" aria-labelledby="CalculatorLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="CalculatorModalLabel">Area Unit Converter</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Area Unit Converter Modal -->
+        <div class="modal fade" id="Calculator" tabindex="-1" aria-labelledby="CalculatorModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0">
+
+              <!-- Header -->
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                  <i class="bi bi-calculator me-2"></i>
+                  Area Unit Converter
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
               </div>
+
+              <!-- Body -->
               <div class="modal-body">
-                <div class="container">
 
-<h2>Area Converter</h2>
+                <div class="text-center mb-4">
+                  <h4 class="fw-bold">Convert Area Units</h4>
+                  <p class="text-muted mb-0">
+                    Convert between Square Feet, Square Yards, Marla, and Kanal.
+                  </p>
+                </div>
 
-<form method="POST">
+                <form id="areaConverterForm">
 
-<label>Enter Area</label>
+                  <!-- Area -->
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                      Enter Area
+                    </label>
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="bi bi-rulers"></i>
+                      </span>
+                      <input type="number" class="form-control" name="area" placeholder="Enter Area" step="any"
+                        required>
+                    </div>
+                  </div>
 
-<input
-type="number"
-step="any"
-name="area"
-required>
+                  <!-- From Unit -->
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                      From Unit
+                    </label>
+                    <select class="form-select" name="from_unit">
+                      <option value="sqft">Square Feet (Sq Ft)</option>
+                      <option value="sqyd">Square Yard (Sq Yd)</option>
+                      <option value="marla">Marla</option>
+                      <option value="kanal">Kanal</option>
+                    </select>
+                  </div>
 
-<label>Select Unit</label>
+                  <!-- To Unit -->
+                  <div class="mb-4">
+                    <label class="form-label fw-semibold">
+                      To Unit
+                    </label>
+                    <select class="form-select" name="to_unit">
+                      <option value="sqft">Square Feet (Sq Ft)</option>
+                      <option value="sqyd">Square Yard (Sq Yd)</option>
+                      <option value="marla">Marla</option>
+                      <option value="kanal">Kanal</option>
+                    </select>
+                  </div>
 
-<select name="unit">
+                  <!-- Buttons -->
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bi bi-arrow-repeat me-2"></i>
+                      Convert
+                    </button>
 
-<option value="sqft">Square Feet</option>
+                    <button type="reset" class="btn btn-outline-secondary">
+                      <i class="bi bi-arrow-counterclockwise me-2"></i>
+                      Reset
+                    </button>
+                  </div>
 
-<option value="sqyd">Square Yard</option>
+                </form>
 
-<option value="marla">Marla</option>
+                <!-- Result -->
+                <div class="card bg-light mt-4 border-0">
+                  <div class="card-body text-center">
+                    <h6 class="text-muted mb-2">Converted Result</h6>
 
-<option value="kanal">Kanal</option>
+                    <h3 class="fw-bold text-primary mb-0">
+                      0.00
+                    </h3>
 
-</select>
+                    <small class="text-muted">
+                      Converted area will appear here
+                    </small>
+                  </div>
+                </div>
 
-<button name="convert">
-Convert
-</button>
-
-</form>
               </div>
+
+              <!-- Footer -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
               </div>
+
             </div>
           </div>
         </div>
-
       </div>
-    </div>
 
   </nav>
 </div>
@@ -157,15 +228,15 @@ Convert
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body d-flex flex-column align-items-center justify-content-center container-fluid">
-          <a href="<?= site_url('Properties/Home'); ?>"
-            class="navbar-brand d-flex align-items-center text-center mb-3">
+          <a href="<?= site_url('Properties/Home'); ?>" class="navbar-brand d-flex align-items-center text-center mb-3">
             <div class="icon p-2 me-2">
               <img class="img-fluid" src="<?= base_url('assets/images/Fre-logo.png'); ?>" alt="Icon"
                 style="width: 40px; height: 40px; object-fit: contain;">
             </div>
             <div>
               <h1 style="color: #1F509A; line-height: 1;" class="m-0">Free Real Estate</h1>
-              <span style="font-size: 0.8rem; color: #6c757d; font-weight: 600; display: block; text-align: left; padding-left: 2px; letter-spacing: 1px;">Australia</span>
+              <span
+                style="font-size: 0.8rem; color: #6c757d; font-weight: 600; display: block; text-align: left; padding-left: 2px; letter-spacing: 1px;">Australia</span>
             </div>
           </a>
           <h3 class="mb-4">Sign in</h3>
@@ -224,12 +295,12 @@ Convert
           <p class="modal-p">OR</p>
 
           <!-- method2 -->
-          <!-- <input class="modal-input ps-2 mb-3 w-100" name="txtUserName" type="text" value="<?= ($PropertyTitle ?? '');?>" placeholder="UserName*" required> -->
+          <!-- <input class="modal-input ps-2 mb-3 w-100" name="txtUserName" type="text" value="<?= ($PropertyTitle ?? ''); ?>" placeholder="UserName*" required> -->
 
-          <?= form_input(['name'=>'FullName','class'=>'modal-input ps-2 mb-3 w-100','type'=>'text','placeholder'=>'Full Name*','required' => 'required']); ?>
-          <?= form_input(['name'=>'UserEmail','class'=>'modal-input ps-2 mb-3 w-100','type'=>'email','placeholder'=>'Email*','required' => 'required']); ?>
-          <?= form_input(['name'=>'UserPass1','class'=>'modal-input ps-2 mb-3 w-100','type'=>'password','placeholder'=>'Password*','required' => 'required']); ?>
-          <?= form_input(['name'=>'UserPass2','class'=>'modal-input ps-2 mb-3 w-100','type'=>'password','placeholder'=>'Confirm Password*','required' => 'required']); ?>
+          <?= form_input(['name' => 'FullName', 'class' => 'modal-input ps-2 mb-3 w-100', 'type' => 'text', 'placeholder' => 'Full Name*', 'required' => 'required']); ?>
+          <?= form_input(['name' => 'UserEmail', 'class' => 'modal-input ps-2 mb-3 w-100', 'type' => 'email', 'placeholder' => 'Email*', 'required' => 'required']); ?>
+          <?= form_input(['name' => 'UserPass1', 'class' => 'modal-input ps-2 mb-3 w-100', 'type' => 'password', 'placeholder' => 'Password*', 'required' => 'required']); ?>
+          <?= form_input(['name' => 'UserPass2', 'class' => 'modal-input ps-2 mb-3 w-100', 'type' => 'password', 'placeholder' => 'Confirm Password*', 'required' => 'required']); ?>
 
 
 
@@ -242,7 +313,7 @@ Convert
             <div class="flag-icon">PK</div>
             <span class="country-code">+61</span>
 
-            <?= form_input(['name'=>'UserPhone',  'class'=>'phone-input','type'=>'number','placeholder'=>'Enter your phone number','required' => 'required']); ?>
+            <?= form_input(['name' => 'UserPhone', 'class' => 'phone-input', 'type' => 'number', 'placeholder' => 'Enter your phone number', 'required' => 'required']); ?>
 
             <!-- <input class="phone-input" type="tel" placeholder="Enter your phone number"> -->
 
@@ -251,7 +322,7 @@ Convert
             <input class="custom-checkbox me-3" type="checkbox" name="Remember Me" id="">
             <p>I have read and I agree to the Real State.com <br> <a href="#">Terms and Conditions</a></p>
           </div>
-          <?= form_submit('mysubmit', 'Continue',"class='modal-btn w-100'"); ?>
+          <?= form_submit('mysubmit', 'Continue', "class='modal-btn w-100'"); ?>
           <!-- <input type="submit" value="Continue" class="modal-btn w-100"> -->
         </div>
         <?= form_close(); ?>
