@@ -220,9 +220,11 @@
       data: $(this).serialize(),
       success: function (response) {
         $('#result').html(response);
+        console.log(response);
       },
       error: function (err) {
         $('#result').html(err);
+        console.log(err);
       }
     });
   });
