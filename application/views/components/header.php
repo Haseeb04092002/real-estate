@@ -169,7 +169,7 @@
                       Convert
                     </button>
 
-                    <button type="reset" class="btn btn-outline-secondary w-100">
+                    <button id="resetBtn" type="reset" class="btn btn-outline-secondary w-100">
                       <i class="bi bi-arrow-counterclockwise me-2"></i>
                       Reset
                     </button>
@@ -224,15 +224,6 @@
         url: base_url + "Calculator/calculator",
         type: 'POST',
         data: $(this).serialize(),
-        // success: function (response) {
-        //   const res = JSON.parse(response);
-        //   $('#result').html(res);
-        //   console.log(res);
-        // },
-        // error: function (err) {
-        //   $('#result').html(err);
-        //   console.log(err);
-        // }
         success: function (res) {
 
           $('#result').html(res);
@@ -243,6 +234,12 @@
           console.log(xhr.responseText);
         }
       });
+
+    });
+
+    $('#resetBtn').on('click', function () {
+      $('#result').html('0.00');
+      $('#areaConverterForm').trigger('reset');
     });
 
   });
