@@ -210,27 +210,37 @@
 </div>
 <!-- Navbar End -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0/jquery.min.js"
-  integrity="sha512-8LENNbXmzI/Gbj+OwXmqR6V4QaUAw0/porPzy1+dQoJqC0JPHedWoe0DDOTL2uHA5XXJyIsPtiMHH86pVlay6A=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-  $('#areaConverterForm').submit(function (e) {
-    e.preventDefault();
+  document.addEventListener("DOMContentLoaded", () => {
+    // Your DOM manipulation code goes here
+    console.log("The DOM is fully loaded and ready!");
+    $('#areaConverterForm').submit(function (e) {
 
-    $.ajax({
-      url: base_url() + '/Calculator/calculator',
-      type: 'POST',
-      data: $(this).serialize(),
-      success: function (response) {
-        $('#result').html(response);
-        console.log(response);
-      },
-      error: function (err) {
-        $('#result').html(err);
-        console.log(err);
-      }
+      var base_url = "<?= base_url(); ?>";
+      console.log(base_url);
+      base_url + "Calculator/calculator";
+      console.log(base_url + "Calculator/calculator");
+
+      e.preventDefault();
+
+      $.ajax({
+        url: base_url + "Calculator/calculator",
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function (response) {
+          $('#result').html(response);
+          console.log(response);
+        },
+        error: function (err) {
+          $('#result').html(err);
+          console.log(err);
+        }
+      });
     });
+
   });
+
 </script>
 
 <div id="registration-modal">
