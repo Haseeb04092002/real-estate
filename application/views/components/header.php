@@ -72,6 +72,8 @@
         <a href="<?= site_url('Properties'); ?>" class="nav-item nav-link <?= ($class == 'Properties' && ($method == 'index' || $method == 'Home')) ? 'active' : ''; ?>">Home</a>
         <a href="<?= site_url('Properties/news_details'); ?>" class="nav-item nav-link <?= ($method == 'news_details') ? 'active' : ''; ?>">News</a>
         <a href="<?= site_url('Properties/map'); ?>" class="nav-item nav-link <?= ($method == 'map') ? 'active' : ''; ?>">Map</a>
+        <button class="nav-item nav-link">Calculator</button>
+
         <a href="<?= site_url('Properties/contract'); ?>" class="nav-item nav-link <?= ($method == 'contract') ? 'active' : ''; ?>">Contract</a>
 
         <?php if($UserId > 0): ?>
