@@ -182,7 +182,7 @@
                   <div class="card-body text-center">
                     <h6 class="text-muted mb-2">Converted Result</h6>
 
-                    <h3 class="fw-bold text-primary mb-0">
+                    <h3 class="fw-bold text-primary mb-0" id="result">
                       0.00
                     </h3>
 
@@ -209,6 +209,24 @@
   </nav>
 </div>
 <!-- Navbar End -->
+
+<script>
+  $('#areaConverterForm').submit(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: base_url() + '/Calculator/calculator',
+      type: 'POST',
+      data: $(this).serialize(),
+      success: function (response) {
+        $('#result').html(response);
+      },
+      error: function (err) {
+        $('#result').html(err);
+      }
+    });
+  });
+</script>
 
 <div id="registration-modal">
   <!-- signin modal -->
