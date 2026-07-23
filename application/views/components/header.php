@@ -228,14 +228,27 @@
         url: base_url + "Calculator/calculator",
         type: 'POST',
         data: $(this).serialize(),
-        success: function (response) {
-          const res = JSON.parse(response);
-          $('#result').html(res);
+        // success: function (response) {
+        //   const res = JSON.parse(response);
+        //   $('#result').html(res);
+        //   console.log(res);
+        // },
+        // error: function (err) {
+        //   $('#result').html(err);
+        //   console.log(err);
+        // }
+        success: function (res) {
+
+          $('#result').html(
+            "Area: " + res.area + "<br>" +
+            "From: " + res.from + "<br>" +
+            "To: " + res.to
+          );
+
           console.log(res);
         },
-        error: function (err) {
-          $('#result').html(err);
-          console.log(err);
+        error: function (xhr) {
+          console.log(xhr.responseText);
         }
       });
     });
