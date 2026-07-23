@@ -110,7 +110,7 @@
 
               <!-- Header -->
               <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">
+                <h5 class="modal-title text-white">
                   <i class="bi bi-calculator me-2"></i>
                   Area Unit Converter
                 </h5>
@@ -119,13 +119,6 @@
 
               <!-- Body -->
               <div class="modal-body">
-
-                <div class="text-center mb-4">
-                  <h4 class="fw-bold">Convert Area Units</h4>
-                  <p class="text-muted mb-0">
-                    Convert between Square Feet, Square Yards, Marla, and Kanal.
-                  </p>
-                </div>
 
                 <form id="areaConverterForm">
 
