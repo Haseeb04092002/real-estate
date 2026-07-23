@@ -163,13 +163,13 @@
                   </div>
 
                   <!-- Buttons -->
-                  <div class="d-flex justify-content-between align-items-center gap-2">
-                    <button type="submit" class="btn btn-primary">
+                  <div class="d-flex justify-content-center align-items-center gap-2">
+                    <button type="submit" class="btn btn-primary w-100">
                       <i class="bi bi-arrow-repeat me-2"></i>
                       Convert
                     </button>
 
-                    <button type="reset" class="btn btn-outline-secondary">
+                    <button type="reset" class="btn btn-outline-secondary w-100">
                       <i class="bi bi-arrow-counterclockwise me-2"></i>
                       Reset
                     </button>
