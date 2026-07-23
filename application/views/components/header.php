@@ -163,7 +163,7 @@
                   </div>
 
                   <!-- Buttons -->
-                  <div class="d-grid gap-2">
+                  <div class="d-flex justify-content-between align-items-center gap-2">
                     <button type="submit" class="btn btn-primary">
                       <i class="bi bi-arrow-repeat me-2"></i>
                       Convert
