@@ -225,7 +225,7 @@
       e.preventDefault();
 
       $.ajax({
-        url: base_url + "Calculator/calculator/" + $(this).serialize(),
+        url: base_url + "Calculator/calculator/" + $(this),
         type: 'POST',
         // data: $(this).serialize(),
         success: function (response) {
