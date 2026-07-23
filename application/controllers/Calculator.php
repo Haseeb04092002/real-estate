@@ -41,16 +41,20 @@ class Calculator extends CI_Controller
         $kanal = $marla / $marlaPerKanal;
 
         if ($to == "sqyd") {
-            echo json_encode($sqyd);
+            $answer = $sqyd . ' Sqyd';
+            echo json_encode($answer);
             exit();
         } elseif ($to == "marla") {
-            echo json_encode($marla);
+            $answer = $marla . ' Marla';
+            echo json_encode($answer);
             exit();
         } elseif ($to == "kanal") {
-            echo json_encode($kanal);
+            $answer = $kanal . ' Kanal';
+            echo json_encode($answer);
             exit();
         } elseif ($to == "sqft") {
-            echo json_encode($sqft);
+            $answer = $sqft . ' Sqft';
+            echo json_encode($answer);
             exit();
         }
 

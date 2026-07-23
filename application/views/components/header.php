@@ -185,10 +185,6 @@
                     <h3 class="fw-bold text-primary mb-0" id="result">
                       0.00
                     </h3>
-
-                    <small class="text-muted">
-                      Converted area will appear here
-                    </small>
                   </div>
                 </div>
 
