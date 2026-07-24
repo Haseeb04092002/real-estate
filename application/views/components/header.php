@@ -104,7 +104,8 @@
         </button>
 
         <!-- Area Unit Converter Modal -->
-        <div class="modal fade" id="Calculator" tabindex="-1" aria-labelledby="CalculatorModalLabel" aria-hidden="true">
+        <div style="z-index: 99999999999999999999;" class="modal fade" id="Calculator"
+          aria-labelledby="CalculatorModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow-lg border-0">
 
