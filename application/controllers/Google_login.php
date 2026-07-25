@@ -4,29 +4,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 // =================================================================
-// =================================================================
-
-// Client ID = 666843242869-p5lq0v10s820573ql40c1g7pgp4ggism.apps.googleusercontent.com
-
-// Client secret = YOUR_CLIENT_SECRET_HERE
-
-// =================================================================
+// Google OAuth Authentication Controller
 // =================================================================
 
 
-class Google_login extends CI_Controller {
+class Google_login extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         require_once APPPATH . "third_party/google-api-php-client-v4/vendor/autoload.php";
 
     }
 
-    private function getClient() {
+    private function getClient()
+    {
+        $this->config->load('google_oauth', FALSE, TRUE);
+        $client_id = $this->config->item('google_client_id') ?: '';
+        $client_secret = $this->config->item('google_client_secret') ?: '';
+
         $client = new Google_Client();
-        $client->setClientId("666843242869-p5lq0v10s820573ql40c1g7pgp4ggism.apps.googleusercontent.com");
-        $client->setClientSecret("YOUR_CLIENT_SECRET_HERE");
-        $client->setRedirectUri('http://properties.jauntsolutions.com/Google_login/callback');
+        $client->setClientId($client_id);
+        $client->setClientSecret($client_secret);
+        // $client->setRedirectUri('http://properties.jauntsolutions.com/Google_login/callback');
+        $client->setRedirectUri(base_url('Google_login/callback'));
         // $client->setRedirectUri("http://properties.jauntsolutions.com");
         $client->addScope("email");
         $client->addScope("profile");
@@ -39,7 +41,8 @@ class Google_login extends CI_Controller {
     //     $this->load->view('google_login', $data);
     // }
 
-    public function index() {
+    public function index()
+    {
         $client = $this->getClient();
 
         $client->setPrompt('select_account');
@@ -48,7 +51,8 @@ class Google_login extends CI_Controller {
     }
 
 
-    public function callback() {
+    public function callback()
+    {
         $client = $this->getClient();
 
         if ($this->input->get('code')) {
@@ -63,9 +67,9 @@ class Google_login extends CI_Controller {
             $google_info = $google_service->userinfo->get();
 
             // Get Google info
-            $google_id    = $google_info->id;
-            $user_name    = $google_info->name;
-            $user_email   = $google_info->email;
+            $google_id = $google_info->id;
+            $user_name = $google_info->name;
+            $user_email = $google_info->email;
             $user_picture = $google_info->picture;
 
             // echo "<br>google_id = ".$google_id;
@@ -81,14 +85,14 @@ class Google_login extends CI_Controller {
 
             if (!$user) {
                 // Register user if not exists
-                // $encKey = $this->config->item('encryption_key');
+                $encKey = $this->config->item('encryption_key');
                 // $random_pass = bin2hex(random_bytes(6)); // auto-generate password
                 $Password = '123456789';
                 $insert_data = [
-                    'ClientName'  => $user_name,
-                    'EmailAddress'=> $user_email,
-                    'Password'    => $this->encrypt->encode($Password,$encKey),
-                    'StationId'   => 1,
+                    'ClientName' => $user_name,
+                    'EmailAddress' => $user_email,
+                    'Password' => $this->encrypt->encode($Password, $encKey),
+                    'StationId' => 1,
                     'PhoneNumber' => ''
                 ];
 
@@ -101,20 +105,20 @@ class Google_login extends CI_Controller {
 
             // Set session for login
             $session_data = [
-                'user_id'        => $user->ClientId,
-                'user_email'     => $user->EmailAddress,
-                'user_name'      => $user->ClientName,
-                'user_thumb'     => $user_picture,
-                'client_id'      => $user->ClientId,
-                'client_name'    => $user->ClientName,
+                'user_id' => $user->ClientId,
+                'user_email' => $user->EmailAddress,
+                'user_name' => $user->ClientName,
+                'user_thumb' => $user_picture,
+                'client_id' => $user->ClientId,
+                'client_name' => $user->ClientName,
                 'parent_station' => $user->StationParentId ?? '',
                 'active_station' => $user->StationId,
-                'user_station'   => $user->StationId??'1',
-                'user_company'   => $user->CompanyId ?? '',
-                'is_active'      => time(),
-                'logo'           => '',
-                'login_time'     => date("d-M-Y H:i:s"),
-                'logged_in'      => true
+                'user_station' => $user->StationId ?? '1',
+                'user_company' => $user->CompanyId ?? '',
+                'is_active' => time(),
+                'logo' => '',
+                'login_time' => date("d-M-Y H:i:s"),
+                'logged_in' => true
             ];
 
             $this->session->set_userdata($session_data);

@@ -85,131 +85,146 @@
           class="nav-item nav-link <?= ($method == 'contract') ? 'active' : ''; ?>">Contract</a>
 
         <?php if ($UserId > 0): ?>
-          <a href="<?= site_url('Properties/user_dashboard'); ?>"
-            class="nav-item nav-link <?= ($method == 'user_dashboard') ? 'active' : ''; ?>"><i
-              class="mx-1 fa-solid fa-user"></i><?= $UserName; ?></a>
           <a href="<?= site_url('Properties/AddListing'); ?>"
             class="nav-item nav-link <?= ($method == 'AddListing') ? 'active' : ''; ?>">Post Property</a>
-          <a href="<?= site_url('Admin/login'); ?>"
-            class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
-          <a href="<?= site_url('Login/Logout'); ?>" class="nav-item nav-link">Logout</a>
-        <?php else: ?>
-          <a href="<?= site_url('Admin/login'); ?>"
-            class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
-          <a href="<?= site_url('Properties/signin'); ?>"
-            class="nav-item nav-link <?= ($method == 'signin') ? 'active' : ''; ?>">Sign in</a>
         <?php endif; ?>
+
+        <a href="<?= site_url('Admin/login'); ?>"
+          class="nav-item nav-link <?= ($class == 'Admin') ? 'active' : ''; ?>">Admin</a>
+
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle <?= ($method == 'user_dashboard' || $method == 'signin') ? 'active' : ''; ?>" data-bs-toggle="dropdown">
+            <i class="mx-1 fa-solid fa-user"></i><?= ($UserId > 0) ? $UserName : 'Account'; ?>
+          </a>
+          <div class="dropdown-menu border-0 shadow-sm m-0">
+            <?php if ($UserId > 0): ?>
+              <a href="<?= site_url('Properties/user_dashboard'); ?>"
+                class="dropdown-item <?= ($method == 'user_dashboard') ? 'active' : ''; ?>">Dashboard</a>
+              <a href="<?= site_url('Login/Logout'); ?>" class="dropdown-item">Logout</a>
+            <?php else: ?>
+              <a href="<?= site_url('Properties/signin'); ?>"
+                class="dropdown-item <?= ($method == 'signin') ? 'active' : ''; ?>">Sign in</a>
+            <?php endif; ?>
+          </div>
+        </div>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Calculator">
           Calculator
         </button>
 
-        <!-- Area Unit Converter Modal -->
-        <div style="z-index: 99999999999999999999;" class="modal fade" id="Calculator"
-          aria-labelledby="CalculatorModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg border-0">
 
-              <!-- Header -->
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title text-white">
-                  <i class="bi bi-calculator me-2"></i>
-                  Area Unit Converter
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-              </div>
-
-              <!-- Body -->
-              <div class="modal-body">
-
-                <form id="areaConverterForm">
-
-                  <!-- Area -->
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                      Enter Area
-                    </label>
-                    <div class="input-group">
-                      <span class="input-group-text">
-                        <i class="bi bi-rulers"></i>
-                      </span>
-                      <input type="number" class="form-control" name="area" placeholder="Enter Area" step="any"
-                        required>
-                    </div>
-                  </div>
-
-                  <!-- From Unit -->
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                      From Unit
-                    </label>
-                    <select class="form-select" name="from_unit">
-                      <option value="sqft">Square Feet (Sq Ft)</option>
-                      <option value="sqyd">Square Yard (Sq Yd)</option>
-                      <option value="marla">Marla</option>
-                      <option value="kanal">Kanal</option>
-                    </select>
-                  </div>
-
-                  <!-- To Unit -->
-                  <div class="mb-4">
-                    <label class="form-label fw-semibold">
-                      To Unit
-                    </label>
-                    <select class="form-select" name="to_unit">
-                      <option value="sqft">Square Feet (Sq Ft)</option>
-                      <option value="sqyd">Square Yard (Sq Yd)</option>
-                      <option value="marla">Marla</option>
-                      <option value="kanal">Kanal</option>
-                    </select>
-                  </div>
-
-                  <!-- Buttons -->
-                  <div class="d-flex justify-content-center align-items-center gap-2">
-                    <button type="submit" class="btn btn-primary w-100">
-                      <i class="bi bi-arrow-repeat me-2"></i>
-                      Convert
-                    </button>
-
-                    <button id="resetBtn" type="reset" class="btn btn-outline-secondary w-100">
-                      <i class="bi bi-arrow-counterclockwise me-2"></i>
-                      Reset
-                    </button>
-                  </div>
-
-                </form>
-
-                <!-- Result -->
-                <div class="card bg-light mt-4 border-0">
-                  <div class="card-body text-center">
-                    <h6 class="text-muted mb-2">Converted Result</h6>
-
-                    <h3 class="fw-bold text-primary mb-0" id="result">
-                      0.00
-                    </h3>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Footer -->
-              <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
       </div>
 
   </nav>
 </div>
 <!-- Navbar End -->
 
+<!-- Area Unit Converter Modal -->
+<div class="modal fade" id="Calculator" aria-labelledby="CalculatorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+
+      <!-- Header -->
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title text-white">
+          <i class="bi bi-calculator me-2"></i>
+          Area Unit Converter
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+
+        <form id="areaConverterForm">
+
+          <!-- Area -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              Enter Area
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-rulers"></i>
+              </span>
+              <input type="number" class="form-control" name="area" placeholder="Enter Area" step="any"
+                required>
+            </div>
+          </div>
+
+          <!-- From Unit -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">
+              From Unit
+            </label>
+            <select class="form-select" name="from_unit">
+              <option value="sqft">Square Feet (Sq Ft)</option>
+              <option value="sqyd">Square Yard (Sq Yd)</option>
+              <option value="marla">Marla</option>
+              <option value="kanal">Kanal</option>
+            </select>
+          </div>
+
+          <!-- To Unit -->
+          <div class="mb-4">
+            <label class="form-label fw-semibold">
+              To Unit
+            </label>
+            <select class="form-select" name="to_unit">
+              <option value="sqft">Square Feet (Sq Ft)</option>
+              <option value="sqyd">Square Yard (Sq Yd)</option>
+              <option value="marla">Marla</option>
+              <option value="kanal">Kanal</option>
+            </select>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-arrow-repeat me-2"></i>
+              Convert
+            </button>
+
+            <button id="resetBtn" type="reset" class="btn btn-outline-secondary w-100">
+              <i class="bi bi-arrow-counterclockwise me-2"></i>
+              Reset
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Result -->
+        <div class="card bg-light mt-4 border-0">
+          <div class="card-body text-center">
+            <h6 class="text-muted mb-2">Converted Result</h6>
+
+            <h3 class="fw-bold text-primary mb-0" id="result">
+              0.00
+            </h3>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // Append modals to body to prevent stacking context overlay issues
+    const calcModal = document.getElementById("Calculator");
+    if (calcModal) { document.body.appendChild(calcModal); }
+    const regModal = document.getElementById("registration-modal");
+    if (regModal) { document.body.appendChild(regModal); }
+
     // Your DOM manipulation code goes here
     console.log("The DOM is fully loaded and ready!");
     $('#areaConverterForm').submit(function (e) {
