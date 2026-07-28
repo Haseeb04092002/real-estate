@@ -757,10 +757,11 @@ class Admin extends CI_Controller
         $this->check_auth();
         $data['page_title'] = 'Review Rating';
         $data['reviews'] = $this->db->where('PropertyID IS NOT NULL', NULL)->from('tbl_reviews')->get()->result();
-        echo "<br>";
-        echo "<pre>";
-        print_r($data['reviews']);
-        exit;
+        // echo "<br>";
+        // echo "<pre>";
+        // print_r($data['reviews']);
+        // exit;
+        $this->load->view('admin/reviews', $data);
     }
 
     public function support_ticket()
