@@ -54,7 +54,8 @@
                                     <td>
                                         <?= $r->ReviewId ?>
                                     </td>
-                                    <?= $r->ReviewerId ?>
+                                    <td>
+                                        <?= $r->ReviewerId ?>
                                     </td>
                                     <td>
                                         <?= $r->PropertyId ?>
