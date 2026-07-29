@@ -105,26 +105,22 @@ if ($ClientId > 0) {
 }
 
 // Format address
-$dispAddr = [];
-if (!empty($MailingAddress)) {
-    $dispAddr[] = $MailingAddress;
-} else {
-    if (!empty($value->UnitNumber)) $dispAddr[] = "Unit " . $value->UnitNumber;
-    if (!empty($value->StreetNumber) && !empty($value->StreetName)) {
-        $dispAddr[] = $value->StreetNumber . ' ' . $value->StreetName;
-    }
-    if (!empty($value->Suburb)) $dispAddr[] = $value->Suburb;
-    if (!empty($value->State)) $dispAddr[] = $value->State;
-    if (!empty($value->ZipCode)) $dispAddr[] = $value->ZipCode;
+$addrParts = [];
+if (!empty($value->UnitNumber)) $addrParts[] = $value->UnitNumber;
+if (!empty($value->StreetNumber)) $addrParts[] = $value->StreetNumber;
+if (!empty($value->StreetName)) $addrParts[] = $value->StreetName;
+if (!empty($value->Suburb)) $addrParts[] = $value->Suburb;
+if (!empty($value->State)) $addrParts[] = strtoupper($value->State);
+if (!empty($value->Postcode)) {
+    $addrParts[] = $value->Postcode;
+} elseif (!empty($value->ZipCode)) {
+    $addrParts[] = $value->ZipCode;
 }
-$fAddr = implode(', ', array_filter($dispAddr));
-$words = explode(' ', $fAddr);
-if (count($words) > 5) {
-    $displayAddress = implode(' ', array_slice($words, 0, 5)) . "...";
-} else {
-    $displayAddress = $fAddr;
+
+$displayAddress = implode(' ', array_filter($addrParts));
+if (empty(trim($displayAddress))) {
+    $displayAddress = !empty($MailingAddress) ? $MailingAddress : "Address not provided";
 }
-if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
 ?>
 
 <?php $GridClass = $GridClass ?? 'col-lg-4 col-md-6'; ?>
@@ -343,9 +339,6 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
               <?php endif; ?>
           </div>
 
-          <div class="prop-badge-bottom-left">
-              <i class="fa fa-map-marker-alt"></i> <?= $displayAddress; ?>
-          </div>
       </div>
 
       <!-- Body Section -->
@@ -353,6 +346,10 @@ if (empty(trim($displayAddress))) $displayAddress = "Address not provided";
           <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="prop-title" style="max-width: 65%;" title="<?= $PropertyTitle; ?>"><?= $PropertyTitle; ?></div>
               <div class="prop-price">$<?= number_format($TotalPrice); ?><?= (strtolower($ListType) == 'rent') ? '/week' : '' ?></div>
+          </div>
+
+          <div class="prop-address mb-2" style="color: #6c757d; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= htmlspecialchars($displayAddress); ?>">
+              <i class="fa fa-map-marker-alt me-1"></i> <?= $displayAddress; ?>
           </div>
 
           <div class="prop-desc"><?= $PropertyDescription; ?></div>
