@@ -152,7 +152,7 @@ $UserId = $this->session->userdata('user_id')??'';
                   <span class="input-group-text border-0 bg-white">
                     <i class="fa fa-search"></i>
                   </span>
-                  <input type="text" class="form-control border-0 search-input fs-6"
+                  <input type="text" class="form-control border-0 search-input"
                     placeholder="search state, suburb, post code">
                 </div>
                 <button class="btn1 btn-light border rounded-pill btn-lg" data-bs-toggle="modal" data-bs-target="#filterModal">Filters</button>
@@ -265,16 +265,35 @@ $UserId = $this->session->userdata('user_id')??'';
       </script>
 
     <script>
+      function initSearchAutocomplete() {
+          const inputs = document.querySelectorAll('.search-input');
+          inputs.forEach(input => {
+              const autocomplete = new google.maps.places.Autocomplete(input, {
+                  componentRestrictions: { country: "au" },
+                  fields: ["address_components", "formatted_address", "geometry"]
+              });
+              autocomplete.addListener('place_changed', function() {
+                  input.dispatchEvent(new Event('input', { bubbles: true }));
+              });
+          });
+      }
+
       document.addEventListener("DOMContentLoaded", function () {
-        const searchBox = document.getElementById("propertySearch");
+        const searchInputs = document.querySelectorAll(".search-input");
         const applyBtn = document.getElementById("applyFilters");
+        const searchBtns = document.querySelectorAll(".btn-primary.rounded-pill.btn-lg");
         const properties = document.querySelectorAll(".property-item-box");
 
         function applyFilters() {
-            let query = searchBox ? searchBox.value.toLowerCase().trim() : "";
-            console.log(query);
+            let activeInput = Array.from(searchInputs).find(el => el.offsetParent !== null) || searchInputs[0];
+            let query = activeInput ? activeInput.value.toLowerCase().trim() : "";
+            
+            // Clean up Google Places commas and 'australia' to match our data-search format better
+            query = query.replace(/,/g, ' ').replace(/australia/g, ' ').trim();
+            let queryTokens = query.split(/\s+/).filter(t => t.length > 0);
+
             let selectedTypes = Array.from(document.querySelectorAll('input[name="propertyType[]"]:checked'))
-                                     .map(el => el.value); // now values are numeric IDs
+                                     .map(el => el.value);
 
             let minPrice = document.querySelector('input[name="txtMinPrice"]')?.value.trim();
             let maxPrice = document.querySelector('input[name="txtMaxPrice"]')?.value.trim();
@@ -290,12 +309,19 @@ $UserId = $this->session->userdata('user_id')??'';
                 let price = parseInt(card.dataset.price) || 0;
                 let cardBedrooms = parseInt(card.dataset.bedrooms) || 0;
                 let cardBathrooms = parseInt(card.dataset.bathrooms) || 0;
-                let cardType = card.dataset.type;  // numeric ID now
+                let cardType = card.dataset.type; 
                 let cardState = card.dataset.state || "";
                 let cardSuburb = card.dataset.suburb || "";
 
-                // Keyword search
-                if (query && !searchable.includes(query)) show = false;
+                // Keyword search: token matching
+                if (queryTokens.length > 0) {
+                    for(let token of queryTokens) {
+                        if (!searchable.includes(token)) {
+                            show = false;
+                            break;
+                        }
+                    }
+                }
 
                 // Types
                 if (selectedTypes.length > 0 && !selectedTypes.includes(cardType)) show = false;
@@ -316,16 +342,23 @@ $UserId = $this->session->userdata('user_id')??'';
             });
         }
 
-        if (searchBox) {
-            searchBox.addEventListener("keyup", applyFilters);
-        }
+        searchInputs.forEach(input => {
+            input.addEventListener("keyup", applyFilters);
+            input.addEventListener("input", applyFilters); // Also listen to input for when autocomplete triggers
+        });
+
+        searchBtns.forEach(btn => {
+            if(btn.innerText.trim() === 'Search') {
+                btn.addEventListener("click", applyFilters);
+            }
+        });
 
         if (applyBtn) {
             applyBtn.addEventListener("click", applyFilters);
         }
       });
-
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv1FrfWK8d_Z28pT_XtiZW02msCfrC2Rs&libraries=places&callback=initSearchAutocomplete" async defer></script>
 
 
 

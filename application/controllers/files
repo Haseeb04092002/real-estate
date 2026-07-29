@@ -5,3 +5,4 @@ Views
     admin/reviews.php
     home.php
     components/property_card.php
+    old_pages/all_properties.php
