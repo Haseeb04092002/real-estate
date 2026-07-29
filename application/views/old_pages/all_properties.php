@@ -137,7 +137,7 @@ $UserId = $this->session->userdata('user_id')??'';
                     <i class="fa fa-search"></i>
                   </span>
                   <input id="propertySearch" type="text" class="form-control border-0 search-input"
-                    placeholder="Select suburb, postcode, or states">
+                    placeholder="search state, suburb, post code">
                 </div>
                 <button class="btn1 btn-light border rounded-pill btn-lg" data-bs-toggle="modal" data-bs-target="#filterModal">Filters</button>
                 <button class="btn btn-primary rounded-pill btn-lg">Search</button>
@@ -153,7 +153,7 @@ $UserId = $this->session->userdata('user_id')??'';
                     <i class="fa fa-search"></i>
                   </span>
                   <input type="text" class="form-control border-0 search-input fs-6"
-                    placeholder="Select suburb, postcode, or states">
+                    placeholder="search state, suburb, post code">
                 </div>
                 <button class="btn1 btn-light border rounded-pill btn-lg" data-bs-toggle="modal" data-bs-target="#filterModal">Filters</button>
                 <button class="btn btn-primary rounded-pill btn-lg">Search</button>
