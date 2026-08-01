@@ -1,15 +1,14 @@
 <?php
 // echo "<br>StationId = ".$StationId;
-$StationId = $StationId??'1';
-$PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties','*'," WHERE StationId = '$StationId'",2);
-  
+$StationId = $StationId ?? '1';
+$PropertyDetails = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', '*', " WHERE StationId = '$StationId'", 2);
+
 $PropertyTypeId = '';
-if($PropertyDetails)
-{
-  $PropertyTypeId  = $PropertyDetails->PropertyTypeId;
+if ($PropertyDetails) {
+  $PropertyTypeId = $PropertyDetails->PropertyTypeId;
 }
 
-$arrAllTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','TypeId,Title,PropertyIcon',"ORDER BY SortOrder");
+$arrAllTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types', 'TypeId,Title,PropertyIcon', "ORDER BY SortOrder");
 $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features_lists', 'FeatureId, Title', "ORDER BY FeatureId ASC");
 
 
@@ -17,17 +16,20 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
 ?>
 
 <!-- Filter Modal -->
-<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true" style="z-index: 9999999;">
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true"
+  style="z-index: 9999999;">
   <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" style="z-index: 9999999;">
     <div class="modal-content" style="z-index: 9999999;">
       <!-- Modal Header -->
       <div class="modal-header cust-modal-header border-bottom-0 p-0">
         <ul class="nav nav-tabs w-100 text-center" id="myTab" role="tablist">
           <li class="nav-item flex-fill" role="presentation">
-            <button class="nav-link active w-100" id="BuyBtnFilter" data-bs-toggle="tab" data-bs-target="#BuyContent" type="button" role="tab" aria-controls="BuyContent" aria-selected="true"> Sale </button>
+            <button class="nav-link active w-100" id="BuyBtnFilter" data-bs-toggle="tab" data-bs-target="#BuyContent"
+              type="button" role="tab" aria-controls="BuyContent" aria-selected="true"> Sale </button>
           </li>
           <li class="nav-item flex-fill" role="presentation">
-            <button class="nav-link w-100" id="RentBtnFilter" data-bs-toggle="tab" data-bs-target="#RentContent" type="button" role="tab" aria-controls="RentContent" aria-selected="false"> Rent </button>
+            <button class="nav-link w-100" id="RentBtnFilter" data-bs-toggle="tab" data-bs-target="#RentContent"
+              type="button" role="tab" aria-controls="RentContent" aria-selected="false"> Rent </button>
           </li>
         </ul>
         <input type="hidden" name="ListType">
@@ -43,13 +45,17 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Types</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-                    <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
-                    <div class="col">
-                      <label class="d-flex align-items-center m-0 w-100">
-                        <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($type->Title) ?>"><?= htmlspecialchars($type->Title) ?></span>
-                      </label>
-                    </div>
-                    <?php } } ?>
+                    <?php if (is_array($arrAllTypes)) {
+                      foreach ($arrAllTypes as $type) { ?>
+                        <div class="col">
+                          <label class="d-flex align-items-center m-0 w-100">
+                            <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>"
+                              class="form-check-input me-2 mt-0"> <span class="text-truncate"
+                              title="<?= htmlspecialchars($type->Title) ?>"><?= htmlspecialchars($type->Title) ?></span>
+                          </label>
+                        </div>
+                      <?php }
+                    } ?>
                   </div>
                 </div>
               </div>
@@ -60,13 +66,17 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Features</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-                    <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
-                    <div class="col">
-                      <label class="d-flex align-items-center m-0 w-100">
-                        <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
-                      </label>
-                    </div>
-                    <?php } } ?>
+                    <?php if (is_array($arrAllFeatures)) {
+                      foreach ($arrAllFeatures as $feature) { ?>
+                        <div class="col">
+                          <label class="d-flex align-items-center m-0 w-100">
+                            <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>"
+                              class="form-check-input me-2 mt-0"> <span class="text-truncate"
+                              title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
+                          </label>
+                        </div>
+                      <?php }
+                    } ?>
                   </div>
                 </div>
               </div>
@@ -74,24 +84,220 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
             <!-- Price -->
             <div class="mt-4 text-start price-wrapper">
               <h6 class="fw-bold mb-2">Price</h6>
-              <div class="price-input">
-                  <div class="field">
+              <style>
+                ::selection {
+                  color: #fff;
+                  background: #17a2b8;
+                }
+
+                .wrapper {
+                  width: 400px;
+                  background: #fff;
+                  border-radius: 10px;
+                  padding: 20px 25px 40px;
+                  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+                }
+
+                header h2 {
+                  font-size: 24px;
+                  font-weight: 600;
+                }
+
+                header p {
+                  margin-top: 5px;
+                  font-size: 16px;
+                }
+
+                .price-input {
+                  width: 100%;
+                  display: flex;
+                  margin: 30px 0 35px;
+                }
+
+                .price-input .field {
+                  display: flex;
+                  width: 100%;
+                  height: 45px;
+                  align-items: center;
+                }
+
+                .field input {
+                  width: 100%;
+                  height: 100%;
+                  outline: none;
+                  font-size: 19px;
+                  margin-left: 12px;
+                  border-radius: 5px;
+                  text-align: center;
+                  border: 1px solid #999;
+                  -moz-appearance: textfield;
+                }
+
+                input[type="number"]::-webkit-outer-spin-button,
+                input[type="number"]::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                }
+
+                .price-input .separator {
+                  width: 130px;
+                  display: flex;
+                  font-size: 19px;
+                  align-items: center;
+                  justify-content: center;
+                }
+
+                .slider {
+                  height: 5px;
+                  position: relative;
+                  background: #ddd;
+                  border-radius: 5px;
+                }
+
+                .slider .progress {
+                  height: 100%;
+                  left: 25%;
+                  right: 25%;
+                  position: absolute;
+                  border-radius: 5px;
+                  background: #17a2b8;
+                }
+
+                .range-input {
+                  position: relative;
+                }
+
+                .range-input input {
+                  position: absolute;
+                  width: 100%;
+                  height: 5px;
+                  top: -5px;
+                  background: none;
+                  pointer-events: none;
+                  -webkit-appearance: none;
+                  -moz-appearance: none;
+                }
+
+                input[type="range"]::-webkit-slider-thumb {
+                  height: 17px;
+                  width: 17px;
+                  border-radius: 50%;
+                  background: #17a2b8;
+                  pointer-events: auto;
+                  -webkit-appearance: none;
+                  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+                }
+
+                input[type="range"]::-moz-range-thumb {
+                  height: 17px;
+                  width: 17px;
+                  border: none;
+                  border-radius: 50%;
+                  background: #17a2b8;
+                  pointer-events: auto;
+                  -moz-appearance: none;
+                  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+                }
+
+                /* Support */
+                .support-box {
+                  top: 2rem;
+                  position: relative;
+                  bottom: 0;
+                  text-align: center;
+                  display: block;
+                }
+
+                .b-btn {
+                  color: white;
+                  text-decoration: none;
+                  font-weight: bold;
+                }
+
+                .b-btn.paypal i {
+                  color: blue;
+                }
+
+                .b-btn:hover {
+                  text-decoration: none;
+                  font-weight: bold;
+                }
+
+                .b-btn i {
+                  font-size: 20px;
+                  color: yellow;
+                  margin-top: 2rem;
+                }
+              </style>
+              <div class="d-flex">
+                <div class="wrapper">
+
+                  <div class="price-input">
+                    <div class="field">
                       <span>Min</span>
-                      <input type="number" class="input-min" name="txtMinPrice" value="0">
-                  </div>
-                  <div class="separator">-</div>
-                  <div class="field">
+                      <input type="number" class="input-min" value="2500">
+                    </div>
+                    <div class="separator">-</div>
+                    <div class="field">
                       <span>Max</span>
-                      <input type="number" class="input-max" name="txtMaxPrice" value="100000">
+                      <input type="number" class="input-max" value="7500">
+                    </div>
                   </div>
+                  <div class="slider">
+                    <div class="progress"></div>
+                  </div>
+                  <div class="range-input">
+                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                  </div>
+                </div>
+
+                <!--   Support Section -->
+
               </div>
-              <div class="slider mt-3">
-                  <div class="progress" style="left: 0%; right: 0%;"></div>
-              </div>
-              <div class="range-input">
-                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
-                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
-              </div>
+              <script>
+                const rangeInput = document.querySelectorAll(".range-input input"),
+                  priceInput = document.querySelectorAll(".price-input input"),
+                  range = document.querySelector(".slider .progress");
+                let priceGap = 1000;
+
+                priceInput.forEach((input) => {
+                  input.addEventListener("input", (e) => {
+                    let minPrice = parseInt(priceInput[0].value),
+                      maxPrice = parseInt(priceInput[1].value);
+
+                    if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+                      if (e.target.className === "input-min") {
+                        rangeInput[0].value = minPrice;
+                        range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                      } else {
+                        rangeInput[1].value = maxPrice;
+                        range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                      }
+                    }
+                  });
+                });
+
+                rangeInput.forEach((input) => {
+                  input.addEventListener("input", (e) => {
+                    let minVal = parseInt(rangeInput[0].value),
+                      maxVal = parseInt(rangeInput[1].value);
+
+                    if (maxVal - minVal < priceGap) {
+                      if (e.target.className === "range-min") {
+                        rangeInput[0].value = maxVal - priceGap;
+                      } else {
+                        rangeInput[1].value = minVal + priceGap;
+                      }
+                    } else {
+                      priceInput[0].value = minVal;
+                      priceInput[1].value = maxVal;
+                      range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+                      range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+                    }
+                  });
+                });
+
+              </script>
             </div>
             <!-- Bedrooms & Bathrooms -->
             <div class="mt-4 d-flex gap-3">
@@ -120,11 +326,14 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               <h6 class="fw-bold mb-2">Property Status</h6>
               <div class="d-flex flex-wrap gap-4">
                 <label class="form-check d-flex align-items-center">
-                  <input class="form-check-input me-2" type="checkbox" id="chkStatusOccupied" name="chkStatusOccupied"> Occupied </label>
+                  <input class="form-check-input me-2" type="checkbox" id="chkStatusOccupied" name="chkStatusOccupied">
+                  Occupied </label>
                 <label class="form-check d-flex align-items-center">
-                  <input class="form-check-input me-2" type="checkbox" id="chkStatusRented" name="chkStatusRented"> Rented </label>
+                  <input class="form-check-input me-2" type="checkbox" id="chkStatusRented" name="chkStatusRented">
+                  Rented </label>
                 <label class="form-check d-flex align-items-center">
-                  <input class="form-check-input me-2" type="checkbox" id="chkStatusVaccant" name="chkStatusVaccant"> Vacant </label>
+                  <input class="form-check-input me-2" type="checkbox" id="chkStatusVaccant" name="chkStatusVaccant">
+                  Vacant </label>
               </div>
             </div>
             <!-- Property Title -->
@@ -152,7 +361,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <input type="number" class="form-control" name="txtCoveredArea">
               </div>
             </div>
-            
+
             <!-- More features sections can follow here... -->
           </div>
           <!-- End Buy Tab -->
@@ -164,13 +373,17 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Types</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-                    <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
-                    <div class="col">
-                      <label class="d-flex align-items-center m-0 w-100">
-                        <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($type->Title) ?>"><?= htmlspecialchars($type->Title) ?></span>
-                      </label>
-                    </div>
-                    <?php } } ?>
+                    <?php if (is_array($arrAllTypes)) {
+                      foreach ($arrAllTypes as $type) { ?>
+                        <div class="col">
+                          <label class="d-flex align-items-center m-0 w-100">
+                            <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>"
+                              class="form-check-input me-2 mt-0"> <span class="text-truncate"
+                              title="<?= htmlspecialchars($type->Title) ?>"><?= htmlspecialchars($type->Title) ?></span>
+                          </label>
+                        </div>
+                      <?php }
+                    } ?>
                   </div>
                 </div>
               </div>
@@ -181,13 +394,17 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Features</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
-                    <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
-                    <div class="col">
-                      <label class="d-flex align-items-center m-0 w-100">
-                        <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
-                      </label>
-                    </div>
-                    <?php } } ?>
+                    <?php if (is_array($arrAllFeatures)) {
+                      foreach ($arrAllFeatures as $feature) { ?>
+                        <div class="col">
+                          <label class="d-flex align-items-center m-0 w-100">
+                            <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>"
+                              class="form-check-input me-2 mt-0"> <span class="text-truncate"
+                              title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
+                          </label>
+                        </div>
+                      <?php }
+                    } ?>
                   </div>
                 </div>
               </div>
@@ -196,22 +413,22 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
             <div class="mt-4 text-start price-wrapper">
               <h6 class="fw-bold mb-2">Price</h6>
               <div class="price-input">
-                  <div class="field">
-                      <span>Min</span>
-                      <input type="number" class="input-min" name="txtMinPrice" value="0">
-                  </div>
-                  <div class="separator">-</div>
-                  <div class="field">
-                      <span>Max</span>
-                      <input type="number" class="input-max" name="txtMaxPrice" value="100000">
-                  </div>
+                <div class="field">
+                  <span>Min</span>
+                  <input type="number" class="input-min" name="txtMinPrice" value="0">
+                </div>
+                <div class="separator">-</div>
+                <div class="field">
+                  <span>Max</span>
+                  <input type="number" class="input-max" name="txtMaxPrice" value="100000">
+                </div>
               </div>
               <div class="slider mt-3">
-                  <div class="progress" style="left: 0%; right: 0%;"></div>
+                <div class="progress" style="left: 0%; right: 0%;"></div>
               </div>
               <div class="range-input">
-                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
-                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
+                <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
+                <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
@@ -241,11 +458,14 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               <h6 class="fw-bold mb-2">Property Status</h6>
               <div class="d-flex flex-wrap gap-4">
                 <label class="form-check d-flex align-items-center">
-                  <input class="form-check-input me-2" type="checkbox" id="chkStatusOccupied" name="chkStatusOccupied"> Occupied </label>
+                  <input class="form-check-input me-2" type="checkbox" id="chkStatusOccupied" name="chkStatusOccupied">
+                  Occupied </label>
                 <label class="form-check d-flex align-items-center">
-                  <input class="form-check-input me-2" type="checkbox" id="chkStatusRented" name="chkStatusRented"> Rented </label>
+                  <input class="form-check-input me-2" type="checkbox" id="chkStatusRented" name="chkStatusRented">
+                  Rented </label>
                 <label class="form-check d-flex align-items-center">
-                  <input class="form-check-input me-2" type="checkbox" id="chkStatusVaccant" name="chkStatusVaccant"> Vacant </label>
+                  <input class="form-check-input me-2" type="checkbox" id="chkStatusVaccant" name="chkStatusVaccant">
+                  Vacant </label>
               </div>
             </div>
             <!-- Property Title -->
@@ -273,9 +493,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <input type="number" class="form-control" name="txtCoveredArea">
               </div>
             </div>
-            
+
           </div>
-          
+
         </div>
       </div>
       <!-- Modal Footer -->
@@ -287,55 +507,55 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
   </div>
 </div>
 <script>
-  document.getElementById("BuyBtnFilter").addEventListener("click", function() {
+  document.getElementById("BuyBtnFilter").addEventListener("click", function () {
     document.querySelector("input[name='ListType']").value = "Sale";
   });
-  document.getElementById("RentBtnFilter").addEventListener("click", function() {
+  document.getElementById("RentBtnFilter").addEventListener("click", function () {
     document.querySelector("input[name='ListType']").value = "Rent";
   });
 
   document.querySelectorAll('.price-wrapper').forEach(wrapper => {
-      const rangeInput = wrapper.querySelectorAll(".range-input input");
-      const priceInput = wrapper.querySelectorAll(".price-input input");
-      const range = wrapper.querySelector(".slider .progress");
-      let priceGap = 1000;
+    const rangeInput = wrapper.querySelectorAll(".range-input input");
+    const priceInput = wrapper.querySelectorAll(".price-input input");
+    const range = wrapper.querySelector(".slider .progress");
+    let priceGap = 1000;
 
-      priceInput.forEach((input) => {
-          input.addEventListener("input", (e) => {
-              let minPrice = parseInt(priceInput[0].value) || 0,
-                  maxPrice = parseInt(priceInput[1].value) || 0;
+    priceInput.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        let minPrice = parseInt(priceInput[0].value) || 0,
+          maxPrice = parseInt(priceInput[1].value) || 0;
 
-              if (maxPrice - minPrice >= priceGap && maxPrice <= parseInt(rangeInput[1].max)) {
-                  if (e.target.className.includes("input-min")) {
-                      rangeInput[0].value = minPrice;
-                      range.style.left = (minPrice / parseInt(rangeInput[0].max)) * 100 + "%";
-                  } else {
-                      rangeInput[1].value = maxPrice;
-                      range.style.right = 100 - (maxPrice / parseInt(rangeInput[1].max)) * 100 + "%";
-                  }
-              }
-          });
+        if (maxPrice - minPrice >= priceGap && maxPrice <= parseInt(rangeInput[1].max)) {
+          if (e.target.className.includes("input-min")) {
+            rangeInput[0].value = minPrice;
+            range.style.left = (minPrice / parseInt(rangeInput[0].max)) * 100 + "%";
+          } else {
+            rangeInput[1].value = maxPrice;
+            range.style.right = 100 - (maxPrice / parseInt(rangeInput[1].max)) * 100 + "%";
+          }
+        }
       });
+    });
 
-      rangeInput.forEach((input) => {
-          input.addEventListener("input", (e) => {
-              let minVal = parseInt(rangeInput[0].value),
-                  maxVal = parseInt(rangeInput[1].value);
+    rangeInput.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        let minVal = parseInt(rangeInput[0].value),
+          maxVal = parseInt(rangeInput[1].value);
 
-              if (maxVal - minVal < priceGap) {
-                  if (e.target.className.includes("range-min")) {
-                      rangeInput[0].value = maxVal - priceGap;
-                  } else {
-                      rangeInput[1].value = minVal + priceGap;
-                  }
-              } else {
-                  priceInput[0].value = minVal;
-                  priceInput[1].value = maxVal;
-                  range.style.left = (minVal / parseInt(rangeInput[0].max)) * 100 + "%";
-                  range.style.right = 100 - (maxVal / parseInt(rangeInput[1].max)) * 100 + "%";
-              }
-          });
+        if (maxVal - minVal < priceGap) {
+          if (e.target.className.includes("range-min")) {
+            rangeInput[0].value = maxVal - priceGap;
+          } else {
+            rangeInput[1].value = minVal + priceGap;
+          }
+        } else {
+          priceInput[0].value = minVal;
+          priceInput[1].value = maxVal;
+          range.style.left = (minVal / parseInt(rangeInput[0].max)) * 100 + "%";
+          range.style.right = 100 - (maxVal / parseInt(rangeInput[1].max)) * 100 + "%";
+        }
       });
+    });
   });
 </script>
 <!-- Map Modal -->
@@ -343,7 +563,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content p-4">
       <h4>Select Location</h4>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3313.1031492957684!2d73.0479!3d33.6844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbf5d3e48ad8b%3A0x3b2b610778f7eb9e!2sIslamabad%2C%20Pakistan!5e0!3m2!1sen!2s!4v1625258123456!5m2!1sen!2s" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3313.1031492957684!2d73.0479!3d33.6844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbf5d3e48ad8b%3A0x3b2b610778f7eb9e!2sIslamabad%2C%20Pakistan!5e0!3m2!1sen!2s!4v1625258123456!5m2!1sen!2s"
+        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
       <div class="text-end mt-3">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
       </div>
