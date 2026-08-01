@@ -37,10 +37,10 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
         <div class="tab-content p-4" id="myTabContent">
           <!-- Buy Tab Content -->
           <div class="tab-pane fade active show" id="BuyContent" role="tabpanel" aria-labelledby="BuyBtnFilter">
-            <div class="card bg-light border-0 mb-2">
+            <!-- Property Types -->
+            <div class="card bg-light border-0 mb-4">
               <div class="card-body">
-                <!-- Property Types -->
-                <div class="text-start mb-4">
+                <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Types</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
@@ -52,7 +52,11 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                     <?php } } ?>
                   </div>
                 </div>
-                <!-- Property Features -->
+              </div>
+            </div>
+            <!-- Property Features -->
+            <div class="card bg-light border-0 mb-2">
+              <div class="card-body">
                 <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Features</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
@@ -186,10 +190,10 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
           <!-- End Buy Tab -->
 
           <div class="tab-pane fade" id="RentContent" role="tabpanel" aria-labelledby="RentBtnFilter">
-            <div class="card bg-light border-0 mb-2">
+            <!-- Property Types -->
+            <div class="card bg-light border-0 mb-4">
               <div class="card-body">
-                <!-- Property Types -->
-                <div class="text-start mb-4">
+                <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Types</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
@@ -201,7 +205,11 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                     <?php } } ?>
                   </div>
                 </div>
-                <!-- Property Features -->
+              </div>
+            </div>
+            <!-- Property Features -->
+            <div class="card bg-light border-0 mb-2">
+              <div class="card-body">
                 <div class="text-start">
                   <h6 class="fw-bold mb-3">Property Features</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
