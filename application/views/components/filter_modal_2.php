@@ -82,222 +82,129 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Price -->
-            <div class="mt-4 text-start price-wrapper">
-              <h6 class="fw-bold mb-2">Price</h6>
-              <style>
-                ::selection {
-                  color: #fff;
-                  background: #17a2b8;
+            <style>
+              .price-card {
+                background: #fff;
+                border: 1px solid #e9ecef;
+                border-radius: 15px;
+                padding: 22px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, .05);
+              }
+
+              .price-card .form-control {
+                height: 46px;
+                border-radius: 10px;
+                text-align: center;
+                font-weight: 600;
+              }
+
+              .price-card .input-group-text {
+                border-radius: 10px 0 0 10px;
+                background: #f8f9fa;
+                font-weight: 600;
+              }
+
+              .slider {
+                position: relative;
+                height: 6px;
+                background: #dee2e6;
+                border-radius: 50px;
+                margin-top: 10px;
+              }
+
+              .slider .progress {
+                position: absolute;
+                height: 100%;
+                left: 25%;
+                right: 25%;
+                border-radius: 50px;
+                background: linear-gradient(90deg, #0d6efd, #17c1e8);
+              }
+
+              .range-input {
+                position: relative;
+                margin-top: -6px;
+              }
+
+              .range-input input {
+                position: absolute;
+                width: 100%;
+                height: 6px;
+                background: none;
+                pointer-events: none;
+                appearance: none;
+                -webkit-appearance: none;
+              }
+
+              .range-input input::-webkit-slider-thumb {
+                appearance: none;
+                pointer-events: auto;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 3px solid #fff;
+                background: #0d6efd;
+                box-shadow: 0 3px 10px rgba(13, 110, 253, .35);
+                cursor: pointer;
+              }
+
+              .range-input input::-moz-range-thumb {
+                pointer-events: auto;
+                width: 20px;
+                height: 20px;
+                border: none;
+                border-radius: 50%;
+                background: #0d6efd;
+                cursor: pointer;
+              }
+
+              @media(max-width:576px) {
+
+                .price-card {
+                  padding: 18px;
                 }
 
-                .wrapper {
-                  width: 400px;
-                  background: #fff;
-                  border-radius: 10px;
-                  padding: 20px 25px 40px;
-                  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-                }
+              }
+            </style>
+            <script>
+              range.style.left = (rangeInput[0].value / rangeInput[0].max) * 100 + "%";
+              range.style.right = 100 - (rangeInput[1].value / rangeInput[1].max) * 100 + "%";
+            </script>
+            <div class="mt-4 price-wrapper">
+              <h6 class="fw-bold mb-3">
+                <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
+              </h6>
 
-                header h2 {
-                  font-size: 24px;
-                  font-weight: 600;
-                }
+              <div class="price-card">
 
-                header p {
-                  margin-top: 5px;
-                  font-size: 16px;
-                }
-
-                .price-input {
-                  width: 100%;
-                  display: flex;
-                  margin: 30px 0 35px;
-                }
-
-                .price-input .field {
-                  display: flex;
-                  width: 100%;
-                  height: 45px;
-                  align-items: center;
-                }
-
-                .field input {
-                  width: 100%;
-                  height: 100%;
-                  outline: none;
-                  font-size: 19px;
-                  margin-left: 12px;
-                  border-radius: 5px;
-                  text-align: center;
-                  border: 1px solid #999;
-                  -moz-appearance: textfield;
-                }
-
-                input[type="number"]::-webkit-outer-spin-button,
-                input[type="number"]::-webkit-inner-spin-button {
-                  -webkit-appearance: none;
-                }
-
-                .price-input .separator {
-                  width: 130px;
-                  display: flex;
-                  font-size: 19px;
-                  align-items: center;
-                  justify-content: center;
-                }
-
-                .slider {
-                  height: 5px;
-                  position: relative;
-                  background: #ddd;
-                  border-radius: 5px;
-                }
-
-                .slider .progress {
-                  height: 100%;
-                  left: 25%;
-                  right: 25%;
-                  position: absolute;
-                  border-radius: 5px;
-                  background: #17a2b8;
-                }
-
-                .range-input {
-                  position: relative;
-                }
-
-                .range-input input {
-                  position: absolute;
-                  width: 100%;
-                  height: 5px;
-                  top: -5px;
-                  background: none;
-                  pointer-events: none;
-                  -webkit-appearance: none;
-                  -moz-appearance: none;
-                }
-
-                input[type="range"]::-webkit-slider-thumb {
-                  height: 17px;
-                  width: 17px;
-                  border-radius: 50%;
-                  background: #17a2b8;
-                  pointer-events: auto;
-                  -webkit-appearance: none;
-                  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-                }
-
-                input[type="range"]::-moz-range-thumb {
-                  height: 17px;
-                  width: 17px;
-                  border: none;
-                  border-radius: 50%;
-                  background: #17a2b8;
-                  pointer-events: auto;
-                  -moz-appearance: none;
-                  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-                }
-
-                /* Support */
-                .support-box {
-                  top: 2rem;
-                  position: relative;
-                  bottom: 0;
-                  text-align: center;
-                  display: block;
-                }
-
-                .b-btn {
-                  color: white;
-                  text-decoration: none;
-                  font-weight: bold;
-                }
-
-                .b-btn.paypal i {
-                  color: blue;
-                }
-
-                .b-btn:hover {
-                  text-decoration: none;
-                  font-weight: bold;
-                }
-
-                .b-btn i {
-                  font-size: 20px;
-                  color: yellow;
-                  margin-top: 2rem;
-                }
-              </style>
-              <div class="d-flex">
-                <div class="wrapper">
-
-                  <div class="price-input">
-                    <div class="field">
-                      <span>Min</span>
-                      <input type="number" class="input-min" value="2500">
-                    </div>
-                    <div class="separator">-</div>
-                    <div class="field">
-                      <span>Max</span>
-                      <input type="number" class="input-max" value="7500">
+                <div class="row g-3 mb-4">
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Minimum</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control input-min" value="2500">
                     </div>
                   </div>
-                  <div class="slider">
-                    <div class="progress"></div>
-                  </div>
-                  <div class="range-input">
-                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Maximum</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control input-max" value="7500">
+                    </div>
                   </div>
                 </div>
 
-                <!--   Support Section -->
+                <div class="slider">
+                  <div class="progress"></div>
+                </div>
+
+                <div class="range-input">
+                  <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                  <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                </div>
 
               </div>
-              <script>
-                const rangeInput = document.querySelectorAll(".range-input input"),
-                  priceInput = document.querySelectorAll(".price-input input"),
-                  range = document.querySelector(".slider .progress");
-                let priceGap = 1000;
-
-                priceInput.forEach((input) => {
-                  input.addEventListener("input", (e) => {
-                    let minPrice = parseInt(priceInput[0].value),
-                      maxPrice = parseInt(priceInput[1].value);
-
-                    if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
-                      if (e.target.className === "input-min") {
-                        rangeInput[0].value = minPrice;
-                        range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
-                      } else {
-                        rangeInput[1].value = maxPrice;
-                        range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-                      }
-                    }
-                  });
-                });
-
-                rangeInput.forEach((input) => {
-                  input.addEventListener("input", (e) => {
-                    let minVal = parseInt(rangeInput[0].value),
-                      maxVal = parseInt(rangeInput[1].value);
-
-                    if (maxVal - minVal < priceGap) {
-                      if (e.target.className === "range-min") {
-                        rangeInput[0].value = maxVal - priceGap;
-                      } else {
-                        rangeInput[1].value = minVal + priceGap;
-                      }
-                    } else {
-                      priceInput[0].value = minVal;
-                      priceInput[1].value = maxVal;
-                      range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
-                      range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-                    }
-                  });
-                });
-
-              </script>
             </div>
             <!-- Bedrooms & Bathrooms -->
             <div class="mt-4 d-flex gap-3">
