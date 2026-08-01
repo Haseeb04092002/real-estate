@@ -9,11 +9,8 @@ if($PropertyDetails)
   $PropertyTypeId  = $PropertyDetails->PropertyTypeId;
 }
 
-$arrHomes    = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','TypeId,Title,PropertyIcon',"WHERE PropertyGroup = 'Home' ORDER BY SortOrder");
-
-$arrLand =$this->getlist_model->getFieldsMultipleConditions('tbl_properties_types', 'TypeId, Title, PropertyIcon', "WHERE PropertyGroup='Land' ORDER BY SortOrder");
-
-$arrCommercial    = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','TypeId,Title,PropertyIcon',"WHERE PropertyGroup = 'Commercial' ORDER BY SortOrder");
+$arrAllTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types','TypeId,Title,PropertyIcon',"ORDER BY SortOrder");
+$arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features_lists', 'FeatureId, Title', "ORDER BY FeatureId ASC");
 
 
 
@@ -44,63 +41,85 @@ $arrCommercial    = $this->getlist_model->getFieldsMultipleConditions('tbl_prope
             <div class="text-start">
               <h6 class="fw-bold mb-2">Property Types</h6>
               <div class="d-flex flex-wrap gap-4">
-                <!-- <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="1" class="form-check-input me-2"> All Types </label> -->
+                <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
                 <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="10" class="form-check-input me-2"> Villa </label>
+                  <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2"> <?= htmlspecialchars($type->Title) ?> </label>
+                <?php } } ?>
+              </div>
+            </div>
+            <!-- Property Features -->
+            <div class="mt-4 text-start">
+              <h6 class="fw-bold mb-2">Property Features</h6>
+              <div class="d-flex flex-wrap gap-4">
+                <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
                 <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="29" class="form-check-input me-2"> Unit </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="6" class="form-check-input me-2"> Townhouse </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="4" class="form-check-input me-2"> House </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="9" class="form-check-input me-2"> Rural </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="7" class="form-check-input me-2"> Acreage </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="11" class="form-check-input me-2"> Block Of Units </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="3" class="form-check-input me-2"> Guest House </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="8" class="form-check-input me-2"> Apartment </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="2" class="form-check-input me-2"> Retirement Living </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="5" class="form-check-input me-2"> Land </label>
+                  <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2"> <?= htmlspecialchars($feature->Title) ?> </label>
+                <?php } } ?>
               </div>
             </div>
             <!-- Price -->
             <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Price</h6>
-              <div class="d-flex gap-3">
-                <input type="number" class="form-control" placeholder="Min" name="txtMinPrice">
-                <input type="number" class="form-control" placeholder="Max" name="txtMaxPrice">
+              <style>
+                .dual-slider-container {
+                  position: relative;
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                }
+                .dual-slider-container input[type=range] {
+                  position: absolute;
+                  width: 100%;
+                  -webkit-appearance: none;
+                  background: transparent;
+                  pointer-events: none;
+                  z-index: 2;
+                }
+                .dual-slider-container .slider-track {
+                  position: absolute;
+                  width: 100%;
+                  height: 6px;
+                  background: #e9ecef;
+                  border-radius: 3px;
+                  z-index: 1;
+                }
+                .dual-slider-container input[type=range]::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                  pointer-events: auto;
+                  width: 20px;
+                  height: 20px;
+                  background: #0d6efd;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  margin-top: 0px;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+                .dual-slider-container input[type=range]::-moz-range-thumb {
+                  pointer-events: auto;
+                  width: 20px;
+                  height: 20px;
+                  background: #0d6efd;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  border: none;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                }
+              </style>
+              <h6 class="fw-bold mb-2">Price: <span class="price-display-buy text-primary">AUS 0 - AUS 100,000</span></h6>
+              <div class="dual-slider-container">
+                <div class="slider-track"></div>
+                <input type="range" class="form-range" name="txtMinPrice" min="0" max="100000" step="1000" value="0" oninput="updatePriceDisplay(this, 'min', 'price-display-buy')">
+                <input type="range" class="form-range" name="txtMaxPrice" min="0" max="100000" step="1000" value="100000" oninput="updatePriceDisplay(this, 'max', 'price-display-buy')">
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
             <div class="mt-4 d-flex gap-3">
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Bedrooms</h6>
-                <select class="form-select" name="txtBedrooms">
-                  <option selected="">Select</option>
-                  <option value="2">2</option>
-                  <option value="5">5</option>
-                  <option value="8">8</option>
-                  <option value="10">10</option>
-                  <option value="10+">10+</option>
-                </select>
+                <input type="number" class="form-control" name="txtBedrooms" placeholder="e.g. 2" min="0">
               </div>
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Bathrooms</h6>
-                <select class="form-select" name="txtBathrooms">
-                  <option selected="">Select</option>
-                  <option value="2">2</option>
-                  <option value="5">5</option>
-                  <option value="8">8</option>
-                  <option value="10">10</option>
-                  <option value="10+">10+</option>
-                </select>
+                <input type="number" class="form-control" name="txtBathrooms" placeholder="e.g. 2" min="0">
               </div>
             </div>
             <!-- Built-in & Available From -->
@@ -161,53 +180,40 @@ $arrCommercial    = $this->getlist_model->getFieldsMultipleConditions('tbl_prope
             <div class="text-start">
               <h6 class="fw-bold mb-2">Property Types</h6>
               <div class="d-flex flex-wrap gap-4">
-                <!-- <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="1" class="form-check-input me-2"> All Types </label> -->
+                <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
                 <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="10" class="form-check-input me-2"> Villa </label>
+                  <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2"> <?= htmlspecialchars($type->Title) ?> </label>
+                <?php } } ?>
+              </div>
+            </div>
+            <!-- Property Features -->
+            <div class="mt-4 text-start">
+              <h6 class="fw-bold mb-2">Property Features</h6>
+              <div class="d-flex flex-wrap gap-4">
+                <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
                 <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="29" class="form-check-input me-2"> Unit </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="6" class="form-check-input me-2"> Townhouse </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="4" class="form-check-input me-2"> House </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="9" class="form-check-input me-2"> Rural </label>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="7" class="form-check-input me-2"> Acreage </label>
+                  <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2"> <?= htmlspecialchars($feature->Title) ?> </label>
+                <?php } } ?>
               </div>
             </div>
             <!-- Price -->
             <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Price</h6>
-              <div class="d-flex gap-3">
-                <input type="number" class="form-control" placeholder="Min" name="txtMinPrice">
-                <input type="number" class="form-control" placeholder="Max" name="txtMaxPrice">
+              <h6 class="fw-bold mb-2">Price: <span class="price-display-rent text-primary">AUS 0 - AUS 100,000</span></h6>
+              <div class="dual-slider-container">
+                <div class="slider-track"></div>
+                <input type="range" class="form-range" name="txtMinPrice" min="0" max="100000" step="1000" value="0" oninput="updatePriceDisplay(this, 'min', 'price-display-rent')">
+                <input type="range" class="form-range" name="txtMaxPrice" min="0" max="100000" step="1000" value="100000" oninput="updatePriceDisplay(this, 'max', 'price-display-rent')">
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
             <div class="mt-4 d-flex gap-3">
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Bedrooms</h6>
-                <select class="form-select" name="txtBedrooms">
-                  <option selected="">Select</option>
-                  <option value="2">2</option>
-                  <option value="5">5</option>
-                  <option value="8">8</option>
-                  <option value="10">10</option>
-                  <option value="10+">10+</option>
-                </select>
+                <input type="number" class="form-control" name="txtBedrooms" placeholder="e.g. 2" min="0">
               </div>
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Bathrooms</h6>
-                <select class="form-select" name="txtBathrooms">
-                  <option selected="">Select</option>
-                  <option value="2">2</option>
-                  <option value="5">5</option>
-                  <option value="8">8</option>
-                  <option value="10">10</option>
-                  <option value="10+">10+</option>
-                </select>
+                <input type="number" class="form-control" name="txtBathrooms" placeholder="e.g. 2" min="0">
               </div>
             </div>
             <!-- Built-in & Available From -->
@@ -278,6 +284,28 @@ $arrCommercial    = $this->getlist_model->getFieldsMultipleConditions('tbl_prope
   document.getElementById("RentBtnFilter").addEventListener("click", function() {
     document.querySelector("input[name='ListType']").value = "Rent";
   });
+
+  function updatePriceDisplay(el, type, displayClass) {
+      let container = el.parentElement;
+      let minEl = container.querySelector('input[name="txtMinPrice"]');
+      let maxEl = container.querySelector('input[name="txtMaxPrice"]');
+      let minVal = parseInt(minEl.value);
+      let maxVal = parseInt(maxEl.value);
+
+      if (type === 'min' && minVal > maxVal) {
+          minEl.value = maxVal;
+          minVal = maxVal;
+      }
+      if (type === 'max' && maxVal < minVal) {
+          maxEl.value = minVal;
+          maxVal = minVal;
+      }
+
+      let display = container.parentElement.querySelector('.' + displayClass);
+      if (display) {
+          display.innerHTML = `AUS ${minVal.toLocaleString()} - AUS ${maxVal.toLocaleString()}`;
+      }
+  }
 </script>
 <!-- Map Modal -->
 <div class="modal fade" id="mapModal" tabindex="-1">

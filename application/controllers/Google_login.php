@@ -15,7 +15,7 @@ class Google_login extends CI_Controller
     {
         parent::__construct();
         require_once APPPATH . "third_party/google-api-php-client-v4/vendor/autoload.php";
-
+        $this->load->library('encryption');
     }
 
     private function getClient()
@@ -91,7 +91,7 @@ class Google_login extends CI_Controller
                 $insert_data = [
                     'ClientName' => $user_name,
                     'EmailAddress' => $user_email,
-                    'Password' => $this->encrypt->encode($Password, $encKey),
+                    'Password' => $this->encryption->encrypt($Password),
                     'StationId' => 1,
                     'PhoneNumber' => ''
                 ];

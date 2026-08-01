@@ -399,19 +399,29 @@ $UserId = $this->session->userdata('user_id')??'';
             let activeInput = Array.from(searchInputs).find(el => el.offsetParent !== null) || searchInputs[0];
             let query = activeInput ? activeInput.value.toLowerCase().trim() : "";
             
+            let activeListType = "";
+            let activeFilterPane = document.querySelector('#filterModal .tab-pane.active');
+
+            if (activeInput) {
+                if (activeInput.closest('#sale')) activeListType = "sale";
+                else if (activeInput.closest('#rent')) activeListType = "rent";
+            }
+            
             // Clean up Google Places commas and 'australia' to match our data-search format better
             query = query.replace(/,/g, ' ').replace(/australia/g, ' ').trim();
             let queryTokens = query.split(/\s+/).filter(t => t.length > 0);
 
-            let selectedTypes = Array.from(document.querySelectorAll('input[name="propertyType[]"]:checked'))
+            let pane = activeFilterPane || document;
+
+            let selectedTypes = Array.from(pane.querySelectorAll('input[name="propertyType[]"]:checked'))
                                      .map(el => el.value);
 
-            let minPrice = document.querySelector('input[name="txtMinPrice"]')?.value.trim();
-            let maxPrice = document.querySelector('input[name="txtMaxPrice"]')?.value.trim();
-            let bedrooms = document.querySelector('select[name="txtBedrooms"]')?.value;
-            let bathrooms = document.querySelector('select[name="txtBathrooms"]')?.value;
-            let state = document.querySelector('input[name="txtState"]')?.value.toLowerCase().trim();
-            let suburb = document.querySelector('input[name="txtSuburb"]')?.value.toLowerCase().trim();
+            let minPrice = pane.querySelector('input[name="txtMinPrice"]')?.value.trim();
+            let maxPrice = pane.querySelector('input[name="txtMaxPrice"]')?.value.trim();
+            let bedrooms = pane.querySelector('select[name="txtBedrooms"]')?.value;
+            let bathrooms = pane.querySelector('select[name="txtBathrooms"]')?.value;
+            let state = pane.querySelector('input[name="txtState"]')?.value.toLowerCase().trim();
+            let suburb = pane.querySelector('input[name="txtSuburb"]')?.value.toLowerCase().trim();
 
             properties.forEach(card => {
                 let show = true;
@@ -433,6 +443,10 @@ $UserId = $this->session->userdata('user_id')??'';
                         }
                     }
                 }
+
+                // List Type matching (Sale vs Rent)
+                let cardListType = card.dataset.listtype || "";
+                if (activeListType && cardListType !== activeListType) show = false;
 
                 // Types
                 if (selectedTypes.length > 0 && !selectedTypes.includes(cardType)) show = false;
@@ -465,8 +479,43 @@ $UserId = $this->session->userdata('user_id')??'';
         });
 
         if (applyBtn) {
-            applyBtn.addEventListener("click", applyFilters);
+            applyBtn.addEventListener("click", function() {
+                let activeFilterPane = document.querySelector('#filterModal .tab-pane.active');
+                if (activeFilterPane) {
+                    if (activeFilterPane.id === 'BuyContent') {
+                        let mainSaleTab = document.querySelector('.search-box .nav-tabs .nav-link[href="#sale"]');
+                        if (mainSaleTab && !mainSaleTab.classList.contains('active')) {
+                            mainSaleTab.click(); 
+                            return; 
+                        }
+                    } else if (activeFilterPane.id === 'RentContent') {
+                        let mainRentTab = document.querySelector('.search-box .nav-tabs .nav-link[href="#rent"]');
+                        if (mainRentTab && !mainRentTab.classList.contains('active')) {
+                            mainRentTab.click();
+                            return;
+                        }
+                    }
+                }
+                applyFilters();
+            });
         }
+
+        // Re-apply filters when switching between For Sale / For Rent tabs
+        const mainTabs = document.querySelectorAll('.search-box .nav-tabs .nav-link');
+        mainTabs.forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function(e) {
+                // Sync modal tab
+                if (e.target.getAttribute('href') === '#sale') {
+                    let btn = document.getElementById('BuyBtnFilter');
+                    if (btn && !btn.classList.contains('active')) btn.click();
+                } else if (e.target.getAttribute('href') === '#rent') {
+                    let btn = document.getElementById('RentBtnFilter');
+                    if (btn && !btn.classList.contains('active')) btn.click();
+                }
+                applyFilters();
+            });
+            tab.addEventListener('click', () => setTimeout(applyFilters, 100)); // Fallback
+        });
       });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv1FrfWK8d_Z28pT_XtiZW02msCfrC2Rs&libraries=places&callback=initSearchAutocomplete" async defer></script>
