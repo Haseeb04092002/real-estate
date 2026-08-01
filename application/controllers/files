@@ -1,8 +1,19 @@
+properties_new\chat_server\package.json
+properties_new\chat_server\server.js
+properties_new\chat_server\.env
+
+
+helpers
+   jwt_helper.php
+
 Controllers
+   Api_Chat.php
    
+models
+   Chat_model.php
 
 Views
-   admin\components\css_links.php
+   chat\chat_ui.php
 
 assets
    
