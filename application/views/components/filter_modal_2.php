@@ -169,15 +169,15 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
             </style>
             <div class="mt-4 price-wrapper">
               <h6 class="fw-bold mb-3">
-                <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
+                Price Range
               </h6>
 
               <div class="">
 
                 <div class="row g-3 mb-4 text-center">
                   <div class="col-6 border-end">
-                    <div class="d-flex align-items-center text-start justify-content-start">
-                      <label class="form-label small text-muted mb-1">Minimum</label>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <label class="form-label small text-muted mb-1 me-1">Minimum</label>
                       <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
                     </div>
                     <input type="hidden" class="input-min" name="txtMinPrice" value="0">
@@ -185,7 +185,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
 
                   <div class="col-6">
                     <div class="d-flex align-items-center text-start justify-content-start">
-                      <label class="form-label small text-muted mb-1">Maximum</label>
+                      <label class="form-label small text-muted mb-1 me-1">Maximum</label>
                       <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
                     </div>
                     <input type="hidden" class="input-max" name="txtMaxPrice" value="100000">
@@ -196,9 +196,11 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   <div class="progress"></div>
                 </div>
 
-                <div class="range-input border-none">
-                  <input type="range" class="border-none range-min" min="0" max="100000" value="0" step="1000">
-                  <input type="range" class="border-none range-max" min="0" max="100000" value="100000" step="1000">
+                <div style="border: none;" class="range-input border-none">
+                  <input style="border: none;" type="range" class="border-none range-min" min="0" max="100000" value="0"
+                    step="1000">
+                  <input style="border: none;" type="range" class="border-none range-max" min="0" max="100000"
+                    value="100000" step="1000">
                 </div>
 
               </div>
