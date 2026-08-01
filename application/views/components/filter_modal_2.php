@@ -206,7 +206,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
-            <div class="mt-4 d-flex gap-3">
+            <!-- <div class="mt-4 d-flex gap-3">
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Bedrooms</h6>
                 <input type="number" class="form-control" name="txtBedrooms" placeholder="e.g. 2" min="0">
@@ -215,9 +215,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <h6 class="fw-bold mb-2">Bathrooms</h6>
                 <input type="number" class="form-control" name="txtBathrooms" placeholder="e.g. 2" min="0">
               </div>
-            </div>
+            </div> -->
             <!-- Built-in & Available From -->
-            <div class="mt-4 d-flex gap-3">
+            <!-- <div class="mt-4 d-flex gap-3">
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Built in Date</h6>
                 <input type="date" name="txtBuiltInYear" class="form-control">
@@ -226,7 +226,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <h6 class="fw-bold mb-2">Available from</h6>
                 <input type="date" name="txtAvailableFrom" class="form-control">
               </div>
-            </div>
+            </div> -->
             <!-- Property Status -->
             <div class="mt-4 text-start">
               <h6 class="fw-bold mb-2">Property Status</h6>
