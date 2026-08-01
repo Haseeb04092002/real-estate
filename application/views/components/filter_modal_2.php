@@ -176,7 +176,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
 
                 <div class="row g-3 mb-4 text-center">
                   <div class="col-6 border-end">
-                    <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center justify-content-start">
                       <label class="form-label small text-muted mb-1 me-1">Minimum</label>
                       <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
                     </div>
@@ -184,7 +184,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   </div>
 
                   <div class="col-6">
-                    <div class="d-flex align-items-center text-start justify-content-start">
+                    <div class="d-flex align-items-center justify-content-end">
                       <label class="form-label small text-muted mb-1 me-1">Maximum</label>
                       <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
                     </div>
