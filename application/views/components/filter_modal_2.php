@@ -72,57 +72,106 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Price -->
-            <div class="mt-4 text-start">
+            <div class="mt-4 text-start price-wrapper">
               <style>
-                .dual-slider-container {
-                  position: relative;
-                  height: 40px;
-                  display: flex;
-                  align-items: center;
+                .price-input {
+                    width: 100%;
+                    display: flex;
+                    margin: 15px 0 25px;
                 }
-                .dual-slider-container input[type=range] {
-                  position: absolute;
-                  width: 100%;
-                  -webkit-appearance: none;
-                  background: transparent;
-                  pointer-events: none;
-                  z-index: 2;
+                .price-input .field {
+                    display: flex;
+                    width: 100%;
+                    height: 40px;
+                    align-items: center;
                 }
-                .dual-slider-container .slider-track {
-                  position: absolute;
-                  width: 100%;
-                  height: 6px;
-                  background: #e9ecef;
-                  border-radius: 3px;
-                  z-index: 1;
+                .price-input .field input {
+                    width: 100%;
+                    height: 100%;
+                    outline: none;
+                    font-size: 16px;
+                    margin-left: 12px;
+                    border-radius: 5px;
+                    text-align: center;
+                    border: 1px solid #ccc;
+                    -moz-appearance: textfield;
                 }
-                .dual-slider-container input[type=range]::-webkit-slider-thumb {
-                  -webkit-appearance: none;
-                  pointer-events: auto;
-                  width: 20px;
-                  height: 20px;
-                  background: #0d6efd;
-                  border-radius: 50%;
-                  cursor: pointer;
-                  margin-top: 0px;
-                  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                .price-input .field input[type="number"]::-webkit-outer-spin-button,
+                .price-input .field input[type="number"]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
                 }
-                .dual-slider-container input[type=range]::-moz-range-thumb {
-                  pointer-events: auto;
-                  width: 20px;
-                  height: 20px;
-                  background: #0d6efd;
-                  border-radius: 50%;
-                  cursor: pointer;
-                  border: none;
-                  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                .price-input .separator {
+                    width: 50px;
+                    display: flex;
+                    font-size: 19px;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .slider {
+                    height: 5px;
+                    position: relative;
+                    background: #ddd;
+                    border-radius: 5px;
+                }
+                .slider .progress {
+                    height: 100%;
+                    left: 0%;
+                    right: 0%;
+                    position: absolute;
+                    border-radius: 5px;
+                    background: #0d6efd;
+                }
+                .range-input {
+                    position: relative;
+                }
+                .range-input input {
+                    position: absolute;
+                    width: 100%;
+                    height: 5px;
+                    top: -5px;
+                    background: none;
+                    pointer-events: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                }
+                .range-input input[type="range"]::-webkit-slider-thumb {
+                    height: 17px;
+                    width: 17px;
+                    border-radius: 50%;
+                    background: #0d6efd;
+                    pointer-events: auto;
+                    -webkit-appearance: none;
+                    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+                }
+                .range-input input[type="range"]::-moz-range-thumb {
+                    height: 17px;
+                    width: 17px;
+                    border: none;
+                    border-radius: 50%;
+                    background: #0d6efd;
+                    pointer-events: auto;
+                    -moz-appearance: none;
+                    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
                 }
               </style>
-              <h6 class="fw-bold mb-2">Price: <span class="price-display-buy text-primary">AUS 0 - AUS 100,000</span></h6>
-              <div class="dual-slider-container">
-                <div class="slider-track"></div>
-                <input type="range" class="form-range" name="txtMinPrice" min="0" max="100000" step="1000" value="0" oninput="updatePriceDisplay(this, 'min', 'price-display-buy')">
-                <input type="range" class="form-range" name="txtMaxPrice" min="0" max="100000" step="1000" value="100000" oninput="updatePriceDisplay(this, 'max', 'price-display-buy')">
+              <h6 class="fw-bold mb-2">Price</h6>
+              <div class="price-input">
+                  <div class="field">
+                      <span>Min</span>
+                      <input type="number" class="input-min" name="txtMinPrice" value="0">
+                  </div>
+                  <div class="separator">-</div>
+                  <div class="field">
+                      <span>Max</span>
+                      <input type="number" class="input-max" name="txtMaxPrice" value="100000">
+                  </div>
+              </div>
+              <div class="slider mt-3">
+                  <div class="progress" style="left: 0%; right: 0%;"></div>
+              </div>
+              <div class="range-input">
+                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
+                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
@@ -225,12 +274,25 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Price -->
-            <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Price: <span class="price-display-rent text-primary">AUS 0 - AUS 100,000</span></h6>
-              <div class="dual-slider-container">
-                <div class="slider-track"></div>
-                <input type="range" class="form-range" name="txtMinPrice" min="0" max="100000" step="1000" value="0" oninput="updatePriceDisplay(this, 'min', 'price-display-rent')">
-                <input type="range" class="form-range" name="txtMaxPrice" min="0" max="100000" step="1000" value="100000" oninput="updatePriceDisplay(this, 'max', 'price-display-rent')">
+            <div class="mt-4 text-start price-wrapper">
+              <h6 class="fw-bold mb-2">Price</h6>
+              <div class="price-input">
+                  <div class="field">
+                      <span>Min</span>
+                      <input type="number" class="input-min" name="txtMinPrice" value="0">
+                  </div>
+                  <div class="separator">-</div>
+                  <div class="field">
+                      <span>Max</span>
+                      <input type="number" class="input-max" name="txtMaxPrice" value="100000">
+                  </div>
+              </div>
+              <div class="slider mt-3">
+                  <div class="progress" style="left: 0%; right: 0%;"></div>
+              </div>
+              <div class="range-input">
+                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
+                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
@@ -313,27 +375,49 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
     document.querySelector("input[name='ListType']").value = "Rent";
   });
 
-  function updatePriceDisplay(el, type, displayClass) {
-      let container = el.parentElement;
-      let minEl = container.querySelector('input[name="txtMinPrice"]');
-      let maxEl = container.querySelector('input[name="txtMaxPrice"]');
-      let minVal = parseInt(minEl.value);
-      let maxVal = parseInt(maxEl.value);
+  document.querySelectorAll('.price-wrapper').forEach(wrapper => {
+      const rangeInput = wrapper.querySelectorAll(".range-input input");
+      const priceInput = wrapper.querySelectorAll(".price-input input");
+      const range = wrapper.querySelector(".slider .progress");
+      let priceGap = 1000;
 
-      if (type === 'min' && minVal > maxVal) {
-          minEl.value = maxVal;
-          minVal = maxVal;
-      }
-      if (type === 'max' && maxVal < minVal) {
-          maxEl.value = minVal;
-          maxVal = minVal;
-      }
+      priceInput.forEach((input) => {
+          input.addEventListener("input", (e) => {
+              let minPrice = parseInt(priceInput[0].value) || 0,
+                  maxPrice = parseInt(priceInput[1].value) || 0;
 
-      let display = container.parentElement.querySelector('.' + displayClass);
-      if (display) {
-          display.innerHTML = `AUS ${minVal.toLocaleString()} - AUS ${maxVal.toLocaleString()}`;
-      }
-  }
+              if (maxPrice - minPrice >= priceGap && maxPrice <= parseInt(rangeInput[1].max)) {
+                  if (e.target.className.includes("input-min")) {
+                      rangeInput[0].value = minPrice;
+                      range.style.left = (minPrice / parseInt(rangeInput[0].max)) * 100 + "%";
+                  } else {
+                      rangeInput[1].value = maxPrice;
+                      range.style.right = 100 - (maxPrice / parseInt(rangeInput[1].max)) * 100 + "%";
+                  }
+              }
+          });
+      });
+
+      rangeInput.forEach((input) => {
+          input.addEventListener("input", (e) => {
+              let minVal = parseInt(rangeInput[0].value),
+                  maxVal = parseInt(rangeInput[1].value);
+
+              if (maxVal - minVal < priceGap) {
+                  if (e.target.className.includes("range-min")) {
+                      rangeInput[0].value = maxVal - priceGap;
+                  } else {
+                      rangeInput[1].value = minVal + priceGap;
+                  }
+              } else {
+                  priceInput[0].value = minVal;
+                  priceInput[1].value = maxVal;
+                  range.style.left = (minVal / parseInt(rangeInput[0].max)) * 100 + "%";
+                  range.style.right = 100 - (maxVal / parseInt(rangeInput[1].max)) * 100 + "%";
+              }
+          });
+      });
+  });
 </script>
 <!-- Map Modal -->
 <div class="modal fade" id="mapModal" tabindex="-1">
