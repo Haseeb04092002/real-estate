@@ -226,8 +226,9 @@
             text-align: center;
             padding: 25px 10px 15px 10px;
         }
-        .sidebar-toggled .sidebar-header img {
-            display: none;
+        .sidebar-toggled .sidebar-header img,
+        .sidebar-toggled .sidebar-header div {
+            display: none !important;
         }
         .sidebar-toggled .sidebar-header::after {
             content: '\f015'; /* Home icon as a placeholder for mini logo */

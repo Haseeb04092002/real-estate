@@ -2,7 +2,7 @@ Controllers
    
 
 Views
-   contracts\templates.php
+   admin\components\css_links.php
 
 assets
    
