@@ -166,10 +166,6 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
 
               }
             </style>
-            <script>
-              range.style.left = (rangeInput[0].value / rangeInput[0].max) * 100 + "%";
-              range.style.right = 100 - (rangeInput[1].value / rangeInput[1].max) * 100 + "%";
-            </script>
             <div class="mt-4 price-wrapper">
               <h6 class="fw-bold mb-3">
                 <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
@@ -177,21 +173,17 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
 
               <div class="price-card">
 
-                <div class="row g-3 mb-4">
-                  <div class="col-6">
+                <div class="row g-3 mb-4 text-center">
+                  <div class="col-6 border-end">
                     <label class="form-label small text-muted mb-1">Minimum</label>
-                    <div class="input-group">
-                      <span class="input-group-text">$</span>
-                      <input type="number" class="form-control input-min" value="2500">
-                    </div>
+                    <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
+                    <input type="hidden" class="input-min" name="txtMinPrice" value="0">
                   </div>
 
                   <div class="col-6">
                     <label class="form-label small text-muted mb-1">Maximum</label>
-                    <div class="input-group">
-                      <span class="input-group-text">$</span>
-                      <input type="number" class="form-control input-max" value="7500">
-                    </div>
+                    <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
+                    <input type="hidden" class="input-max" name="txtMaxPrice" value="100000">
                   </div>
                 </div>
 
@@ -200,8 +192,8 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 </div>
 
                 <div class="range-input">
-                  <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                  <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
+                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
                 </div>
 
               </div>
@@ -317,25 +309,36 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Price -->
-            <div class="mt-4 text-start price-wrapper">
-              <h6 class="fw-bold mb-2">Price</h6>
-              <div class="price-input">
-                <div class="field">
-                  <span>Min</span>
-                  <input type="number" class="input-min" name="txtMinPrice" value="0">
+            <div class="mt-4 price-wrapper">
+              <h6 class="fw-bold mb-3">
+                <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
+              </h6>
+
+              <div class="price-card">
+
+                <div class="row g-3 mb-4 text-center">
+                  <div class="col-6 border-end">
+                    <label class="form-label small text-muted mb-1">Minimum</label>
+                    <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
+                    <input type="hidden" class="input-min" name="txtMinPrice" value="0">
+                  </div>
+
+                  <div class="col-6">
+                    <label class="form-label small text-muted mb-1">Maximum</label>
+                    <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
+                    <input type="hidden" class="input-max" name="txtMaxPrice" value="100000">
+                  </div>
                 </div>
-                <div class="separator">-</div>
-                <div class="field">
-                  <span>Max</span>
-                  <input type="number" class="input-max" name="txtMaxPrice" value="100000">
+
+                <div class="slider">
+                  <div class="progress"></div>
                 </div>
-              </div>
-              <div class="slider mt-3">
-                <div class="progress" style="left: 0%; right: 0%;"></div>
-              </div>
-              <div class="range-input">
-                <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
-                <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
+
+                <div class="range-input">
+                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
+                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
+                </div>
+
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
@@ -423,26 +426,21 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
 
   document.querySelectorAll('.price-wrapper').forEach(wrapper => {
     const rangeInput = wrapper.querySelectorAll(".range-input input");
-    const priceInput = wrapper.querySelectorAll(".price-input input");
+    const priceInput = wrapper.querySelectorAll("input[type='hidden'].input-min, input[type='hidden'].input-max");
+    const priceLabelMin = wrapper.querySelector(".price-min-label");
+    const priceLabelMax = wrapper.querySelector(".price-max-label");
     const range = wrapper.querySelector(".slider .progress");
     let priceGap = 1000;
 
-    priceInput.forEach((input) => {
-      input.addEventListener("input", (e) => {
-        let minPrice = parseInt(priceInput[0].value) || 0,
-          maxPrice = parseInt(priceInput[1].value) || 0;
-
-        if (maxPrice - minPrice >= priceGap && maxPrice <= parseInt(rangeInput[1].max)) {
-          if (e.target.className.includes("input-min")) {
-            rangeInput[0].value = minPrice;
-            range.style.left = (minPrice / parseInt(rangeInput[0].max)) * 100 + "%";
-          } else {
-            rangeInput[1].value = maxPrice;
-            range.style.right = 100 - (maxPrice / parseInt(rangeInput[1].max)) * 100 + "%";
-          }
-        }
-      });
-    });
+    // Initialize UI on load
+    if (rangeInput.length === 2 && priceInput.length === 2) {
+      let minVal = parseInt(rangeInput[0].value);
+      let maxVal = parseInt(rangeInput[1].value);
+      range.style.left = (minVal / parseInt(rangeInput[0].max)) * 100 + "%";
+      range.style.right = 100 - (maxVal / parseInt(rangeInput[1].max)) * 100 + "%";
+      if(priceLabelMin) priceLabelMin.innerText = minVal;
+      if(priceLabelMax) priceLabelMax.innerText = maxVal;
+    }
 
     rangeInput.forEach((input) => {
       input.addEventListener("input", (e) => {
@@ -456,8 +454,14 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
             rangeInput[1].value = minVal + priceGap;
           }
         } else {
-          priceInput[0].value = minVal;
-          priceInput[1].value = maxVal;
+          if (priceInput.length === 2) {
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+          }
+          if (priceLabelMin && priceLabelMax) {
+            priceLabelMin.innerText = minVal;
+            priceLabelMax.innerText = maxVal;
+          }
           range.style.left = (minVal / parseInt(rangeInput[0].max)) * 100 + "%";
           range.style.right = 100 - (maxVal / parseInt(rangeInput[1].max)) * 100 + "%";
         }
