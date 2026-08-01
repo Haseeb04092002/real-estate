@@ -4,3 +4,6 @@ Controllers
 Views
     
     components/filter_modal_2.php
+
+assets
+    css/style.css
