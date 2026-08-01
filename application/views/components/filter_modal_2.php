@@ -37,24 +37,34 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
         <div class="tab-content p-4" id="myTabContent">
           <!-- Buy Tab Content -->
           <div class="tab-pane fade active show" id="BuyContent" role="tabpanel" aria-labelledby="BuyBtnFilter">
-            <!-- Property Types -->
-            <div class="text-start">
-              <h6 class="fw-bold mb-2">Property Types</h6>
-              <div class="d-flex flex-wrap gap-4">
-                <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2"> <?= htmlspecialchars($type->Title) ?> </label>
-                <?php } } ?>
-              </div>
-            </div>
-            <!-- Property Features -->
-            <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Property Features</h6>
-              <div class="d-flex flex-wrap gap-4">
-                <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2"> <?= htmlspecialchars($feature->Title) ?> </label>
-                <?php } } ?>
+            <div class="card bg-light border-0 mb-2">
+              <div class="card-body">
+                <!-- Property Types -->
+                <div class="text-start mb-4">
+                  <h6 class="fw-bold mb-3">Property Types</h6>
+                  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
+                    <div class="col">
+                      <label class="d-flex align-items-center m-0 w-100">
+                        <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($type->Title) ?>"><?= htmlspecialchars($type->Title) ?></span>
+                      </label>
+                    </div>
+                    <?php } } ?>
+                  </div>
+                </div>
+                <!-- Property Features -->
+                <div class="text-start">
+                  <h6 class="fw-bold mb-3">Property Features</h6>
+                  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
+                    <div class="col">
+                      <label class="d-flex align-items-center m-0 w-100">
+                        <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
+                      </label>
+                    </div>
+                    <?php } } ?>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- Price -->
@@ -176,24 +186,34 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
           <!-- End Buy Tab -->
 
           <div class="tab-pane fade" id="RentContent" role="tabpanel" aria-labelledby="RentBtnFilter">
-            <!-- Property Types -->
-            <div class="text-start">
-              <h6 class="fw-bold mb-2">Property Types</h6>
-              <div class="d-flex flex-wrap gap-4">
-                <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2"> <?= htmlspecialchars($type->Title) ?> </label>
-                <?php } } ?>
-              </div>
-            </div>
-            <!-- Property Features -->
-            <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Property Features</h6>
-              <div class="d-flex flex-wrap gap-4">
-                <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
-                <label class="d-flex align-items-center">
-                  <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2"> <?= htmlspecialchars($feature->Title) ?> </label>
-                <?php } } ?>
+            <div class="card bg-light border-0 mb-2">
+              <div class="card-body">
+                <!-- Property Types -->
+                <div class="text-start mb-4">
+                  <h6 class="fw-bold mb-3">Property Types</h6>
+                  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <?php if(is_array($arrAllTypes)) { foreach($arrAllTypes as $type) { ?>
+                    <div class="col">
+                      <label class="d-flex align-items-center m-0 w-100">
+                        <input type="checkbox" name="propertyType[]" value="<?= $type->TypeId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($type->Title) ?>"><?= htmlspecialchars($type->Title) ?></span>
+                      </label>
+                    </div>
+                    <?php } } ?>
+                  </div>
+                </div>
+                <!-- Property Features -->
+                <div class="text-start">
+                  <h6 class="fw-bold mb-3">Property Features</h6>
+                  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <?php if(is_array($arrAllFeatures)) { foreach($arrAllFeatures as $feature) { ?>
+                    <div class="col">
+                      <label class="d-flex align-items-center m-0 w-100">
+                        <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>" class="form-check-input me-2 mt-0"> <span class="text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
+                      </label>
+                    </div>
+                    <?php } } ?>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- Price -->
