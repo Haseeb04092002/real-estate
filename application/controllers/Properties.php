@@ -69,6 +69,12 @@ class Properties extends CI_Controller {
 	    $this->load->view('Home/index_functions');
 	}
 
+  public function debug_features()
+  {
+      $features = $this->db->get('tbl_properties_features_lists')->result();
+      echo json_encode($features);
+  }
+
   public function smart_contract($Case = 'sale_contract')
   {
       require_once APPPATH . 'third_party/dompdf/autoload.inc.php';

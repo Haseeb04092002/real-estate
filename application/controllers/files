@@ -1,8 +1,7 @@
 Controllers
-   
+   Properties.php
 
 Views
-    
     components/filter_modal_2.php
 
 assets

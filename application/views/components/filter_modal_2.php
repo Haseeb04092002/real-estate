@@ -9,7 +9,7 @@ if ($PropertyDetails) {
 }
 
 $arrAllTypes = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_types', 'TypeId,Title,PropertyIcon', "ORDER BY SortOrder");
-$arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features_lists', 'FeatureId, Title', "ORDER BY FeatureId ASC");
+$arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_properties_features_lists', 'FeatureId, Title, InputType', "ORDER BY FeatureId ASC");
 
 
 
@@ -67,13 +67,36 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   <h6 class="fw-bold mb-3">Property Features</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <?php if (is_array($arrAllFeatures)) {
-                      foreach ($arrAllFeatures as $feature) { ?>
+                      foreach ($arrAllFeatures as $feature) { 
+                        $inputType = isset($feature->InputType) ? strtolower($feature->InputType) : 'checkbox';
+                      ?>
                         <div class="col">
-                          <label class="d-flex align-items-center m-0 w-100">
-                            <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>"
-                              class="form-check-input me-2 mt-0"> <span class="text-truncate"
-                              title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
-                          </label>
+                          <?php if ($inputType == 'number'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <input type="number" step="any" name="feature_<?= $feature->FeatureId ?>" class="form-control" placeholder="e.g. 2">
+                          <?php elseif ($inputType == 'year'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <select name="feature_<?= $feature->FeatureId ?>" class="form-select">
+                                <option value="">Select</option>
+                                <?php for($y = date('Y') + 5; $y >= 1800; $y--): ?>
+                                    <option value="<?= $y ?>"><?= $y ?></option>
+                                <?php endfor; ?>
+                            </select>
+                          <?php elseif ($inputType == 'date'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <input type="date" name="feature_<?= $feature->FeatureId ?>" class="form-control">
+                          <?php elseif ($inputType == 'text'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <input type="text" name="feature_<?= $feature->FeatureId ?>" class="form-control" placeholder="<?= htmlspecialchars($feature->Title) ?>">
+                          <?php else: ?>
+                            <div class="h-100 d-flex align-items-end pb-2">
+                              <label class="d-flex align-items-center m-0 w-100">
+                                <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>"
+                                  class="form-check-input me-2 mt-0"> <span class="text-truncate"
+                                  title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
+                              </label>
+                            </div>
+                          <?php endif; ?>
                         </div>
                       <?php }
                     } ?>
@@ -306,13 +329,36 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   <h6 class="fw-bold mb-3">Property Features</h6>
                   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <?php if (is_array($arrAllFeatures)) {
-                      foreach ($arrAllFeatures as $feature) { ?>
+                      foreach ($arrAllFeatures as $feature) { 
+                        $inputType = isset($feature->InputType) ? strtolower($feature->InputType) : 'checkbox';
+                      ?>
                         <div class="col">
-                          <label class="d-flex align-items-center m-0 w-100">
-                            <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>"
-                              class="form-check-input me-2 mt-0"> <span class="text-truncate"
-                              title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
-                          </label>
+                          <?php if ($inputType == 'number'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <input type="number" step="any" name="feature_<?= $feature->FeatureId ?>" class="form-control" placeholder="e.g. 2">
+                          <?php elseif ($inputType == 'year'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <select name="feature_<?= $feature->FeatureId ?>" class="form-select">
+                                <option value="">Select</option>
+                                <?php for($y = date('Y') + 5; $y >= 1800; $y--): ?>
+                                    <option value="<?= $y ?>"><?= $y ?></option>
+                                <?php endfor; ?>
+                            </select>
+                          <?php elseif ($inputType == 'date'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <input type="date" name="feature_<?= $feature->FeatureId ?>" class="form-control">
+                          <?php elseif ($inputType == 'text'): ?>
+                            <label class="form-label small text-muted mb-1 w-100 text-truncate" title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></label>
+                            <input type="text" name="feature_<?= $feature->FeatureId ?>" class="form-control" placeholder="<?= htmlspecialchars($feature->Title) ?>">
+                          <?php else: ?>
+                            <div class="h-100 d-flex align-items-end pb-2">
+                              <label class="d-flex align-items-center m-0 w-100">
+                                <input type="checkbox" name="propertyFeature[]" value="<?= $feature->FeatureId ?>"
+                                  class="form-check-input me-2 mt-0"> <span class="text-truncate"
+                                  title="<?= htmlspecialchars($feature->Title) ?>"><?= htmlspecialchars($feature->Title) ?></span>
+                              </label>
+                            </div>
+                          <?php endif; ?>
                         </div>
                       <?php }
                     } ?>
