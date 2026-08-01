@@ -228,7 +228,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div> -->
             <!-- Property Status -->
-            <div class="mt-4 text-start">
+            <div class="mt-5 text-start">
               <h6 class="fw-bold mb-2">Property Status</h6>
               <div class="d-flex flex-wrap gap-4">
                 <label class="form-check d-flex align-items-center">
@@ -243,9 +243,15 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Property Title -->
-            <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Property Title</h6>
-              <input type="text" class="form-control" name="txtPropertyTitle">
+            <div class="mt-4 text-start d-flex align-items-center gap-3">
+              <div>
+                <h6 class="fw-bold mb-2">Property Title</h6>
+                <input type="text" class="form-control" name="txtPropertyTitle">
+              </div>
+              <div>
+                <h6 class="fw-bold mb-2">Covered Area (Sqft)</h6>
+                <input type="number" class="form-control" name="txtCoveredArea">
+              </div>
             </div>
             <!-- Address -->
             <div class="mt-4 text-start">
@@ -262,10 +268,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <h6 class="fw-bold mb-2">Suburb</h6>
                 <input type="text" class="form-control" name="txtSuburb">
               </div>
-              <div class="flex-fill">
-                <h6 class="fw-bold mb-2">Covered Area (Sqft)</h6>
-                <input type="number" class="form-control" name="txtCoveredArea">
-              </div>
+              <!-- <div class="flex-fill">
+                
+              </div> -->
             </div>
 
             <!-- More features sections can follow here... -->
