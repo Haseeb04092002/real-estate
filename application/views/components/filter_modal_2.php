@@ -118,7 +118,8 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 left: 25%;
                 right: 25%;
                 border-radius: 50px;
-                background: linear-gradient(90deg, #0d6efd, #17c1e8);
+                /* background: linear-gradient(90deg, #0d6efd, #17c1e8); */
+                background-color: #1f509a;
               }
 
               .range-input {
@@ -171,18 +172,22 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
               </h6>
 
-              <div class="price-card">
+              <div class="">
 
                 <div class="row g-3 mb-4 text-center">
                   <div class="col-6 border-end">
-                    <label class="form-label small text-muted mb-1">Minimum</label>
-                    <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
+                    <div class="d-flex align-items-center text-start justify-content-start">
+                      <label class="form-label small text-muted mb-1">Minimum</label>
+                      <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
+                    </div>
                     <input type="hidden" class="input-min" name="txtMinPrice" value="0">
                   </div>
 
                   <div class="col-6">
-                    <label class="form-label small text-muted mb-1">Maximum</label>
-                    <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
+                    <div class="d-flex align-items-center text-start justify-content-start">
+                      <label class="form-label small text-muted mb-1">Maximum</label>
+                      <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
+                    </div>
                     <input type="hidden" class="input-max" name="txtMaxPrice" value="100000">
                   </div>
                 </div>
@@ -191,9 +196,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   <div class="progress"></div>
                 </div>
 
-                <div class="range-input">
-                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
-                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
+                <div class="range-input border-none">
+                  <input type="range" class="border-none range-min" min="0" max="100000" value="0" step="1000">
+                  <input type="range" class="border-none range-max" min="0" max="100000" value="100000" step="1000">
                 </div>
 
               </div>
@@ -438,8 +443,8 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
       let maxVal = parseInt(rangeInput[1].value);
       range.style.left = (minVal / parseInt(rangeInput[0].max)) * 100 + "%";
       range.style.right = 100 - (maxVal / parseInt(rangeInput[1].max)) * 100 + "%";
-      if(priceLabelMin) priceLabelMin.innerText = minVal;
-      if(priceLabelMax) priceLabelMax.innerText = maxVal;
+      if (priceLabelMin) priceLabelMin.innerText = minVal;
+      if (priceLabelMax) priceLabelMax.innerText = maxVal;
     }
 
     rangeInput.forEach((input) => {
