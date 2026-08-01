@@ -295,6 +295,7 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
           <!-- End Buy Tab -->
 
           <div class="tab-pane fade" id="RentContent" role="tabpanel" aria-labelledby="RentBtnFilter">
+
             <!-- Property Types -->
             <div class="card bg-light border-0 mb-4">
               <div class="card-body">
@@ -361,23 +362,112 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               </div>
             </div>
             <!-- Price -->
+            <style>
+              .price-card {
+                background: #fff;
+                border: 1px solid #e9ecef;
+                border-radius: 15px;
+                padding: 22px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, .05);
+              }
+
+              .price-card .form-control {
+                height: 46px;
+                border-radius: 10px;
+                text-align: center;
+                font-weight: 600;
+              }
+
+              .price-card .input-group-text {
+                border-radius: 10px 0 0 10px;
+                background: #f8f9fa;
+                font-weight: 600;
+              }
+
+              .slider {
+                position: relative;
+                height: 6px;
+                background: #dee2e6;
+                border-radius: 50px;
+                margin-top: 10px;
+              }
+
+              .slider .progress {
+                position: absolute;
+                height: 100%;
+                left: 25%;
+                right: 25%;
+                border-radius: 50px;
+                /* background: linear-gradient(90deg, #0d6efd, #17c1e8); */
+                background-color: #1f509a;
+              }
+
+              .range-input {
+                position: relative;
+                margin-top: -6px;
+              }
+
+              .range-input input {
+                position: absolute;
+                width: 100%;
+                height: 6px;
+                background: none;
+                pointer-events: none;
+                appearance: none;
+                -webkit-appearance: none;
+              }
+
+              .range-input input::-webkit-slider-thumb {
+                appearance: none;
+                pointer-events: auto;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 3px solid #fff;
+                background: #0d6efd;
+                box-shadow: 0 3px 10px rgba(13, 110, 253, .35);
+                cursor: pointer;
+              }
+
+              .range-input input::-moz-range-thumb {
+                pointer-events: auto;
+                width: 20px;
+                height: 20px;
+                border: none;
+                border-radius: 50%;
+                background: #0d6efd;
+                cursor: pointer;
+              }
+
+              @media(max-width:576px) {
+
+                .price-card {
+                  padding: 18px;
+                }
+
+              }
+            </style>
             <div class="mt-4 price-wrapper">
               <h6 class="fw-bold mb-3">
-                <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
+                Price Range
               </h6>
 
-              <div class="price-card">
+              <div class="">
 
                 <div class="row g-3 mb-4 text-center">
                   <div class="col-6 border-end">
-                    <label class="form-label small text-muted mb-1">Minimum</label>
-                    <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
+                    <div class="d-flex align-items-center justify-content-start">
+                      <label class="form-label small text-muted mb-1 me-1">Minimum</label>
+                      <h5 class="fw-bold text-primary mb-0">$<span class="price-min-label">0</span></h5>
+                    </div>
                     <input type="hidden" class="input-min" name="txtMinPrice" value="0">
                   </div>
 
                   <div class="col-6">
-                    <label class="form-label small text-muted mb-1">Maximum</label>
-                    <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
+                    <div class="d-flex align-items-center justify-content-end">
+                      <label class="form-label small text-muted mb-1 me-1">Maximum</label>
+                      <h5 class="fw-bold text-primary mb-0">$<span class="price-max-label">100000</span></h5>
+                    </div>
                     <input type="hidden" class="input-max" name="txtMaxPrice" value="100000">
                   </div>
                 </div>
@@ -386,15 +476,17 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   <div class="progress"></div>
                 </div>
 
-                <div class="range-input">
-                  <input type="range" class="range-min" min="0" max="100000" value="0" step="1000">
-                  <input type="range" class="range-max" min="0" max="100000" value="100000" step="1000">
+                <div style="border: none;" class="range-input border-none">
+                  <input style="border: none;" type="range" class="border-none range-min" min="0" max="100000" value="0"
+                    step="1000">
+                  <input style="border: none;" type="range" class="border-none range-max" min="0" max="100000"
+                    value="100000" step="1000">
                 </div>
 
               </div>
             </div>
             <!-- Bedrooms & Bathrooms -->
-            <div class="mt-4 d-flex gap-3">
+            <!-- <div class="mt-4 d-flex gap-3">
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Bedrooms</h6>
                 <input type="number" class="form-control" name="txtBedrooms" placeholder="e.g. 2" min="0">
@@ -403,9 +495,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <h6 class="fw-bold mb-2">Bathrooms</h6>
                 <input type="number" class="form-control" name="txtBathrooms" placeholder="e.g. 2" min="0">
               </div>
-            </div>
+            </div> -->
             <!-- Built-in & Available From -->
-            <div class="mt-4 d-flex gap-3">
+            <!-- <div class="mt-4 d-flex gap-3">
               <div class="flex-fill">
                 <h6 class="fw-bold mb-2">Built in Date</h6>
                 <input type="date" name="txtBuiltInYear" class="form-control">
@@ -414,9 +506,9 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                 <h6 class="fw-bold mb-2">Available from</h6>
                 <input type="date" name="txtAvailableFrom" class="form-control">
               </div>
-            </div>
+            </div> -->
             <!-- Property Status -->
-            <div class="mt-4 text-start">
+            <div class="mt-5 text-start">
               <h6 class="fw-bold mb-2">Property Status</h6>
               <div class="d-flex flex-wrap gap-4">
                 <label class="form-check d-flex align-items-center">
@@ -455,8 +547,8 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
               <input type="hidden" name="numZipCode" class="txtPostalCodeFilter">
             </div>
 
+            <!-- More features sections can follow here... -->
           </div>
-
         </div>
       </div>
       <!-- Modal Footer -->
