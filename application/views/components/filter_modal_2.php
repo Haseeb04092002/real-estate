@@ -265,13 +265,13 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   Vacant </label>
               </div>
             </div>
-            <!-- Property Title -->
-            <div class="mt-4 text-start d-flex align-items-center gap-3">
-              <div>
+            <!-- Property Title & Covered Area -->
+            <div class="mt-4 text-start row g-3">
+              <div class="col-6">
                 <h6 class="fw-bold mb-2">Property Title</h6>
                 <input type="text" class="form-control" name="txtPropertyTitle">
               </div>
-              <div>
+              <div class="col-6">
                 <h6 class="fw-bold mb-2">Covered Area (Sqft)</h6>
                 <input type="number" class="form-control" name="txtCoveredArea">
               </div>
@@ -279,21 +279,15 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
             <!-- Address -->
             <div class="mt-4 text-start">
               <h6 class="fw-bold mb-2">Address</h6>
-              <input type="text" class="form-control" name="txtAddress">
-            </div>
-            <!-- State -->
-            <div class="mt-4 text-start d-flex gap-3">
-              <div class="flex-fill">
-                <h6 class="fw-bold mb-2">State</h6>
-                <input type="text" class="form-control" name="txtState">
+              <div class="input-group">
+                <input type="text" class="form-control txtMailingAddress" name="txtMailingAddress" placeholder="Search state, suburb, postal code">
+                <span class="input-group-text bg-white">
+                  <i class="fas fa-search text-muted"></i>
+                </span>
               </div>
-              <div class="flex-fill">
-                <h6 class="fw-bold mb-2">Suburb</h6>
-                <input type="text" class="form-control" name="txtSuburb">
-              </div>
-              <!-- <div class="flex-fill">
-                
-              </div> -->
+              <input type="hidden" name="txtState" class="txtStateFilter">
+              <input type="hidden" name="txtSuburb" class="txtSuburbFilter">
+              <input type="hidden" name="numZipCode" class="txtPostalCodeFilter">
             </div>
 
             <!-- More features sections can follow here... -->
@@ -436,30 +430,29 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
                   Vacant </label>
               </div>
             </div>
-            <!-- Property Title -->
-            <div class="mt-4 text-start">
-              <h6 class="fw-bold mb-2">Property Title</h6>
-              <input type="text" class="form-control" name="txtPropertyTitle">
+            <!-- Property Title & Covered Area -->
+            <div class="mt-4 text-start row g-3">
+              <div class="col-6">
+                <h6 class="fw-bold mb-2">Property Title</h6>
+                <input type="text" class="form-control" name="txtPropertyTitle">
+              </div>
+              <div class="col-6">
+                <h6 class="fw-bold mb-2">Covered Area (Sqft)</h6>
+                <input type="number" class="form-control" name="txtCoveredArea">
+              </div>
             </div>
             <!-- Address -->
             <div class="mt-4 text-start">
               <h6 class="fw-bold mb-2">Address</h6>
-              <input type="text" class="form-control" name="txtAddress">
-            </div>
-            <!-- State -->
-            <div class="mt-4 text-start d-flex gap-3">
-              <div class="flex-fill">
-                <h6 class="fw-bold mb-2">State</h6>
-                <input type="text" class="form-control" name="txtState">
+              <div class="input-group">
+                <input type="text" class="form-control txtMailingAddress" name="txtMailingAddress" placeholder="Search state, suburb, postal code">
+                <span class="input-group-text bg-white">
+                  <i class="fas fa-search text-muted"></i>
+                </span>
               </div>
-              <div class="flex-fill">
-                <h6 class="fw-bold mb-2">Suburb</h6>
-                <input type="text" class="form-control" name="txtSuburb">
-              </div>
-              <div class="flex-fill">
-                <h6 class="fw-bold mb-2">Covered Area (Sqft)</h6>
-                <input type="number" class="form-control" name="txtCoveredArea">
-              </div>
+              <input type="hidden" name="txtState" class="txtStateFilter">
+              <input type="hidden" name="txtSuburb" class="txtSuburbFilter">
+              <input type="hidden" name="numZipCode" class="txtPostalCodeFilter">
             </div>
 
           </div>
@@ -526,6 +519,56 @@ $arrAllFeatures = $this->getlist_model->getFieldsMultipleConditions('tbl_propert
       });
     });
   });
+
+  function initFilterAutocomplete() {
+    const addressInputs = document.querySelectorAll('.txtMailingAddress');
+    addressInputs.forEach(input => {
+      const pane = input.closest('.tab-pane');
+      const stateInput = pane.querySelector('.txtStateFilter');
+      const suburbInput = pane.querySelector('.txtSuburbFilter');
+      const zipInput = pane.querySelector('.txtPostalCodeFilter');
+
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        componentRestrictions: { country: "au" },
+        fields: ["address_components", "formatted_address"]
+      });
+
+      autocomplete.addListener('place_changed', function () {
+        const place = autocomplete.getPlace();
+        if (!place.address_components) return;
+
+        if (stateInput) stateInput.value = "";
+        if (suburbInput) suburbInput.value = "";
+        if (zipInput) zipInput.value = "";
+
+        place.address_components.forEach(component => {
+          const types = component.types;
+          if (types.includes("locality") && suburbInput) {
+            suburbInput.value = component.long_name;
+          }
+          if (types.includes("administrative_area_level_1") && stateInput) {
+            stateInput.value = component.short_name;
+          }
+          if (types.includes("postal_code") && zipInput) {
+            zipInput.value = component.long_name;
+          }
+        });
+        
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    });
+  }
+
+  // Check if google maps is loaded
+  if (typeof google === 'undefined' || typeof google.maps === 'undefined' || typeof google.maps.places === 'undefined') {
+    const script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCv1FrfWK8d_Z28pT_XtiZW02msCfrC2Rs&libraries=places&callback=initFilterAutocomplete";
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    initFilterAutocomplete();
+  }
 </script>
 <!-- Map Modal -->
 <div class="modal fade" id="mapModal" tabindex="-1">
