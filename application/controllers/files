@@ -1,8 +1,8 @@
 Controllers
-   Properties.php
+   
 
 Views
-    components/filter_modal_2.php
+   contracts\templates.php
 
 assets
-    css/style.css
+   

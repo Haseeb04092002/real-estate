@@ -265,7 +265,14 @@
         let theEditor;
 
         ClassicEditor
-            .create( document.querySelector( '#editor' ) )
+            .create( document.querySelector( '#editor' ), {
+                toolbar: [
+                    'heading', '|',
+                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                    'outdent', 'indent', '|',
+                    'blockQuote', 'insertTable', 'undo', 'redo'
+                ]
+            } )
             .then( editor => {
                 theEditor = editor;
             } )
