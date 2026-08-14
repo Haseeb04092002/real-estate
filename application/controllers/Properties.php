@@ -788,6 +788,7 @@ class Properties extends CI_Controller {
         'PropertyTypeId'      => $this->input->post('chkPropertyType'),
         'OwnershipId'         => $UserId,
         'CoveredArea'         => $this->input->post('txtCoveredArea'),
+        'AreaUnitId'          => $this->input->post('selAreaUnitId') ? $this->input->post('selAreaUnitId') : '5',
         'PropertyStatus'      => $this->input->post('selPropertyStatus'),
         'PropertyDescription' => $this->input->post('txtPropertyDescription'),
         'MailingAddress'      => $this->input->post('txtPropertyAddress'),

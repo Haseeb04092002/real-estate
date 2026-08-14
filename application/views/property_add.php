@@ -30,6 +30,7 @@ $PropertyTitle = '';
 $ListType = '';
 $OwnershipId = '';
 $CoveredArea = '';
+$AreaUnitId = '5';
 $PropertyStatus = '';
 $PropertyDescription = '';
 $MailingAddress = '';
@@ -57,6 +58,7 @@ if($PropertyDetails)
     $PropertyTypeId = $PropertyDetails->PropertyTypeId;
     $OwnershipId = $PropertyDetails->OwnershipId;
     $CoveredArea = $PropertyDetails->CoveredArea;
+    $AreaUnitId = $PropertyDetails->AreaUnitId ?? '5';
     $PropertyStatus = $PropertyDetails->PropertyStatus;
     $PropertyDescription = $PropertyDetails->PropertyDescription;
     $MailingAddress = $PropertyDetails->MailingAddress;
@@ -129,8 +131,17 @@ $CountryId = 28;
             </div>
 
             <div class="form-group">
-                <label>Covered Area <span class="text-danger">*</span> <span style="font-size: 14px;" class="fw-normal">(in square-foot)</span></label>
-                <input type="text" value="<?= $CoveredArea; ?>" name="txtCoveredArea" placeholder="10 Sqft" required data-parsley-required-message="Covered Area is required">
+                <label>Covered Area <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="text" value="<?= $CoveredArea; ?>" name="txtCoveredArea" placeholder="100" required data-parsley-required-message="Covered Area is required" class="form-control">
+                    <select name="selAreaUnitId" class="form-select" style="max-width: 110px;">
+                        <option value="5" <?= ($AreaUnitId == '5') ? 'selected' : ''; ?>>Sqm</option>
+                        <option value="1" <?= ($AreaUnitId == '1') ? 'selected' : ''; ?>>Sqft</option>
+                        <option value="2" <?= ($AreaUnitId == '2') ? 'selected' : ''; ?>>Sqyd</option>
+                        <option value="3" <?= ($AreaUnitId == '3') ? 'selected' : ''; ?>>Kanal</option>
+                        <option value="4" <?= ($AreaUnitId == '4') ? 'selected' : ''; ?>>Marla</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
                 <label>Property Status <span class="text-danger">*</span></label>

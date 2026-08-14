@@ -1,17 +1,17 @@
-
-
-
 helpers
-   
+
 
 Controllers
-   
-   
+Properties.php
+
 models
-   
+
 
 Views
-   
+components/property_card.php
+property_details.php
+property_add.php
+home.php
+all_listings.php
 
 assets
-   

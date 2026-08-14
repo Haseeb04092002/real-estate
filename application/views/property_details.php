@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $PropertyTypeId = $PropertyDetails->PropertyTypeId;
-$AreaUnitId = $PropertyDetails->AreaUnitId ?? '1';
+$AreaUnitId = $PropertyDetails->AreaUnitId ?? '5';
 $UserId = $this->session->userdata('user_id');
 $ClientId = $this->getlist_model->getFieldsMultipleConditions('tbl_properties', 'ClientId', "WHERE PropertyId = '$PropertyId'", 1);
 
@@ -23,8 +23,11 @@ switch ($AreaUnitId) {
     case '4':
         $AreaUnit = 'Marla';
         break;
+    case '5':
+        $AreaUnit = 'Sqm';
+        break;
     default:
-        $AreaUnit = 'Sqft';
+        $AreaUnit = 'Sqm';
         break;
 }
 

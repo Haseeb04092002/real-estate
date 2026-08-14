@@ -79,50 +79,70 @@ if (empty($arrProperties)) {
             //   return "Invalid Value";
             // }
 
-            let kanal, marla, sqft, sqyd;
-            let content = '';
+        let sqm, sqft, sqyd, kanal, marla;
+        let content = '';
 
-            // Conversion logic based on the unit
-            switch (unit) {
-                case "Sqft":
-                    kanal = value / 5445;
-                    marla = value / 225;
-                    sqyd = value * 0.11111;
-                    content = `
-              <span class="tooltip-unit">Kanal = </span><span class="tooltip-value">${kanal.toFixed(2)}</span><br>
-              <span class="tooltip-unit">Marla = </span><span class="tooltip-value">${marla.toFixed(2)}</span><br>
-              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span>`;
-                    break;
-                case "Kanal":
-                    sqft = value * 5445;
-                    marla = value * 20;
-                    sqyd = value * 605;
-                    content = `
+        // Standardizing conversions:
+        // 1 Sqm = 10.7639 Sqft = 1.19599 Sqyd = 0.0395369 Marla = 0.0019768 Kanal
+        switch (unit) {
+            case "Sqm":
+                sqft = value * 10.7639;
+                sqyd = value * 1.19599;
+                marla = value * 0.0395369;
+                kanal = value * 0.0019768;
+                content = `
               <span class="tooltip-unit">Sqft = </span><span class="tooltip-value">${sqft.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span><br>
               <span class="tooltip-unit">Marla = </span><span class="tooltip-value">${marla.toFixed(2)}</span><br>
-              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span>`;
-                    break;
-                case "Marla":
-                    kanal = value * 0.05;
-                    sqft = value * 272.25;
-                    sqyd = value * 30.25;
-                    content = `
-              <span class="tooltip-unit">Kanal = </span><span class="tooltip-value">${kanal.toFixed(2)}</span><br>
-              <span class="tooltip-unit">Sqft = </span><span class="tooltip-value">${sqft.toFixed(2)}</span><br>
-              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span>`;
-                    break;
-                case "Sqyd":
-                    kanal = value * 0.00165;
-                    marla = value * 0.04;
-                    sqft = value * 9;
-                    content = `
+              <span class="tooltip-unit">Kanal = </span><span class="tooltip-value">${kanal.toFixed(2)}</span>`;
+                break;
+            case "Sqft":
+                sqm = value * 0.092903;
+                sqyd = value * 0.111111;
+                marla = value / 225;
+                kanal = value / 5445;
+                content = `
+              <span class="tooltip-unit">Sqm = </span><span class="tooltip-value">${sqm.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Marla = </span><span class="tooltip-value">${marla.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Kanal = </span><span class="tooltip-value">${kanal.toFixed(2)}</span>`;
+                break;
+            case "Sqyd":
+                sqm = value * 0.836127;
+                sqft = value * 9;
+                marla = value * 0.04;
+                kanal = value * 0.00165;
+                content = `
+              <span class="tooltip-unit">Sqm = </span><span class="tooltip-value">${sqm.toFixed(2)}</span><br>
               <span class="tooltip-unit">Sqft = </span><span class="tooltip-value">${sqft.toFixed(2)}</span><br>
               <span class="tooltip-unit">Marla = </span><span class="tooltip-value">${marla.toFixed(2)}</span><br>
               <span class="tooltip-unit">Kanal = </span><span class="tooltip-value">${kanal.toFixed(2)}</span>`;
-                    break;
-                default:
-                    return "Invalid Unit";
-            }
+                break;
+            case "Marla":
+                sqm = value * 25.2929;
+                sqft = value * 272.25;
+                sqyd = value * 30.25;
+                kanal = value * 0.05;
+                content = `
+              <span class="tooltip-unit">Sqm = </span><span class="tooltip-value">${sqm.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Sqft = </span><span class="tooltip-value">${sqft.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Kanal = </span><span class="tooltip-value">${kanal.toFixed(2)}</span>`;
+                break;
+            case "Kanal":
+                sqm = value * 505.857;
+                sqft = value * 5445;
+                sqyd = value * 605;
+                marla = value * 20;
+                content = `
+              <span class="tooltip-unit">Sqm = </span><span class="tooltip-value">${sqm.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Sqft = </span><span class="tooltip-value">${sqft.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Sqyd = </span><span class="tooltip-value">${sqyd.toFixed(2)}</span><br>
+              <span class="tooltip-unit">Marla = </span><span class="tooltip-value">${marla.toFixed(2)}</span>`;
+                break;
+            default:
+                return "Invalid Unit";
+        }
 
             // Return the formatted content with separate classes
             return content;

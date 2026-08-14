@@ -8,7 +8,7 @@ $ListType = $value->ListType ?? 'Sale';
 $TotalPrice = $value->TotalPrice ?? 0;
 $MailingAddress = $value->MailingAddress ?? '';
 $CoveredArea = $value->CoveredArea ?? '0';
-$AreaUnitId = $value->AreaUnitId ?? '1';
+$AreaUnitId = $value->AreaUnitId ?? '5';
 
 $PropertyDescription = $value->PropertyDescription ?? 'No description available for this property.';
 if (strlen($PropertyDescription) > 90) {
@@ -38,8 +38,11 @@ switch ($AreaUnitId) {
     case '4':
         $AreaUnit = 'Marla';
         break;
+    case '5':
+        $AreaUnit = 'Sqm';
+        break;
     default:
-        $AreaUnit = 'Sqft';
+        $AreaUnit = 'Sqm';
         break;
 }
 
