@@ -140,6 +140,11 @@ class Properties extends CI_Controller {
           $filename = 'FRE-SALE-CONTRACT.pdf';
           break;
 
+        case 'sale_contract2':
+          $html = $this->load->view('contract_templates/sale_contract2', $data, true);
+          $filename = 'FRE-SALE-CONTRACT-2.pdf';
+          break;
+
         case 'deed_of_conveyance':
           $html = $this->load->view('contract_templates/deed_of_conveyance', $data, true);
           $filename = 'FRE-DEED-OF-CONVEYANCE.pdf';
@@ -157,7 +162,9 @@ class Properties extends CI_Controller {
       $dompdf->setPaper('A4', 'portrait');
       $dompdf->render();
 
-      ob_end_clean(); 
+      if (ob_get_length()) {
+          ob_end_clean();
+      }
 
       $dompdf->stream($filename, ["Attachment" => true]);
       exit;

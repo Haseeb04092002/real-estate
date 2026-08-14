@@ -31,6 +31,10 @@ class ContractPreview extends CI_Controller {
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+
         // Output PDF to browser for download
         $filename = $templateName . '_' . date('Y-m-d') . '.pdf';
         $dompdf->stream($filename, array("Attachment" => 1));
