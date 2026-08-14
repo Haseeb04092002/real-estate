@@ -3,11 +3,13 @@ helpers
 
 Controllers
 Properties.php
+ContractPreview.php
 
 models
 
 
 Views
+contract_templates/sale_contract2.php
 components/property_card.php
 property_details.php
 property_add.php
