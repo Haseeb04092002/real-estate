@@ -75,6 +75,41 @@ class Properties extends CI_Controller {
       echo json_encode($features);
   }
 
+  public function chat_test()
+  {
+      // A simple endpoint to view the chat UI for testing
+      $this->load->view('chat/chat_ui');
+  }
+
+  public function start_chat_server()
+  {
+      $node_dir = FCPATH . 'chat_server';
+      
+      echo "<h3>Chat Server Manager</h3>";
+      
+      // Determine OS to run the correct background command
+      if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+          // Windows
+          pclose(popen("cd " . escapeshellarg($node_dir) . " && start /B node server.js 1> NUL 2> NUL", "r"));
+          echo "<p>Started Node server in the background (Windows).</p>";
+      } else {
+          // Linux (cPanel/Ubuntu)
+          exec("cd " . escapeshellarg($node_dir) . " && nohup node server.js > output.log 2>&1 &");
+          echo "<p>Started Node server in the background (Linux).</p>";
+      }
+      
+      echo "<h4>Production Commands (If you have SSH access)</h4>";
+      echo "<p>If you want to keep it running forever on a real server, it is highly recommended to run these commands via SSH terminal:</p>";
+      echo "<pre style='background:#f4f4f4; padding:10px; border-radius:5px;'>";
+      echo "cd " . $node_dir . "\n";
+      echo "npm install\n";
+      echo "npm install -g pm2\n";
+      echo "pm2 start server.js --name \"chat-server\"\n";
+      echo "pm2 save\n";
+      echo "</pre>";
+  }
+
+
   public function smart_contract($Case = 'sale_contract')
   {
       require_once APPPATH . 'third_party/dompdf/autoload.inc.php';
