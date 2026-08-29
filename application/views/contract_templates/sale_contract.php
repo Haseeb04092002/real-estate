@@ -1010,7 +1010,7 @@
                     <!-- 1 -->
                     <tr>
                         <td style="
-                width:7mm;
+                
                 vertical-align:top;
                 padding:1mm 0 0 2mm;
                 white-space:nowrap;
