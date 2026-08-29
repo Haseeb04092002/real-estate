@@ -429,40 +429,23 @@
     </style>
 
     <div class="container">
-
         <!-- page 1 starts -->
         <div class="page">
-
-            <div class="copyright">
-                © 2005 COPYRIGHT&nbsp; The Law Society of New South Wales and The Real Estate Institute of New South Wales.&nbsp;
-                You can prepare your own version of<br>
-                pages 1 and 2 on a computer or typewriter, and you can reproduce this form (or part of it) for educational purposes,
-                but any other reproduction of this form<br>
-                (or part of it) is an infringement of copyright unless authorised by the copyright holders or legislation.
-            </div>
-
-            <div class="document-title">
-                Contract for the sale of land – 2005 edition
-            </div>
-
+            <div class="copyright"> © 2005 COPYRIGHT&nbsp; The Law Society of New South Wales and The Real Estate Institute of New South Wales.&nbsp; You can prepare your own version of <br> pages 1 and 2 on a computer or typewriter, and you can reproduce this form (or part of it) for educational purposes, but any other reproduction of this form <br> (or part of it) is an infringement of copyright unless authorised by the copyright holders or legislation. </div>
+            <div class="document-title"> Contract for the sale of land – 2005 edition </div>
             <table class="main-table no-border-table">
                 <colgroup>
                     <col class="term-col">
                     <col class="meaning-col">
                     <col class="contact-col">
                 </colgroup>
-
                 <tr>
                     <td class="header-cell">TERM</td>
                     <td class="header-cell" colspan="2">MEANING OF TERM</td>
                 </tr>
-
                 <tr>
                     <td class="term">Vendor’s agent</td>
-                    <td class="value">
-                        Raine &amp; Horne Double Bay<br>
-                        385 New South Head Road, Double Bay, NSW 2028
-                    </td>
+                    <td class="value"> Raine &amp; Horne Double Bay <br> 385 New South Head Road, Double Bay, NSW 2028 </td>
                     <td>
                         <table class="contact-table">
                             <tr>
@@ -472,28 +455,19 @@
                         </table>
                     </td>
                 </tr>
-
                 <tr class="space-small">
                     <td class="term">Co-agent</td>
                     <td></td>
                     <td></td>
                 </tr>
-
                 <tr>
                     <td class="term">Vendor</td>
-                    <td class="value">
-                        Edda Unewisse and Kurt Unewisse<br>
-                        35 Boonah Avenue, Eastgardens
-                    </td>
+                    <td class="value"> Edda Unewisse and Kurt Unewisse <br> 35 Boonah Avenue, Eastgardens </td>
                     <td></td>
                 </tr>
-
                 <tr class="space-small">
                     <td class="term">Vendor’s Solicitor</td>
-                    <td class="value">
-                        Key Property Lawyers<br>
-                        PO Box 1398, Bondi Junction 1355 NSW
-                    </td>
+                    <td class="value"> Key Property Lawyers <br> PO Box 1398, Bondi Junction 1355 NSW </td>
                     <td>
                         <table class="contact-table">
                             <tr>
@@ -511,28 +485,17 @@
                         </table>
                     </td>
                 </tr>
-
                 <tr class="space-medium">
                     <td class="term">Completion date</td>
-                    <td colspan="2" class="value">
-                        42nd day after the date of this contract
-                        <span class="normal">(clause 15)</span>
+                    <td colspan="2" class="value"> 42nd day after the date of this contract <span class="normal">(clause 15)</span>
                     </td>
                 </tr>
-
                 <tr>
-                    <td class="term">
-                        Land<br>
-                        <span class="normal">(Address, plan details<br>and title reference)</span>
+                    <td class="term"> Land <br>
+                        <span class="normal">(Address, plan details <br>and title reference) </span>
                     </td>
-
-                    <td colspan="2" class="value land-lines">
-                        35 Boonah Avenue, Eastgardens 2036<br>
-                        Registered Plan: Lot&nbsp; 1 Plan DP 383 654<br>
-                        Folio Identifier 1/383654
-                    </td>
+                    <td colspan="2" class="value land-lines"> 35 Boonah Avenue, Eastgardens 2036 <br> Registered Plan: Lot&nbsp; 1 Plan DP 383 654 <br> Folio Identifier 1/383654 </td>
                 </tr>
-
                 <tr>
                     <td></td>
                     <td colspan="2" class="wide-options">
@@ -548,18 +511,29 @@
                         </table>
                     </td>
                 </tr>
-
                 <tr class="improvements-row">
                     <td class="term">Improvements</td>
                     <td colspan="2">
                         <table class="option-table">
                             <tr>
-                                <td><span class="checkbox checked"></span>HOUSE</td>
-                                <td><span class="checkbox checked"></span>garage</td>
-                                <td><span class="checkbox"></span>carport</td>
-                                <td><span class="checkbox"></span>home unit</td>
-                                <td><span class="checkbox checked"></span>carspace</td>
-                                <td><span class="checkbox"></span>none</td>
+                                <td>
+                                    <span class="checkbox checked"></span>HOUSE
+                                </td>
+                                <td>
+                                    <span class="checkbox checked"></span>garage
+                                </td>
+                                <td>
+                                    <span class="checkbox"></span>carport
+                                </td>
+                                <td>
+                                    <span class="checkbox"></span>home unit
+                                </td>
+                                <td>
+                                    <span class="checkbox checked"></span>carspace
+                                </td>
+                                <td>
+                                    <span class="checkbox"></span>none
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="6">
@@ -569,32 +543,23 @@
                         </table>
                     </td>
                 </tr>
-
                 <tr class="attached-row">
                     <td class="term">Attached copies</td>
                     <td colspan="2" class="attached-content">
                         <div class="attached-line">
-                            <span class="checkbox checked"></span>
-                            Documents in the List of Documents as marked or as numbered:
+                            <span class="checkbox checked"></span> Documents in the List of Documents as marked or as numbered:
                         </div>
-
                         <div class="other-documents">
                             <span class="checkbox"></span>Other documents:
                         </div>
                     </td>
                 </tr>
             </table>
-
             <div style="border:2px solid #000; padding:6px 10px 4px 10px; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.08;">
-
-                <div style="font-weight:bold; font-size:17px; margin-bottom:4px;">
-                    A real estate agent is permitted by <em>legislation</em> to fill up the items in this box in a sale of residential property.
-                </div>
-
+                <div style="font-weight:bold; font-size:17px; margin-bottom:4px;"> A real estate agent is permitted by <em>legislation</em> to fill up the items in this box in a sale of residential property. </div>
                 <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
                     <tr>
                         <td style="width:22%; vertical-align:top; font-size:16px;">Inclusions</td>
-
                         <td style="width:78%; vertical-align:top;">
                             <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
                                 <tr>
@@ -611,7 +576,6 @@
                                         <span class="checkbox"></span>stove
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td style="white-space:nowrap;">
                                         <span class="checkbox checked"></span>built-in wardrobes
@@ -626,7 +590,6 @@
                                         <span class="checkbox"></span>pool equipment
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td style="white-space:nowrap;">
                                         <span class="checkbox checked"></span>clothes line
@@ -641,35 +604,26 @@
                                         <span class="checkbox"></span>TV antenna
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td colspan="4" style="padding-top:2px; line-height:1.2;">
-                                        <span class="checkbox checked"></span>
-                                        other:&nbsp; Wall air-conditioner, garden corner bench and table, groundwater pump, bird<br>
-                                        bath, build in shelves in living room, workbench and machinery in garage, kitchen corner<br>
-                                        bench, Wardrobe in bedroom, pot plants, washing machine in internal laundry, shelves in<br>
-                                        spare bedroom
+                                        <span class="checkbox checked"></span> other:&nbsp; Wall air-conditioner, garden corner bench and table, groundwater pump, bird <br> bath, build in shelves in living room, workbench and machinery in garage, kitchen corner <br> bench, Wardrobe in bedroom, pot plants, washing machine in internal laundry, shelves in <br> spare bedroom
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-
                     <tr>
                         <td style="padding-top:7px; font-size:16px;">Exclusions</td>
                         <td></td>
                     </tr>
-
                     <tr>
                         <td style="padding-top:10px; font-size:16px;">Purchaser</td>
                         <td></td>
                     </tr>
-
                     <tr>
                         <td style="padding-top:28px; font-size:16px;">Purchaser’s solicitor</td>
                         <td></td>
                     </tr>
-
                     <tr>
                         <td colspan="2" style="padding-top:28px;">
                             <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
@@ -678,105 +632,72 @@
                                     <td style="width:4%; font-size:16px; font-weight:bold;">$</td>
                                     <td style="width:74%;"></td>
                                 </tr>
-
                                 <tr>
                                     <td style="font-size:16px;">Deposit</td>
                                     <td style="font-size:16px; font-weight:bold; border-bottom:1px solid #000;">$</td>
-                                    <td style="font-size:16px; padding-left:55px;">
-                                        (10% of the price, unless otherwise stated)
-                                    </td>
+                                    <td style="font-size:16px; padding-left:55px;"> (10% of the price, unless otherwise stated) </td>
                                 </tr>
-
                                 <tr>
                                     <td style="font-size:16px;">Balance</td>
                                     <td style="font-size:16px; font-weight:bold;">$</td>
                                     <td></td>
                                 </tr>
-
                                 <tr>
                                     <td style="font-size:16px;">Contract date</td>
                                     <td></td>
-                                    <td style="font-size:16px; text-align:right;">
-                                        (if not stated, the date this contract was made)
-                                    </td>
+                                    <td style="font-size:16px; text-align:right;"> (if not stated, the date this contract was made) </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                 </table>
             </div>
-
             <table style="width:100%; border-collapse:collapse; table-layout:fixed; margin-top:34px; font-family:Arial, Helvetica, sans-serif; font-size:16px;">
                 <tr>
                     <td style="width:42%; vertical-align:top;">
-                        <div style="border-top:1px solid #000; padding-top:3px; font-weight:bold;">
-                            Vendor
-                        </div>
+                        <div style="border-top:1px solid #000; padding-top:3px; font-weight:bold;"> Vendor </div>
                     </td>
-
                     <td style="width:16%;"></td>
-
                     <td style="width:42%; vertical-align:top;">
-                        <div style="border-top:1px solid #000; padding-top:3px; text-align:right; font-weight:bold;">
-                            Witness
-                        </div>
+                        <div style="border-top:1px solid #000; padding-top:3px; text-align:right; font-weight:bold;"> Witness </div>
                     </td>
                 </tr>
-
                 <tr>
                     <td style="height:58px;"></td>
-
                     <td style="vertical-align:top;">
                         <div style="border:1px dotted #000; padding:2px 8px 3px 8px; min-height:52px;">
-                            <div style="font-weight:bold; font-size:16px;">
-                                GST AMOUNT <span style="font-weight:normal;">(optional)</span>
+                            <div style="font-weight:bold; font-size:16px;"> GST AMOUNT <span style="font-weight:normal;">(optional)</span>
                             </div>
                             <div>The price includes</div>
                             <div>GST of:</div>
                         </div>
                     </td>
-
                     <td></td>
                 </tr>
-
                 <tr>
                     <td style="vertical-align:top;">
-                        <div style="border-top:1px solid #000; padding-top:3px; font-weight:bold;">
-                            Purchaser
-                        </div>
+                        <div style="border-top:1px solid #000; padding-top:3px; font-weight:bold;"> Purchaser </div>
                     </td>
-
                     <td colspan="2" style="vertical-align:top;">
                         <table style="width:100%; border-collapse:collapse; table-layout:auto;">
                             <tr>
                                 <td style="white-space:nowrap; padding-left:6px;">
                                     <span class="checkbox"></span>JOINT TENANTS
                                 </td>
-
                                 <td style="white-space:nowrap; padding-left:8px;">
                                     <span class="checkbox"></span>tenants in common
                                 </td>
-
                                 <td style="white-space:nowrap; padding-left:8px;">
                                     <span class="checkbox"></span>in unequal shares
                                 </td>
-
-                                <td style="width:100%; border-top:1px solid #000; text-align:right; padding-top:3px; font-weight:bold;">
-                                    Witness
-                                </td>
+                                <td style="width:100%; border-top:1px solid #000; text-align:right; padding-top:3px; font-weight:bold;"> Witness </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
-
-
             <div style="font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.08;">
-
-                <div style="text-align:center; font-weight:bold; font-size:17px; margin-bottom:3px;">
-                    Tax information (the parties promise this is correct as far as each party is aware)
-                </div>
-
+                <div style="text-align:center; font-weight:bold; font-size:17px; margin-bottom:3px;"> Tax information (the parties promise this is correct as far as each party is aware) </div>
                 <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
                     <tr>
                         <td style="width:51%; vertical-align:top;">
@@ -789,7 +710,6 @@
                             <span class="checkbox"></span>yes
                         </td>
                     </tr>
-
                     <tr>
                         <td style="vertical-align:top;">
                             <strong>GST:</strong>&nbsp; Taxable supply
@@ -810,11 +730,8 @@
                             </table>
                         </td>
                     </tr>
-
                     <tr>
-                        <td style="vertical-align:top;">
-                            Margin scheme will be used in making the taxable supply
-                        </td>
+                        <td style="vertical-align:top;"> Margin scheme will be used in making the taxable supply </td>
                         <td style="vertical-align:top; white-space:nowrap;">
                             <span class="checkbox"></span>NO
                         </td>
@@ -823,77 +740,51 @@
                         </td>
                     </tr>
                 </table>
-
-                <div style="margin-top:2px; margin-bottom:2px;">
-                    This sale is not a taxable supply because (one or more of the following may apply) the sale is:
-                </div>
-
+                <div style="margin-top:2px; margin-bottom:2px;"> This sale is not a taxable supply because (one or more of the following may apply) the sale is: </div>
                 <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
                     <tr>
                         <td style="width:5%;"></td>
                         <td style="width:95%; vertical-align:top;">
-                            <span class="checkbox checked"></span>
-                            not made in the course or furtherance of an enterprise that the vendor carries on (section 9-5(b))
+                            <span class="checkbox checked"></span> not made in the course or furtherance of an enterprise that the vendor carries on (section 9-5(b))
                         </td>
                     </tr>
-
                     <tr>
                         <td></td>
                         <td style="vertical-align:top;">
-                            <span class="checkbox"></span>
-                            by a vendor who is neither registered nor required to be registered for GST (section 9-5(d))
+                            <span class="checkbox"></span> by a vendor who is neither registered nor required to be registered for GST (section 9-5(d))
                         </td>
                     </tr>
-
                     <tr>
                         <td></td>
                         <td style="vertical-align:top;">
-                            <span class="checkbox"></span>
-                            GST-free because the sale is the supply of a going concern under section 38-325
+                            <span class="checkbox"></span> GST-free because the sale is the supply of a going concern under section 38-325
                         </td>
                     </tr>
-
                     <tr>
                         <td></td>
                         <td style="vertical-align:top;">
-                            <span class="checkbox"></span>
-                            GST-free because the sale is subdivided farm land or farm land supplied for farming under Subdivision 38-O
+                            <span class="checkbox"></span> GST-free because the sale is subdivided farm land or farm land supplied for farming under Subdivision 38-O
                         </td>
                     </tr>
-
                     <tr>
                         <td></td>
                         <td style="vertical-align:top;">
-                            <span class="checkbox"></span>
-                            input taxed because the sale is of eligible residential premises (sections 40-65, 40-75(2) and 195-1)
+                            <span class="checkbox"></span> input taxed because the sale is of eligible residential premises (sections 40-65, 40-75(2) and 195-1)
                         </td>
                     </tr>
                 </table>
-
                 <div style="border:1px solid #000; min-height:50px; margin-top:7px; padding:3px 10px;">
-                    <strong style="font-size:16px;">
-                        HOLDER OF STRATA OR COMMUNITY TITLE RECORDS – Name, address and telephone number
-                    </strong>
+                    <strong style="font-size:16px;"> HOLDER OF STRATA OR COMMUNITY TITLE RECORDS – Name, address and telephone number </strong>
                 </div>
-
             </div>
         </div>
         <!-- page 1 ends -->
-
-
         <!-- page 2 starts -->
         <div class="page">
-
             <div style="width:100%; position:relative; margin-bottom:2mm; font-family:Arial, Helvetica, sans-serif;">
-                <div style="text-align:center; font-size:11px; line-height:1;">
-                    2
-                </div>
-
-                <div style="position:absolute; right:0; top:0; font-size:10.5px; line-height:1;">
-                    Land – 2005 edition
-                </div>
+                <div style="text-align:center; font-size:11px; line-height:1;"> 2 </div>
+                <div style="position:absolute; right:0; top:0; font-size:10.5px; line-height:1;"> Land – 2005 edition </div>
             </div>
-
             <table style="
         width:100%;
         border-collapse:collapse;
@@ -904,7 +795,6 @@
         border:1px solid #000;
     ">
                 <tr>
-
                     <!-- LEFT COLUMN -->
                     <td style="
                 width:50%;
@@ -912,275 +802,171 @@
                 border-right:1px solid #000;
                 padding:1.5mm 2mm 1mm 2mm;
             ">
-
                         <div style="
                     font-weight:bold;
                     font-size:11px;
                     margin-bottom:2mm;
                     line-height:1;
-                ">
-                            General
-                        </div>
-
+                "> General </div>
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox checked"></span>
-                            1 property certificate for the land
+                            <span class="checkbox checked"></span> 1 property certificate for the land
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox checked"></span>
-                            2 plan of the land
+                            <span class="checkbox checked"></span> 2 plan of the land
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            3 unregistered plan of the land
+                            <span class="checkbox"></span> 3 unregistered plan of the land
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            4 plan of land to be subdivided
+                            <span class="checkbox"></span> 4 plan of land to be subdivided
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            5 document that is to be lodged with a relevant plan
+                            <span class="checkbox"></span> 5 document that is to be lodged with a relevant plan
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox checked"></span>
-                            6 section 149(2) certificate (Environmental Planning<br>
+                            <span class="checkbox checked"></span> 6 section 149(2) certificate (Environmental Planning <br>
                             <span style="margin-left:11mm;">and Assessment Act 1979)</span>
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            7 section 149(5) information included in that certificate
+                            <span class="checkbox"></span> 7 section 149(5) information included in that certificate
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox checked"></span>
-                            8 sewerage connections diagram
+                            <span class="checkbox checked"></span> 8 sewerage connections diagram
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox checked"></span>
-                            9 sewer mains diagram
+                            <span class="checkbox checked"></span> 9 sewer mains diagram
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            10 document that created or may have created an<br>
-                            <span style="margin-left:11mm;">easement, profit à prendre, restriction on use or</span><br>
+                            <span class="checkbox"></span> 10 document that created or may have created an <br>
+                            <span style="margin-left:11mm;">easement, profit à prendre, restriction on use or</span>
+                            <br>
                             <span style="margin-left:11mm;">positive covenant disclosed in this contract</span>
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            11 section 88G certificate (positive covenant)
+                            <span class="checkbox"></span> 11 section 88G certificate (positive covenant)
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            12 survey report
+                            <span class="checkbox"></span> 12 survey report
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            13 section 317A certificate (certificate of compliance)
+                            <span class="checkbox"></span> 13 section 317A certificate (certificate of compliance)
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            14 building certificate given under <em>legislation</em>
+                            <span class="checkbox"></span> 14 building certificate given under <em>legislation</em>
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            15 insurance certificate (Home Building Act 1989)
+                            <span class="checkbox"></span> 15 insurance certificate (Home Building Act 1989)
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            16 brochure or note (Home Building Act 1989)
+                            <span class="checkbox"></span> 16 brochure or note (Home Building Act 1989)
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            17 section 24 certificate (Swimming Pools Act 1982)
+                            <span class="checkbox"></span> 17 section 24 certificate (Swimming Pools Act 1982)
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            18 lease (with every relevant memorandum or variation)
+                            <span class="checkbox"></span> 18 lease (with every relevant memorandum or variation)
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            19 other document relevant to tenancies
+                            <span class="checkbox"></span> 19 other document relevant to tenancies
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            20 old system document
+                            <span class="checkbox"></span> 20 old system document
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            21 Crown tenure card
+                            <span class="checkbox"></span> 21 Crown tenure card
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            22 Crown purchase statement of account
+                            <span class="checkbox"></span> 22 Crown purchase statement of account
                         </div>
-
                         <div>
                             <span class="checkbox"></span>
-                            <span style="text-decoration:line-through;">
-                                23 Statutory declaration regarding vendor duty
-                            </span>
+                            <span style="text-decoration:line-through;"> 23 Statutory declaration regarding vendor duty </span>
                         </div>
-
                     </td>
-
                     <!-- RIGHT COLUMN -->
                     <td style="
                 width:50%;
                 vertical-align:top;
                 padding:1.5mm 2mm 1mm 2mm;
             ">
-
                         <div style="
                     font-weight:bold;
                     font-size:11px;
                     margin-bottom:1mm;
                     line-height:1.05;
-                ">
-                            Strata or community title (clause 23 of the contract)
-                        </div>
-
+                "> Strata or community title (clause 23 of the contract) </div>
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            24 property certificate for strata common property
+                            <span class="checkbox"></span> 24 property certificate for strata common property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            25 plan creating strata common property
+                            <span class="checkbox"></span> 25 plan creating strata common property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            26 strata by-laws not set out in <em>legislation</em>
+                            <span class="checkbox"></span> 26 strata by-laws not set out in <em>legislation</em>
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            27 strata development contract or statement
+                            <span class="checkbox"></span> 27 strata development contract or statement
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            28 strata management statement
+                            <span class="checkbox"></span> 28 strata management statement
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            29 leasehold strata - lease of lot and common property
+                            <span class="checkbox"></span> 29 leasehold strata - lease of lot and common property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            30 property certificate for neighbourhood property
+                            <span class="checkbox"></span> 30 property certificate for neighbourhood property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            31 plan creating neighbourhood property
+                            <span class="checkbox"></span> 31 plan creating neighbourhood property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            32 neighbourhood development contract
+                            <span class="checkbox"></span> 32 neighbourhood development contract
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            33 neighbourhood management statement
+                            <span class="checkbox"></span> 33 neighbourhood management statement
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            34 property certificate for precinct property
+                            <span class="checkbox"></span> 34 property certificate for precinct property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            35 plan creating precinct property
+                            <span class="checkbox"></span> 35 plan creating precinct property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            36 precinct development contract
+                            <span class="checkbox"></span> 36 precinct development contract
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            37 precinct management statement
+                            <span class="checkbox"></span> 37 precinct management statement
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            38 property certificate for community property
+                            <span class="checkbox"></span> 38 property certificate for community property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            39 plan creating community property
+                            <span class="checkbox"></span> 39 plan creating community property
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            40 community development contract
+                            <span class="checkbox"></span> 40 community development contract
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            41 community management statement
+                            <span class="checkbox"></span> 41 community management statement
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            42 document disclosing a change of by-laws
+                            <span class="checkbox"></span> 42 document disclosing a change of by-laws
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            43 document disclosing a change in a development<br>
+                            <span class="checkbox"></span> 43 document disclosing a change in a development <br>
                             <span style="margin-left:11mm;">or management contract or statement</span>
                         </div>
-
                         <div style="margin-bottom:1mm;">
-                            <span class="checkbox"></span>
-                            44 document disclosing a change in boundaries
+                            <span class="checkbox"></span> 44 document disclosing a change in boundaries
                         </div>
-
                         <div>
-                            <span class="checkbox"></span>
-                            45 certificate under Management Act – section 109<br>
-                            <span style="margin-left:11mm;">
-                                (Strata Schemes) or section 26 (Community Land)
-                            </span>
+                            <span class="checkbox"></span> 45 certificate under Management Act – section 109 <br>
+                            <span style="margin-left:11mm;"> (Strata Schemes) or section 26 (Community Land) </span>
                         </div>
-
                     </td>
                 </tr>
             </table>
-
-
             <!-- PAGE 2 - WARNINGS / DISPUTES / AUCTIONS SECTION -->
-
             <div style="
     width:100%;
     margin-top:3mm;
@@ -1189,7 +975,6 @@
     font-size:10.5px;
     line-height:1.08;
 ">
-
                 <!-- WARNINGS -->
                 <div style="
         text-align:center;
@@ -1197,10 +982,7 @@
         font-size:11px;
         line-height:1;
         padding:1.5mm 1mm 0.5mm 1mm;
-    ">
-                    WARNINGS
-                </div>
-
+    "> WARNINGS </div>
                 <table style="
         width:100%;
         border-collapse:collapse;
@@ -1209,26 +991,17 @@
         font-size:10.5px;
         line-height:1.08;
     ">
-
                     <!-- WARNING 1 -->
                     <tr>
                         <td style="
-                width:6mm;
+                width:2mm;
                 vertical-align:top;
                 padding:1mm 0 0 2mm;
-            ">
-                            1.
-                        </td>
-
+            "> 1. </td>
                         <td style="
                 vertical-align:top;
                 padding:1mm 2mm 0 0;
-            ">
-                            Various Acts of Parliament and other matters can affect the rights of the parties to this contract.
-                            &nbsp;Some important<br>
-                            matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving
-
-                            <table style="
+            "> Various Acts of Parliament and other matters can affect the rights of the parties to this contract. &nbsp;Some important <br> matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving <table style="
                     width:100%;
                     border-collapse:collapse;
                     table-layout:fixed;
@@ -1237,255 +1010,164 @@
                     line-height:1.12;
                 ">
                                 <tr>
-                                    <td style="width:29%; vertical-align:top; padding:0 2mm 0 0;">
-                                        AGL Gas Networks Limited
-                                    </td>
-                                    <td style="width:42%; vertical-align:top; padding:0 2mm 0 0;">
-                                        Government Business &amp; Government Procurement
-                                    </td>
-                                    <td style="width:29%; vertical-align:top;">
-                                        Public Works Dept
-                                    </td>
+                                    <td style="width:29%; vertical-align:top; padding:0 2mm 0 0;"> AGL Gas Networks Limited </td>
+                                    <td style="width:42%; vertical-align:top; padding:0 2mm 0 0;"> Government Business &amp; Government Procurement </td>
+                                    <td style="width:29%; vertical-align:top;"> Public Works Dept </td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">Council</td>
                                     <td style="vertical-align:top;">Heritage Office</td>
                                     <td style="vertical-align:top;">Roads &amp; Traffic Authority</td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">County Council</td>
                                     <td style="vertical-align:top;">Infrastructure Planning and Natural Resources</td>
                                     <td style="vertical-align:top;">Rural Lands Protection Board</td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">East Australian Pipeline Limited</td>
                                     <td style="vertical-align:top;">Land &amp; Housing Corporation</td>
                                     <td style="vertical-align:top;">Sustainable Energy Development</td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">Education &amp; Training Dept</td>
                                     <td style="vertical-align:top;">Mine Subsidence Board</td>
                                     <td style="vertical-align:top;">Telecommunications authority</td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">Electricity authority</td>
                                     <td style="vertical-align:top;">Owner of adjoining land</td>
                                     <td style="vertical-align:top;">Water, sewerage or drainage authority</td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">Environment &amp; Conservation Dept</td>
                                     <td style="vertical-align:top;">Primary Industries Department</td>
                                     <td></td>
                                 </tr>
-
                                 <tr>
                                     <td style="vertical-align:top;">Fair Trading</td>
                                     <td style="vertical-align:top;">RailCorp</td>
                                     <td></td>
                                 </tr>
                             </table>
-
-                            <div style="margin-top:1mm;">
-                                If you think that any of these matters affects the property, tell your solicitor.
-                            </div>
+                            <div style="margin-top:1mm;"> If you think that any of these matters affects the property, tell your solicitor. </div>
                         </td>
                     </tr>
-
                     <!-- WARNING 2 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 0 2mm;
-            ">
-                            2.
-                        </td>
-
+            "> 2. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 0 0;
-            ">
-                            A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail<br>
-                            Leases Act 1994.
-                        </td>
+            "> A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail <br> Leases Act 1994. </td>
                     </tr>
-
                     <!-- WARNING 3 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 0 2mm;
-            ">
-                            3.
-                        </td>
-
+            "> 3. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 0 0;
-            ">
-                            If any purchase money is owing to the Crown, it may become payable when the transfer is registered.
-                        </td>
+            "> If any purchase money is owing to the Crown, it may become payable when the transfer is registered. </td>
                     </tr>
-
                     <!-- WARNING 4 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 0 2mm;
-            ">
-                            4.
-                        </td>
-
+            "> 4. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 0 0;
-            ">
-                            If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties.
-                        </td>
+            "> If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties. </td>
                     </tr>
-
                     <!-- WARNING 5 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 0 2mm;
-            ">
-                            5.
-                        </td>
-
+            "> 5. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 0 0;
-            ">
-                            The vendor should continue the vendor’s insurance until completion. &nbsp;If the vendor wants to give the purchaser<br>
-                            possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance.
-                        </td>
+            "> The vendor should continue the vendor’s insurance until completion. &nbsp;If the vendor wants to give the purchaser <br> possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance. </td>
                     </tr>
-
                     <!-- WARNING 6 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 0 2mm;
-            ">
-                            6.
-                        </td>
-
+            "> 6. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 0 0;
-            ">
-                            The purchaser will usually have to pay stamp duty on this contract. &nbsp;
-                            <span style="text-decoration:line-through;">
-                                The sale will also usually be a vendor duty<br>
-                                transaction.
-                            </span>
-                            &nbsp;If duty is not paid on time, a party may incur penalties.
-                        </td>
+            "> The purchaser will usually have to pay stamp duty on this contract. &nbsp; <span style="text-decoration:line-through;"> The sale will also usually be a vendor duty <br> transaction. </span> &nbsp;If duty is not paid on time, a party may incur penalties. </td>
                     </tr>
-
                     <!-- WARNING 7 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 0 2mm;
-            ">
-                            7.
-                        </td>
-
+            "> 7. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 0 0;
-            ">
-                            If the purchaser agrees to the release of deposit any rights in relation to the land (for example, the rights mentioned<br>
-                            in clause 2.8) may be subject to the rights of other persons such as the vendor’s mortgagee.
-                        </td>
+            "> If the purchaser agrees to the release of deposit any rights in relation to the land (for example, the rights mentioned <br> in clause 2.8) may be subject to the rights of other persons such as the vendor’s mortgagee. </td>
                     </tr>
-
                     <!-- WARNING 8 -->
                     <tr>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 0 1.8mm 2mm;
-            ">
-                            8.
-                        </td>
-
+            "> 8. </td>
                         <td style="
                 vertical-align:top;
                 padding:1.2mm 2mm 1.8mm 0;
-            ">
-                            The purchaser should arrange insurance as appropriate.
-                        </td>
+            "> The purchaser should arrange insurance as appropriate. </td>
                     </tr>
-
                 </table>
-
-
                 <!-- DISPUTES -->
                 <div style="
         border-top:1px solid #000;
         padding:1.5mm 2mm 1mm 2mm;
     ">
-
                     <div style="
             text-align:center;
             font-size:11px;
             line-height:1;
             font-weight:bold;
             margin-bottom:1mm;
-        ">
-                        DISPUTES
-                    </div>
-
+        "> DISPUTES </div>
                     <div style="
             font-size:10.5px;
             line-height:1.08;
-        ">
-                        If you get into a dispute with the other party, the Law Society and Real Estate Institute encourage you to use informal<br>
-                        procedures such as negotiation, independent expert appraisal or mediation (for example mediation under the Law Society<br>
-                        Mediation Guidelines).
-                    </div>
-
+        "> If you get into a dispute with the other party, the Law Society and Real Estate Institute encourage you to use informal <br> procedures such as negotiation, independent expert appraisal or mediation (for example mediation under the Law Society <br> Mediation Guidelines). </div>
                 </div>
-
-
                 <!-- AUCTIONS -->
                 <div style="
         border-top:1px solid #000;
         padding:1.5mm 2mm 1.5mm 2mm;
     ">
-
                     <div style="
             text-align:center;
             font-size:11px;
             line-height:1;
             font-weight:bold;
             margin-bottom:1mm;
-        ">
-                        AUCTIONS
-                    </div>
-
+        "> AUCTIONS </div>
                     <div style="
             font-size:10.5px;
             line-height:1.08;
-        ">
-                        Regulations made under the Property Stock and Business Agents Act 2002 prescribe a number of conditions applying<br>
-                        to sales by auction.
-                    </div>
-
+        "> Regulations made under the Property Stock and Business Agents Act 2002 prescribe a number of conditions applying <br> to sales by auction. </div>
                 </div>
-
             </div>
-
         </div>
         <!-- page 2 ends -->
-
     </div>
 
 </body>
