@@ -119,356 +119,347 @@
     <div class="container">
 
         <!-- page 1 -->
-        <div id="page1">
-            <table>
-                <tr>
-                    <td style="text-align: justify-all; border: none;">
-                        @2005 COPYRIGHT The Law Society of New South Wales and The Real Estate Institute of New South Wales. You can prepare your own version of
-                        pages 1 and 2 on a computer or typewriter, and you can reproduce this form (or part of it) for educational purposes, but any other reproduction of this form
-                        (or part of it) is an infringement of copyright unless authorised by the copyright holders or legislation.
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; border: none;">
-                        <div style="font-size: 25px; font-weight: 500;">Contract for the sale of land – 2005 edition</div>
-                        <!-- <div style="font-size: 15px; font-weight: 200;">
-                            Sydney Australia<br>
-                            Phone: +92 300 1234567<br>
-                            Email: info@freproperty.com
-                        </div> -->
-                    </td>
-                </tr>
-                <!-- <hr> -->
-            </table>
-            <!-- <div style="margin-bottom: 20px; font-size: 18px; font-weight: 500; text-align: center; text-decoration: underline;">
-                Contract for the sale of land
-            </div> -->
+        <style>
+            @page {
+                margin: 18px 24px 16px 24px;
+                size: A4 landscape;
+            }
 
-            <style>
-                .no-border-table,
-                .no-border-table tr,
-                .no-border-table td,
-                .no-border-table th {
-                    border: none !important;
-                }
-            </style>
+            * {
+                box-sizing: border-box;
+            }
 
-            <table width="100%" border="0" class="no-border-table" cellspacing="0" cellpadding="6">
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 16px;
+                line-height: 1.08;
+                color: #000;
+            }
 
+            .page {
+                width: 100%;
+            }
+
+            .copyright {
+                width: 94%;
+                margin: 5px auto 1px auto;
+                text-align: center;
+                font-size: 12px;
+                line-height: 1.05;
+            }
+
+            .document-title {
+                margin: 2px 0 1px 0;
+                text-align: center;
+                font-size: 32px;
+                line-height: 1;
+                font-weight: bold;
+            }
+
+            .main-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+
+            .main-table td {
+                vertical-align: top;
+                padding: 3px 2px;
+            }
+
+            .term-col {
+                width: 22%;
+            }
+
+            .meaning-col {
+                width: 50%;
+            }
+
+            .contact-col {
+                width: 28%;
+            }
+
+            .header-cell {
+                text-align: center;
+                font-size: 17px;
+                font-weight: bold;
+                padding-top: 1px !important;
+                padding-bottom: 3px !important;
+            }
+
+            .term {
+                font-size: 16px;
+                font-weight: normal;
+                padding-left: 0 !important;
+            }
+
+            .value {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .normal {
+                font-weight: normal;
+            }
+
+            .contact-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+
+            .contact-table td {
+                padding: 0;
+                font-size: 15px;
+                font-weight: bold;
+                line-height: 1.05;
+                vertical-align: top;
+            }
+
+            .contact-label {
+                width: 35%;
+            }
+
+            .contact-value {
+                width: 65%;
+            }
+
+            .space-small td {
+                padding-top: 7px;
+            }
+
+            .space-medium td {
+                padding-top: 11px;
+            }
+
+            .land-lines {
+                line-height: 1.08;
+            }
+
+            .option-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: auto;
+            }
+
+            .option-table td {
+                padding: 1px 8px 1px 0;
+                white-space: nowrap;
+                vertical-align: middle;
+                font-size: 16px;
+                font-weight: normal;
+            }
+
+            .checkbox {
+                display: inline-block;
+                width: 17px;
+                height: 17px;
+                border: 1px solid #000;
+                vertical-align: -3px;
+                margin-right: 5px;
+                position: relative;
+            }
+
+            .checkbox.checked:before,
+            .checkbox.checked:after {
+                content: "";
+                position: absolute;
+                left: 7px;
+                top: -2px;
+                width: 1px;
+                height: 20px;
+                background: #000;
+            }
+
+            .checkbox.checked:before {
+                transform: rotate(45deg);
+            }
+
+            .checkbox.checked:after {
+                transform: rotate(-45deg);
+            }
+
+            .wide-options {
+                padding-top: 8px !important;
+            }
+
+            .improvements-row td {
+                padding-top: 2px;
+            }
+
+            .attached-row td {
+                padding-top: 3px;
+            }
+
+            .attached-content {
+                font-size: 16px;
+                font-weight: normal;
+            }
+
+            .attached-line {
+                margin-bottom: 2px;
+            }
+
+            .other-documents {
+                margin-left: 295px;
+            }
+        </style>
+        <div class="page">
+
+            <div class="copyright">
+                © 2005 COPYRIGHT&nbsp; The Law Society of New South Wales and The Real Estate Institute of New South Wales.&nbsp;
+                You can prepare your own version of<br>
+                pages 1 and 2 on a computer or typewriter, and you can reproduce this form (or part of it) for educational purposes,
+                but any other reproduction of this form<br>
+                (or part of it) is an infringement of copyright unless authorised by the copyright holders or legislation.
+            </div>
+
+            <div class="document-title">
+                Contract for the sale of land – 2005 edition
+            </div>
+
+            <table class="main-table">
                 <colgroup>
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
-                    <col width="5%">
+                    <col class="term-col">
+                    <col class="meaning-col">
+                    <col class="contact-col">
                 </colgroup>
 
                 <tr>
-                    <td colspan="8" style="font-weight:bold; Border-right:none; text-align: left;">
-                        TERM
+                    <td class="header-cell">TERM</td>
+                    <td class="header-cell" colspan="2">MEANING OF TERM</td>
+                </tr>
+
+                <tr>
+                    <td class="term">Vendor’s agent</td>
+                    <td class="value">
+                        Raine &amp; Horne Double Bay<br>
+                        385 New South Head Road, Double Bay, NSW 2028
                     </td>
-                    <td colspan="12" style="font-weight:bold; Border-left:none; text-align: left;">
-                        MEANING OF TERM
+                    <td>
+                        <table class="contact-table">
+                            <tr>
+                                <td class="contact-label">Phone:</td>
+                                <td class="contact-value">(02) 9327 7971</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="space-small">
+                    <td class="term">Co-agent</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td class="term">Vendor</td>
+                    <td class="value">
+                        Edda Unewisse and Kurt Unewisse<br>
+                        35 Boonah Avenue, Eastgardens
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr class="space-small">
+                    <td class="term">Vendor’s Solicitor</td>
+                    <td class="value">
+                        Key Property Lawyers<br>
+                        PO Box 1398, Bondi Junction 1355 NSW
+                    </td>
+                    <td>
+                        <table class="contact-table">
+                            <tr>
+                                <td class="contact-label">Phone:</td>
+                                <td class="contact-value">0403 529 937</td>
+                            </tr>
+                            <tr>
+                                <td class="contact-label">Fax:</td>
+                                <td class="contact-value">(02) 9343 0043</td>
+                            </tr>
+                            <tr>
+                                <td class="contact-label">Ref:</td>
+                                <td class="contact-value">NS:14/1299</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="space-medium">
+                    <td class="term">Completion date</td>
+                    <td colspan="2" class="value">
+                        42nd day after the date of this contract
+                        <span class="normal">(clause 15)</span>
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="8"><strong>Vendor's Agent</strong></td>
-                    <td colspan="12"><?= htmlspecialchars($BuyerName) ?></td>
+                    <td class="term">
+                        Land<br>
+                        <span class="normal">(Address, plan details<br>and title reference)</span>
+                    </td>
+
+                    <td colspan="2" class="value land-lines">
+                        35 Boonah Avenue, Eastgardens 2036<br>
+                        Registered Plan: Lot&nbsp; 1 Plan DP 383 654<br>
+                        Folio Identifier 1/383654
+                    </td>
                 </tr>
 
                 <tr>
-                    <td colspan="8"><strong>Co-Agent Vendor</strong></td>
-                    <td colspan="12"><?= htmlspecialchars($BuyerName) ?></td>
-                </tr>
-
-                <tr>
-                    <td colspan="8"><strong>Vendor's Solicitor</strong></td>
-                    <td colspan="12"><?= htmlspecialchars($PropertyAddress) ?></td>
-                </tr>
-
-                <tr>
-                    <td colspan="8"><strong>Complettion Date</strong></td>
-                    <td colspan="12"><?= $PurchasePrice ?></td>
-                </tr>
-
-                <tr>
-                    <td colspan="8"><strong>Land (Address, plan details and title reference)</strong></td>
-                    <td colspan="12"><?= $DepositAmount ?></td>
-                </tr>
-
-                <tr>
-                    <td colspan="8"><strong>Improvements</strong></td>
-                    <td colspan="12"><?= $SettlementDate ?></td>
-                </tr>
-
-                <tr>
-                    <td colspan="8"><strong>Attached Copies</strong></td>
-                    <td colspan="12"><?= $SettlementDate ?></td>
-                </tr>
-
-            </table>
-
-            <div style="margin-bottom: 10px; font-size: 15px; font-weight: 500; text-align: left; text-decoration: underline;">
-                Property Inclusions
-            </div>
-
-            <table width="100%" cellspacing="0" cellpadding="0">
-                <tr style="height: 0px; margin: 0px; padding: 0px;">
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="blinds">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="blinds">Blinds</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="curtains">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="curtains">Curtains</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="insect-screens">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="insect-screens">Insect Screens</label>
+                    <td></td>
+                    <td colspan="2" class="wide-options">
+                        <table class="option-table">
+                            <tr>
+                                <td>
+                                    <span class="checkbox checked"></span>VACANT POSSESSION
+                                </td>
+                                <td>
+                                    <span class="checkbox"></span>subject to existing tenancies
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
-                <tr style="height: 0px; margin: 0px; padding: 0px;">
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="stove">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="stove">Stove</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="wardrobes">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="wardrobes">Built-in Wardrobes</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="dishwasher">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="dishwasher">Dishwasher</label>
+                <tr class="improvements-row">
+                    <td class="term">Improvements</td>
+                    <td colspan="2">
+                        <table class="option-table">
+                            <tr>
+                                <td><span class="checkbox checked"></span>HOUSE</td>
+                                <td><span class="checkbox checked"></span>garage</td>
+                                <td><span class="checkbox"></span>carport</td>
+                                <td><span class="checkbox"></span>home unit</td>
+                                <td><span class="checkbox checked"></span>carspace</td>
+                                <td><span class="checkbox"></span>none</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <span class="checkbox"></span>other:
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
-                <tr style="height: 0px; margin: 0px; padding: 0px;">
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="light-fittings">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="light-fittings">Light Fittings</label>
-                    </td>
+                <tr class="attached-row">
+                    <td class="term">Attached copies</td>
+                    <td colspan="2" class="attached-content">
+                        <div class="attached-line">
+                            <span class="checkbox checked"></span>
+                            Documents in the List of Documents as marked or as numbered:
+                        </div>
 
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="pool-equipment">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="pool-equipment">Pool Equipment</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="clothes-line">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="clothes-line">Clothes Line</label>
-                    </td>
-                </tr>
-
-                <tr style="height: 0px; margin: 0px; padding: 0px;">
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="floor-coverings">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="floor-coverings">Fixed Floor Coverings</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="range-hood">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="range-hood">Range Hood</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="tv-antenna">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="tv-antenna">TV Antenna</label>
-                    </td>
-                </tr>
-
-                <tr style="height: 0px; margin: 0px; padding: 0px;">
-                    <!-- Only one item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="other">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="other">Other</label>
+                        <div class="other-documents">
+                            <span class="checkbox"></span>Other documents:
+                        </div>
                     </td>
                 </tr>
             </table>
 
-            <div style="margin-bottom: 5px; font-size: 15px; font-weight: 500; text-align: left; text-decoration: underline;">
-                Property Exclusions
-            </div>
-
-            <table width="100%" cellspacing="0" cellpadding="4">
-                <tr>
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="blinds">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="blinds">Blinds</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="curtains">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="curtains">Curtains</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="insect-screens">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="insect-screens">Insect Screens</label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="stove">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="stove">Stove</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="wardrobes">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="wardrobes">Built-in Wardrobes</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="dishwasher">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="dishwasher">Dishwasher</label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="light-fittings">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="light-fittings">Light Fittings</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="pool-equipment">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="pool-equipment">Pool Equipment</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="clothes-line">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="clothes-line">Clothes Line</label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <!-- First item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="floor-coverings">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="floor-coverings">Fixed Floor Coverings</label>
-                    </td>
-
-                    <!-- Second item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="range-hood">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="range-hood">Range Hood</label>
-                    </td>
-
-                    <!-- Third item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="tv-antenna">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="tv-antenna">TV Antenna</label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <!-- Only one item -->
-                    <td style="border: none; vertical-align: middle; width: 20px;">
-                        <input type="checkbox" id="other">
-                    </td>
-                    <td style="border: none; vertical-align: middle; padding-left: 2px;">
-                        <label for="other">Other</label>
-                    </td>
-                </tr>
-            </table>
-
-            <!-- FOOTER -->
-            <div class="footer">
-                This document is computer generated and does not require a physical signature.<br>
-                © <?= date('Y') ?> FRE Real Estate
-            </div>
         </div>
 
         <!-- page 2 -->
