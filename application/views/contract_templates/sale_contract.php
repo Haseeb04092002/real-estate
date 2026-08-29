@@ -983,7 +983,7 @@
     line-height:1.08;
 ">
 
-                <div style="border:1px solid #000; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; line-height:1.08; padding:1.5mm 2mm 2mm 2mm;">
+                <div style="text-align:left; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; line-height:1.08; padding:1.5mm 2mm 2mm 2mm;">
 
                     <div style="text-align:center; font-weight:bold; font-size:11px; margin-bottom:1.5mm;">
                         WARNINGS
