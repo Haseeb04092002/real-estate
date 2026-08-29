@@ -973,34 +973,28 @@
     The previous issue was caused by the number column consuming too much width.
     This version uses a fixed 7mm number column and the remaining width for content.
 -->
+            <div style="width:100%; border:1px solid #000; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; line-height:1.08; box-sizing:border-box;">
 
-            <div style="
-    width:100%;
-    margin-top:3mm;
-    border:1px solid #000;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:10.5px;
-    line-height:1.08;
-">
+                <!-- WARNINGS -->
+                <div style="padding:1.2mm 2mm 2.5mm 2mm;">
 
-                <div style="text-align:left; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; line-height:1.08; padding:1.5mm 2mm 2mm 2mm;">
-
-                    <div style="text-align:center; font-weight:bold; font-size:11px; margin-bottom:1.5mm;">
+                    <div style="text-align:center; font-weight:bold; font-size:11px; line-height:1; margin-bottom:1.5mm;">
                         WARNINGS
                     </div>
 
                     <!-- 1 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">1.</span>
 
                         <div>
                             Various Acts of Parliament and other matters can affect the rights of the parties to this contract.
-                            &nbsp;Some important matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving
+                            &nbsp; Some important matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving
                         </div>
 
-                        <div style="margin-top:1mm; overflow:hidden;">
+                        <!-- THREE COLUMNS -->
+                        <div style="position:relative; margin-top:1mm; height:35mm;">
 
-                            <div style="float:left; width:29%;">
+                            <div style="position:absolute; left:0; top:0; width:29%;">
                                 <div>AGL Gas Networks Limited</div>
                                 <div>Council</div>
                                 <div>County Council</div>
@@ -1011,7 +1005,7 @@
                                 <div>Fair Trading</div>
                             </div>
 
-                            <div style="float:left; width:42%;">
+                            <div style="position:absolute; left:29%; top:0; width:42%;">
                                 <div>Government Business &amp; Government Procurement</div>
                                 <div>Heritage Office</div>
                                 <div>Infrastructure Planning and Natural Resources</div>
@@ -1022,7 +1016,7 @@
                                 <div>RailCorp</div>
                             </div>
 
-                            <div style="float:left; width:29%;">
+                            <div style="position:absolute; left:71%; top:0; width:29%;">
                                 <div>Public Works Dept</div>
                                 <div>Roads &amp; Traffic Authority</div>
                                 <div>Rural Lands Protection Board</div>
@@ -1031,115 +1025,113 @@
                                 <div>Water, sewerage or drainage authority</div>
                             </div>
 
-                            <div style="clear:both;"></div>
                         </div>
 
-                        <div style="margin-top:1mm;">
+                        <div>
                             If you think that any of these matters affects the property, tell your solicitor.
                         </div>
                     </div>
 
                     <!-- 2 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">2.</span>
-                        A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail Leases Act 1994.
+                        <div>
+                            A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail
+                            Leases Act 1994.
+                        </div>
                     </div>
 
                     <!-- 3 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">3.</span>
-                        If any purchase money is owing to the Crown, it may become payable when the transfer is registered.
+                        <div>
+                            If any purchase money is owing to the Crown, it may become payable when the transfer is registered.
+                        </div>
                     </div>
 
                     <!-- 4 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">4.</span>
-                        If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties.
+                        <div>
+                            If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties.
+                        </div>
                     </div>
 
                     <!-- 5 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">5.</span>
-                        The vendor should continue the vendor’s insurance until completion. &nbsp;If the vendor wants to give the purchaser
-                        possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance.
+                        <div>
+                            The vendor should continue the vendor’s insurance until completion. &nbsp; If the vendor wants to give the purchaser
+                            possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance.
+                        </div>
                     </div>
 
                     <!-- 6 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">6.</span>
-
-                        The purchaser will usually have to pay stamp duty on this contract. &nbsp;
-
-                        <span style="text-decoration:line-through;">
-                            The sale will also usually be a vendor duty transaction.
-                        </span>
-
-                        &nbsp;If duty is not paid on time, a party may incur penalties.
+                        <div>
+                            The purchaser will usually have to pay stamp duty on this contract. &nbsp;
+                            <span style="text-decoration:line-through;">
+                                The sale will also usually be a vendor duty transaction.
+                            </span>
+                            &nbsp; If duty is not paid on time, a party may incur penalties.
+                        </div>
                     </div>
 
                     <!-- 7 -->
-                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                    <div style="position:relative; padding-left:6mm; margin-bottom:1.1mm;">
                         <span style="position:absolute; left:0; top:0;">7.</span>
-                        If the purchaser agrees to the release of deposit any rights in relation to the land
-                        (for example, the rights mentioned in clause 2.8) may be subject to the rights of other
-                        persons such as the vendor’s mortgagee.
+                        <div>
+                            If the purchaser agrees to the release of deposit any rights in relation to the land (for example, the rights mentioned
+                            in clause 2.8) may be subject to the rights of other persons such as the vendor’s mortgagee.
+                        </div>
                     </div>
 
                     <!-- 8 -->
-                    <div style="position:relative; padding-left:7mm;">
+                    <div style="position:relative; padding-left:6mm;">
                         <span style="position:absolute; left:0; top:0;">8.</span>
-                        The purchaser should arrange insurance as appropriate.
+                        <div>
+                            The purchaser should arrange insurance as appropriate.
+                        </div>
                     </div>
 
                 </div>
 
+
                 <!-- DISPUTES -->
-                <div style="
-        border-top:1px solid #000;
-        padding:1.5mm 2mm 1mm 2mm;
-    ">
-                    <div style="
-            text-align:center;
-            font-weight:bold;
-            font-size:11px;
-            line-height:1;
-            margin-bottom:1mm;
-        ">
+                <div style="border-top:1px solid #000; padding:1.5mm 2mm 1.2mm 2mm;">
+
+                    <div style="text-align:center; font-weight:bold; font-size:11px; line-height:1; margin-bottom:1mm;">
                         DISPUTES
                     </div>
 
-                    <div style="font-size:10.5px; line-height:1.08;">
+                    <div>
                         If you get into a dispute with the other party, the Law Society and Real Estate Institute encourage you to use informal
                         procedures such as negotiation, independent expert appraisal or mediation (for example mediation under the Law Society
                         Mediation Guidelines).
                     </div>
+
                 </div>
 
+
                 <!-- AUCTIONS -->
-                <div style="
-        border-top:1px solid #000;
-        padding:1.5mm 2mm 1.5mm 2mm;
-    ">
-                    <div style="
-            text-align:center;
-            font-weight:bold;
-            font-size:11px;
-            line-height:1;
-            margin-bottom:1mm;
-        ">
+                <div style="border-top:1px solid #000; padding:1.5mm 2mm 1.5mm 2mm;">
+
+                    <div style="text-align:center; font-weight:bold; font-size:11px; line-height:1; margin-bottom:1mm;">
                         AUCTIONS
                     </div>
 
-                    <div style="font-size:10.5px; line-height:1.08;">
+                    <div>
                         Regulations made under the Property Stock and Business Agents Act 2002 prescribe a number of conditions applying
                         to sales by auction.
                     </div>
+
                 </div>
 
             </div>
+
+            <!-- page 2 ends -->
         </div>
-        <!-- page 2 ends -->
-    </div>
 
 </body>
 
