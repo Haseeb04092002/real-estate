@@ -29,8 +29,8 @@
 
         html,
         body {
-            margin: 0 !important;
-            padding: 0 !important;
+            margin: 5px !important;
+            padding: 5px !important;
             width: 100%;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 10px;
@@ -879,6 +879,307 @@
             </div>
         </div>
         <!-- page 1 ends -->
+
+
+        <!-- page 2 starts -->
+        <div class="page">
+
+            <div style="width:100%; position:relative; margin-bottom:2mm; font-family:Arial, Helvetica, sans-serif;">
+                <div style="text-align:center; font-size:11px; line-height:1;">
+                    2
+                </div>
+
+                <div style="position:absolute; right:0; top:0; font-size:10.5px; line-height:1;">
+                    Land – 2005 edition
+                </div>
+            </div>
+
+            <table style="
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:10.5px;
+        line-height:1.05;
+        border:1px solid #000;
+    ">
+                <tr>
+
+                    <!-- LEFT COLUMN -->
+                    <td style="
+                width:50%;
+                vertical-align:top;
+                border-right:1px solid #000;
+                padding:1.5mm 2mm 1mm 2mm;
+            ">
+
+                        <div style="
+                    font-weight:bold;
+                    font-size:11px;
+                    margin-bottom:2mm;
+                    line-height:1;
+                ">
+                            General
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox checked"></span>
+                            1 property certificate for the land
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox checked"></span>
+                            2 plan of the land
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            3 unregistered plan of the land
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            4 plan of land to be subdivided
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            5 document that is to be lodged with a relevant plan
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox checked"></span>
+                            6 section 149(2) certificate (Environmental Planning<br>
+                            <span style="margin-left:11mm;">and Assessment Act 1979)</span>
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            7 section 149(5) information included in that certificate
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox checked"></span>
+                            8 sewerage connections diagram
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox checked"></span>
+                            9 sewer mains diagram
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            10 document that created or may have created an<br>
+                            <span style="margin-left:11mm;">easement, profit à prendre, restriction on use or</span><br>
+                            <span style="margin-left:11mm;">positive covenant disclosed in this contract</span>
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            11 section 88G certificate (positive covenant)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            12 survey report
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            13 section 317A certificate (certificate of compliance)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            14 building certificate given under <em>legislation</em>
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            15 insurance certificate (Home Building Act 1989)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            16 brochure or note (Home Building Act 1989)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            17 section 24 certificate (Swimming Pools Act 1982)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            18 lease (with every relevant memorandum or variation)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            19 other document relevant to tenancies
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            20 old system document
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            21 Crown tenure card
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            22 Crown purchase statement of account
+                        </div>
+
+                        <div>
+                            <span class="checkbox"></span>
+                            <span style="text-decoration:line-through;">
+                                23 Statutory declaration regarding vendor duty
+                            </span>
+                        </div>
+
+                    </td>
+
+                    <!-- RIGHT COLUMN -->
+                    <td style="
+                width:50%;
+                vertical-align:top;
+                padding:1.5mm 2mm 1mm 2mm;
+            ">
+
+                        <div style="
+                    font-weight:bold;
+                    font-size:11px;
+                    margin-bottom:1mm;
+                    line-height:1.05;
+                ">
+                            Strata or community title (clause 23 of the contract)
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            24 property certificate for strata common property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            25 plan creating strata common property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            26 strata by-laws not set out in <em>legislation</em>
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            27 strata development contract or statement
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            28 strata management statement
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            29 leasehold strata - lease of lot and common property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            30 property certificate for neighbourhood property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            31 plan creating neighbourhood property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            32 neighbourhood development contract
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            33 neighbourhood management statement
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            34 property certificate for precinct property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            35 plan creating precinct property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            36 precinct development contract
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            37 precinct management statement
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            38 property certificate for community property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            39 plan creating community property
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            40 community development contract
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            41 community management statement
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            42 document disclosing a change of by-laws
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            43 document disclosing a change in a development<br>
+                            <span style="margin-left:11mm;">or management contract or statement</span>
+                        </div>
+
+                        <div style="margin-bottom:1mm;">
+                            <span class="checkbox"></span>
+                            44 document disclosing a change in boundaries
+                        </div>
+
+                        <div>
+                            <span class="checkbox"></span>
+                            45 certificate under Management Act – section 109<br>
+                            <span style="margin-left:11mm;">
+                                (Strata Schemes) or section 26 (Community Land)
+                            </span>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <!-- page 2 ends -->
 
     </div>
 
