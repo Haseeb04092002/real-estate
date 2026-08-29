@@ -128,23 +128,23 @@
                         (or part of it) is an infringement of copyright unless authorised by the copyright holders or legislation.
                     </td>
                 </tr>
-                <!-- <tr>
+                <tr>
                     <td style="text-align: center; border: none;">
                         <div style="font-size: 25px; font-weight: 500;">Contract for the sale of land – 2005 edition</div>
-                        <div style="font-size: 15px; font-weight: 200;">
+                        <!-- <div style="font-size: 15px; font-weight: 200;">
                             Sydney Australia<br>
                             Phone: +92 300 1234567<br>
                             Email: info@freproperty.com
-                        </div>
+                        </div> -->
                     </td>
-                </tr> -->
+                </tr>
                 <!-- <hr> -->
             </table>
             <!-- <div style="margin-bottom: 20px; font-size: 18px; font-weight: 500; text-align: center; text-decoration: underline;">
                 Contract for the sale of land
             </div> -->
 
-            <table width="100%" cellspacing="0" cellpadding="6">
+            <table width="100%" border="0" style="border: none;" cellspacing="0" cellpadding="6">
 
                 <colgroup>
                     <col width="5%">
@@ -170,47 +170,47 @@
                 </colgroup>
 
                 <tr>
-                    <td colspan="10" style="font-weight:bold; Border-right:none; text-align: left;">
+                    <td colspan="8" style="font-weight:bold; Border-right:none; text-align: left;">
                         TERM
                     </td>
-                    <td colspan="10" style="font-weight:bold; Border-left:none; text-align: left;">
+                    <td colspan="12" style="font-weight:bold; Border-left:none; text-align: left;">
                         MEANING OF TERM
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Vendor's Agent</strong></td>
-                    <td colspan="14"><?= htmlspecialchars($BuyerName) ?></td>
+                    <td colspan="8"><strong>Vendor's Agent</strong></td>
+                    <td colspan="12"><?= htmlspecialchars($BuyerName) ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Co-Agent Vendor</strong></td>
-                    <td colspan="14"><?= htmlspecialchars($BuyerName) ?></td>
+                    <td colspan="8"><strong>Co-Agent Vendor</strong></td>
+                    <td colspan="12"><?= htmlspecialchars($BuyerName) ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Vendor's Solicitor</strong></td>
-                    <td colspan="14"><?= htmlspecialchars($PropertyAddress) ?></td>
+                    <td colspan="8"><strong>Vendor's Solicitor</strong></td>
+                    <td colspan="12"><?= htmlspecialchars($PropertyAddress) ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Complettion Date</strong></td>
-                    <td colspan="14"><?= $PurchasePrice ?></td>
+                    <td colspan="8"><strong>Complettion Date</strong></td>
+                    <td colspan="12"><?= $PurchasePrice ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Land (Address, plan details and title reference)</strong></td>
-                    <td colspan="14"><?= $DepositAmount ?></td>
+                    <td colspan="8"><strong>Land (Address, plan details and title reference)</strong></td>
+                    <td colspan="12"><?= $DepositAmount ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Improvements</strong></td>
-                    <td colspan="14"><?= $SettlementDate ?></td>
+                    <td colspan="8"><strong>Improvements</strong></td>
+                    <td colspan="12"><?= $SettlementDate ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Attached Copies</strong></td>
-                    <td colspan="14"><?= $SettlementDate ?></td>
+                    <td colspan="8"><strong>Attached Copies</strong></td>
+                    <td colspan="12"><?= $SettlementDate ?></td>
                 </tr>
 
             </table>
