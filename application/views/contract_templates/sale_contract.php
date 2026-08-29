@@ -10,52 +10,77 @@
 
     <style>
         @page {
-            margin: 18px 24px 16px 24px;
             size: A4 landscape;
+            margin: 7mm 8mm 6mm 8mm;
         }
 
         * {
             box-sizing: border-box;
         }
 
+        html,
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            line-height: 1.08;
+            font-size: 11px;
+            line-height: 1.02;
             color: #000;
         }
 
-        .page {
+        body {
             width: 100%;
         }
 
+        .container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*
+     * Keep the entire first contract page together.
+     * DOMPDF should not create a page break inside this block.
+     */
+        .page {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
         .copyright {
-            width: 94%;
-            margin: 5px auto 1px auto;
+            width: 96%;
+            margin: 0 auto 1px auto;
             text-align: center;
-            font-size: 12px;
-            line-height: 1.05;
+            font-size: 8px;
+            line-height: 1;
         }
 
         .document-title {
-            margin: 2px 0 1px 0;
+            margin: 1px 0;
             text-align: center;
-            font-size: 32px;
+            font-size: 22px;
             line-height: 1;
             font-weight: bold;
+        }
+
+        table {
+            border-spacing: 0;
         }
 
         .main-table {
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            margin: 0;
         }
 
         .main-table td {
             vertical-align: top;
-            padding: 3px 2px;
+            padding: 1px 2px;
+            line-height: 1.02;
         }
 
         .term-col {
@@ -72,20 +97,22 @@
 
         .header-cell {
             text-align: center;
-            font-size: 17px;
+            font-size: 12px;
+            line-height: 1;
             font-weight: bold;
-            padding-top: 1px !important;
-            padding-bottom: 3px !important;
+            padding: 0 2px 1px 2px !important;
         }
 
         .term {
-            font-size: 16px;
+            font-size: 11px;
+            line-height: 1.02;
             font-weight: normal;
             padding-left: 0 !important;
         }
 
         .value {
-            font-size: 16px;
+            font-size: 11px;
+            line-height: 1.02;
             font-weight: bold;
         }
 
@@ -97,13 +124,14 @@
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            margin: 0;
         }
 
         .contact-table td {
             padding: 0;
-            font-size: 15px;
+            font-size: 10.5px;
             font-weight: bold;
-            line-height: 1.05;
+            line-height: 1;
             vertical-align: top;
         }
 
@@ -116,49 +144,55 @@
         }
 
         .space-small td {
-            padding-top: 7px;
+            padding-top: 3px !important;
         }
 
         .space-medium td {
-            padding-top: 11px;
+            padding-top: 4px !important;
         }
 
         .land-lines {
-            line-height: 1.08;
+            line-height: 1.02;
         }
 
         .option-table {
             width: 100%;
             border-collapse: collapse;
             table-layout: auto;
+            margin: 0;
         }
 
         .option-table td {
-            padding: 1px 8px 1px 0;
+            padding: 0 5px 0 0;
             white-space: nowrap;
             vertical-align: middle;
-            font-size: 16px;
+            font-size: 11px;
+            line-height: 1.05;
             font-weight: normal;
         }
 
+        /*
+     * Smaller checkboxes are important because the original 17px
+     * boxes consume a lot of vertical space in DOMPDF.
+     */
         .checkbox {
             display: inline-block;
-            width: 17px;
-            height: 17px;
-            border: 1px solid #000;
-            vertical-align: -3px;
-            margin-right: 5px;
             position: relative;
+            width: 11px;
+            height: 11px;
+            border: 1px solid #000;
+            margin-right: 3px;
+            vertical-align: -2px;
         }
 
         .checkbox.checked:before,
         .checkbox.checked:after {
             content: "";
             position: absolute;
-            left: 7px;
-            top: -2px;
+            left: 4.5px;
+            top: -1px;
             width: 1px;
-            height: 20px;
+            height: 12px;
             background: #000;
         }
 
@@ -171,28 +205,30 @@
         }
 
         .wide-options {
-            padding-top: 8px !important;
+            padding-top: 2px !important;
         }
 
         .improvements-row td {
-            padding-top: 2px;
+            padding-top: 1px !important;
         }
 
         .attached-row td {
-            padding-top: 3px;
+            padding-top: 1px !important;
         }
 
         .attached-content {
-            font-size: 16px;
+            font-size: 11px;
+            line-height: 1.02;
             font-weight: normal;
         }
 
         .attached-line {
-            margin-bottom: 2px;
+            margin: 0;
         }
 
         .other-documents {
-            margin-left: 295px;
+            margin-left: 205px;
+            line-height: 1;
         }
 
         .no-border-table,
@@ -201,11 +237,138 @@
         .no-border-table th {
             border: none !important;
         }
+
+        /*
+     * Force all nested tables/divs to use compact typography.
+     * This overrides the 16px inline declarations already present
+     * in the supplied body markup.
+     */
+        .page table,
+        .page table td,
+        .page div {
+            line-height: 1.02;
+        }
+
+        /*
+     * Overrides inline font-size:16px and font-size:17px declarations
+     * inside the second and third sections.
+     */
+        .page table td {
+            font-size: 11px !important;
+        }
+
+        /*
+     * Real-estate-agent inclusions box
+     */
+        .page>div[style*="border:2px"] {
+            padding: 3px 6px 2px 6px !important;
+            font-size: 11px !important;
+            line-height: 1.02 !important;
+            margin: 1px 0 0 0 !important;
+        }
+
+        .page>div[style*="border:2px"]>div:first-child {
+            font-size: 11.5px !important;
+            line-height: 1.02 !important;
+            margin-bottom: 2px !important;
+        }
+
+        /*
+     * Reduce all excessive vertical padding used in the
+     * purchaser / solicitor / price section.
+     */
+        .page td[style*="padding-top:7px"] {
+            padding-top: 2px !important;
+        }
+
+        .page td[style*="padding-top:10px"] {
+            padding-top: 3px !important;
+        }
+
+        .page td[style*="padding-top:28px"] {
+            padding-top: 8px !important;
+        }
+
+        .page td[style*="padding-left:55px"] {
+            padding-left: 25px !important;
+        }
+
+        /*
+     * Signature table.
+     * Original margin-top:34px wastes considerable page height.
+     */
+        .page>table[style*="margin-top:34px"] {
+            margin-top: 8px !important;
+            font-size: 11px !important;
+            line-height: 1 !important;
+        }
+
+        .page td[style*="height:58px"] {
+            height: 31px !important;
+        }
+
+        /*
+     * GST amount box
+     */
+        .page div[style*="min-height:52px"] {
+            min-height: 30px !important;
+            padding: 1px 4px !important;
+            font-size: 10.5px !important;
+            line-height: 1 !important;
+        }
+
+        .page div[style*="min-height:52px"] div {
+            font-size: 10.5px !important;
+            line-height: 1 !important;
+        }
+
+        /*
+     * Tax information section
+     */
+        .page>div:last-child {
+            font-size: 11px !important;
+            line-height: 1.02 !important;
+            margin-top: 2px !important;
+        }
+
+        .page>div:last-child>div:first-child {
+            font-size: 11.5px !important;
+            line-height: 1 !important;
+            margin: 0 0 1px 0 !important;
+        }
+
+        /*
+     * Holder of strata/community title records box
+     */
+        .page div[style*="min-height:50px"] {
+            min-height: 28px !important;
+            margin-top: 3px !important;
+            padding: 2px 6px !important;
+        }
+
+        .page div[style*="min-height:50px"] strong {
+            font-size: 11px !important;
+        }
+
+        /*
+     * Prevent DOMPDF from splitting important structures.
+     */
+        .main-table,
+        .option-table,
+        .contact-table,
+        .page>table,
+        .page>div {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
     </style>
 
     <div class="container">
 
-        <!-- page 1 -->
+        <!-- page 1 starts -->
         <div class="page">
 
             <div class="copyright">
@@ -545,7 +708,115 @@
                 </tr>
             </table>
 
+
+            <div style="font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.08;">
+
+                <div style="text-align:center; font-weight:bold; font-size:17px; margin-bottom:3px;">
+                    Tax information (the parties promise this is correct as far as each party is aware)
+                </div>
+
+                <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                    <tr>
+                        <td style="width:51%; vertical-align:top;">
+                            <strong>Land tax</strong> is adjustable
+                        </td>
+                        <td style="width:11%; vertical-align:top; white-space:nowrap;">
+                            <span class="checkbox checked"></span>NO
+                        </td>
+                        <td style="width:38%; vertical-align:top; white-space:nowrap;">
+                            <span class="checkbox"></span>yes
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="vertical-align:top;">
+                            <strong>GST:</strong>&nbsp; Taxable supply
+                        </td>
+                        <td style="vertical-align:top; white-space:nowrap;">
+                            <span class="checkbox checked"></span>NO
+                        </td>
+                        <td style="vertical-align:top;">
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+                                    <td style="white-space:nowrap; padding-right:30px;">
+                                        <span class="checkbox"></span>yes in full
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox"></span>yes to an extent
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="vertical-align:top;">
+                            Margin scheme will be used in making the taxable supply
+                        </td>
+                        <td style="vertical-align:top; white-space:nowrap;">
+                            <span class="checkbox"></span>NO
+                        </td>
+                        <td style="vertical-align:top; white-space:nowrap;">
+                            <span class="checkbox"></span>yes
+                        </td>
+                    </tr>
+                </table>
+
+                <div style="margin-top:2px; margin-bottom:2px;">
+                    This sale is not a taxable supply because (one or more of the following may apply) the sale is:
+                </div>
+
+                <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                    <tr>
+                        <td style="width:5%;"></td>
+                        <td style="width:95%; vertical-align:top;">
+                            <span class="checkbox checked"></span>
+                            not made in the course or furtherance of an enterprise that the vendor carries on (section 9-5(b))
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td style="vertical-align:top;">
+                            <span class="checkbox"></span>
+                            by a vendor who is neither registered nor required to be registered for GST (section 9-5(d))
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td style="vertical-align:top;">
+                            <span class="checkbox"></span>
+                            GST-free because the sale is the supply of a going concern under section 38-325
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td style="vertical-align:top;">
+                            <span class="checkbox"></span>
+                            GST-free because the sale is subdivided farm land or farm land supplied for farming under Subdivision 38-O
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td style="vertical-align:top;">
+                            <span class="checkbox"></span>
+                            input taxed because the sale is of eligible residential premises (sections 40-65, 40-75(2) and 195-1)
+                        </td>
+                    </tr>
+                </table>
+
+                <div style="border:1px solid #000; min-height:50px; margin-top:7px; padding:3px 10px;">
+                    <strong style="font-size:16px;">
+                        HOLDER OF STRATA OR COMMUNITY TITLE RECORDS – Name, address and telephone number
+                    </strong>
+                </div>
+
+            </div>
         </div>
+        <!-- page 1 ends -->
 
     </div>
 
