@@ -144,7 +144,16 @@
                 Contract for the sale of land
             </div> -->
 
-            <table width="100%" border="0" style="border: none;" cellspacing="0" cellpadding="6">
+            <style>
+                .no-border-table,
+                .no-border-table tr,
+                .no-border-table td,
+                .no-border-table th {
+                    border: none !important;
+                }
+            </style>
+
+            <table width="100%" border="0" class="no-border-table" cellspacing="0" cellpadding="6">
 
                 <colgroup>
                     <col width="5%">
