@@ -983,137 +983,115 @@
     line-height:1.08;
 ">
 
-                <div style="
-        text-align:center;
-        font-weight:bold;
-        font-size:11px;
-        line-height:1;
-        padding:1.5mm 2mm 0.8mm 2mm;
-    ">
-                    WARNINGS
-                </div>
-                <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
-                    <colgroup>
-                        <col style="width:3%;">
-                        <col style="width:97%;">
-                    </colgroup>
+                <div style="border:1px solid #000; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; line-height:1.08; padding:1.5mm 2mm 2mm 2mm;">
 
-                    <tr>
-                        <td style="vertical-align:top;">1.</td>
-                        <td style="vertical-align:top;">
+                    <div style="text-align:center; font-weight:bold; font-size:11px; margin-bottom:1.5mm;">
+                        WARNINGS
+                    </div>
+
+                    <!-- 1 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">1.</span>
+
+                        <div>
                             Various Acts of Parliament and other matters can affect the rights of the parties to this contract.
-                            Some important matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving
+                            &nbsp;Some important matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving
+                        </div>
 
-                            <table style="width:100%; border-collapse:collapse; table-layout:fixed; margin-top:1mm;">
-                                <colgroup>
-                                    <col style="width:29%;">
-                                    <col style="width:42%;">
-                                    <col style="width:29%;">
-                                </colgroup>
+                        <div style="margin-top:1mm; overflow:hidden;">
 
-                                <tr>
-                                    <td>AGL Gas Networks Limited</td>
-                                    <td>Government Business &amp; Government Procurement</td>
-                                    <td>Public Works Dept</td>
-                                </tr>
-                                <tr>
-                                    <td>Council</td>
-                                    <td>Heritage Office</td>
-                                    <td>Roads &amp; Traffic Authority</td>
-                                </tr>
-                                <tr>
-                                    <td>County Council</td>
-                                    <td>Infrastructure Planning and Natural Resources</td>
-                                    <td>Rural Lands Protection Board</td>
-                                </tr>
-                                <tr>
-                                    <td>East Australian Pipeline Limited</td>
-                                    <td>Land &amp; Housing Corporation</td>
-                                    <td>Sustainable Energy Development</td>
-                                </tr>
-                                <tr>
-                                    <td>Education &amp; Training Dept</td>
-                                    <td>Mine Subsidence Board</td>
-                                    <td>Telecommunications authority</td>
-                                </tr>
-                                <tr>
-                                    <td>Electricity authority</td>
-                                    <td>Owner of adjoining land</td>
-                                    <td>Water, sewerage or drainage authority</td>
-                                </tr>
-                                <tr>
-                                    <td>Environment &amp; Conservation Dept</td>
-                                    <td>Primary Industries Department</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Fair Trading</td>
-                                    <td>RailCorp</td>
-                                    <td></td>
-                                </tr>
-                            </table>
-
-                            <div style="margin-top:1mm;">
-                                If you think that any of these matters affects the property, tell your solicitor.
+                            <div style="float:left; width:29%;">
+                                <div>AGL Gas Networks Limited</div>
+                                <div>Council</div>
+                                <div>County Council</div>
+                                <div>East Australian Pipeline Limited</div>
+                                <div>Education &amp; Training Dept</div>
+                                <div>Electricity authority</div>
+                                <div>Environment &amp; Conservation Dept</div>
+                                <div>Fair Trading</div>
                             </div>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">2.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail Leases Act 1994.
-                        </td>
-                    </tr>
+                            <div style="float:left; width:42%;">
+                                <div>Government Business &amp; Government Procurement</div>
+                                <div>Heritage Office</div>
+                                <div>Infrastructure Planning and Natural Resources</div>
+                                <div>Land &amp; Housing Corporation</div>
+                                <div>Mine Subsidence Board</div>
+                                <div>Owner of adjoining land</div>
+                                <div>Primary Industries Department</div>
+                                <div>RailCorp</div>
+                            </div>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">3.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            If any purchase money is owing to the Crown, it may become payable when the transfer is registered.
-                        </td>
-                    </tr>
+                            <div style="float:left; width:29%;">
+                                <div>Public Works Dept</div>
+                                <div>Roads &amp; Traffic Authority</div>
+                                <div>Rural Lands Protection Board</div>
+                                <div>Sustainable Energy Development</div>
+                                <div>Telecommunications authority</div>
+                                <div>Water, sewerage or drainage authority</div>
+                            </div>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">4.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties.
-                        </td>
-                    </tr>
+                            <div style="clear:both;"></div>
+                        </div>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">5.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            The vendor should continue the vendor’s insurance until completion. If the vendor wants to give the purchaser
-                            possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance.
-                        </td>
-                    </tr>
+                        <div style="margin-top:1mm;">
+                            If you think that any of these matters affects the property, tell your solicitor.
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">6.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            The purchaser will usually have to pay stamp duty on this contract.
-                            <span style="text-decoration:line-through;">
-                                The sale will also usually be a vendor duty transaction.
-                            </span>
-                            If duty is not paid on time, a party may incur penalties.
-                        </td>
-                    </tr>
+                    <!-- 2 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">2.</span>
+                        A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail Leases Act 1994.
+                    </div>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">7.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            If the purchaser agrees to the release of deposit any rights in relation to the land (for example, the rights mentioned
-                            in clause 2.8) may be subject to the rights of other persons such as the vendor’s mortgagee.
-                        </td>
-                    </tr>
+                    <!-- 3 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">3.</span>
+                        If any purchase money is owing to the Crown, it may become payable when the transfer is registered.
+                    </div>
 
-                    <tr>
-                        <td style="vertical-align:top; padding-top:1mm;">8.</td>
-                        <td style="vertical-align:top; padding-top:1mm;">
-                            The purchaser should arrange insurance as appropriate.
-                        </td>
-                    </tr>
-                </table>
+                    <!-- 4 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">4.</span>
+                        If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties.
+                    </div>
+
+                    <!-- 5 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">5.</span>
+                        The vendor should continue the vendor’s insurance until completion. &nbsp;If the vendor wants to give the purchaser
+                        possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance.
+                    </div>
+
+                    <!-- 6 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">6.</span>
+
+                        The purchaser will usually have to pay stamp duty on this contract. &nbsp;
+
+                        <span style="text-decoration:line-through;">
+                            The sale will also usually be a vendor duty transaction.
+                        </span>
+
+                        &nbsp;If duty is not paid on time, a party may incur penalties.
+                    </div>
+
+                    <!-- 7 -->
+                    <div style="position:relative; padding-left:7mm; margin-bottom:1.2mm;">
+                        <span style="position:absolute; left:0; top:0;">7.</span>
+                        If the purchaser agrees to the release of deposit any rights in relation to the land
+                        (for example, the rights mentioned in clause 2.8) may be subject to the rights of other
+                        persons such as the vendor’s mortgagee.
+                    </div>
+
+                    <!-- 8 -->
+                    <div style="position:relative; padding-left:7mm;">
+                        <span style="position:absolute; left:0; top:0;">8.</span>
+                        The purchaser should arrange insurance as appropriate.
+                    </div>
+
+                </div>
 
                 <!-- DISPUTES -->
                 <div style="
