@@ -1003,8 +1003,8 @@
     ">
 
                     <colgroup>
-                        <col style="width:1mm;">
-                        <col>
+                        <col style="width:3%;">
+                        <col style="width:97%;">
                     </colgroup>
 
                     <!-- 1 -->
