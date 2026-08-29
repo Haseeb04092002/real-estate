@@ -123,31 +123,28 @@
             <table>
                 <tr>
                     <td style="text-align: justify-all; border: none;">
-                        ©2005 COPYRIGHT The Law Society of New South Wales and
-                        The Real Estate Institute of New South Wales. You can prepare
-                        your own version of pages 1 and 2 on a computer or typewriter,
-                        and you can reproduce this form (or part of it) for educational
-                        purposes, but any other reproduction is an infringement of copyright
-                        unless authorised by the copyright holders or legislation.
+                        @2005 COPYRIGHT The Law Society of New South Wales and The Real Estate Institute of New South Wales. You can prepare your own version of
+                        pages 1 and 2 on a computer or typewriter, and you can reproduce this form (or part of it) for educational purposes, but any other reproduction of this form
+                        (or part of it) is an infringement of copyright unless authorised by the copyright holders or legislation.
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="text-align: center; border: none;">
-                        <div style="font-size: 20px; font-weight: 500;">FRE Real Estate</div>
+                        <div style="font-size: 25px; font-weight: 500;">Contract for the sale of land – 2005 edition</div>
                         <div style="font-size: 15px; font-weight: 200;">
                             Sydney Australia<br>
                             Phone: +92 300 1234567<br>
                             Email: info@freproperty.com
                         </div>
                     </td>
-                </tr>
-                <hr>
+                </tr> -->
+                <!-- <hr> -->
             </table>
-            <div style="margin-bottom: 20px; font-size: 18px; font-weight: 500; text-align: center; text-decoration: underline;">
+            <!-- <div style="margin-bottom: 20px; font-size: 18px; font-weight: 500; text-align: center; text-decoration: underline;">
                 Contract for the sale of land
-            </div>
+            </div> -->
 
-            <table width="100%" border="1" cellspacing="0" cellpadding="6">
+            <table width="100%" cellspacing="0" cellpadding="6">
 
                 <colgroup>
                     <col width="5%">
@@ -173,41 +170,46 @@
                 </colgroup>
 
                 <tr>
-                    <td colspan="10" style="font-weight:bold; background:#f2f2f2; Border-right:none; text-align: left;">
+                    <td colspan="10" style="font-weight:bold; Border-right:none; text-align: left;">
                         TERM
                     </td>
-                    <td colspan="10" style="font-weight:bold; background:#f2f2f2; Border-left:none; text-align: left;">
+                    <td colspan="10" style="font-weight:bold; Border-left:none; text-align: left;">
                         MEANING OF TERM
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Buyer Name</strong></td>
+                    <td colspan="6"><strong>Vendor's Agent</strong></td>
                     <td colspan="14"><?= htmlspecialchars($BuyerName) ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Seller Name</strong></td>
+                    <td colspan="6"><strong>Co-Agent Vendor</strong></td>
                     <td colspan="14"><?= htmlspecialchars($BuyerName) ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Property Address</strong></td>
+                    <td colspan="6"><strong>Vendor's Solicitor</strong></td>
                     <td colspan="14"><?= htmlspecialchars($PropertyAddress) ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Purchase Price</strong></td>
+                    <td colspan="6"><strong>Complettion Date</strong></td>
                     <td colspan="14"><?= $PurchasePrice ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Deposit Amount</strong></td>
+                    <td colspan="6"><strong>Land (Address, plan details and title reference)</strong></td>
                     <td colspan="14"><?= $DepositAmount ?></td>
                 </tr>
 
                 <tr>
-                    <td colspan="6"><strong>Completion date</strong></td>
+                    <td colspan="6"><strong>Improvements</strong></td>
+                    <td colspan="14"><?= $SettlementDate ?></td>
+                </tr>
+
+                <tr>
+                    <td colspan="6"><strong>Attached Copies</strong></td>
                     <td colspan="14"><?= $SettlementDate ?></td>
                 </tr>
 
@@ -704,77 +706,77 @@
                     <td style="border: none; vertical-align: top;" colspan="10">
                         <table width="100%" cellspacing="0" cellpadding="2">
                             <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item24">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                property certificate for strata common property
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item25">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                plan creating strata common property
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item26">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                strata by-laws not set out in legislation
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item27">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                strata development contract or statement
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item28">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                strata management statement
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item29">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                leasehold strata - lease of lot and common property
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item30">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                property certificate for neighbourhood property
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item31">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                plan creating neighbourhood property
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="border: none; vertical-align: middle;">
-                                <input type="checkbox" id="item32">
-                            </td>
-                            <td colspan="19" style="border: none; vertical-align: middle;">
-                                neighbourhood development contract
-                            </td>
-                        </tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item24">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    property certificate for strata common property
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item25">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    plan creating strata common property
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item26">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    strata by-laws not set out in legislation
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item27">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    strata development contract or statement
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item28">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    strata management statement
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item29">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    leasehold strata - lease of lot and common property
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item30">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    property certificate for neighbourhood property
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item31">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    plan creating neighbourhood property
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="border: none; vertical-align: middle;">
+                                    <input type="checkbox" id="item32">
+                                </td>
+                                <td colspan="19" style="border: none; vertical-align: middle;">
+                                    neighbourhood development contract
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -796,7 +798,7 @@
                 <!-- Left Column: Nested Table -->
                 <td style="border: none; vertical-align: top;" colspan="10">
                     <table width="100%" cellspacing="0" cellpadding="2">
-                        
+
                         <tr>
                             <td colspan="1" style="border: none; vertical-align: middle;">
                                 <input type="checkbox" id="item10">
@@ -915,7 +917,7 @@
                 <!-- Right Column: Items 24-45 -->
                 <td style="border: none; vertical-align: top;" colspan="10">
                     <table width="100%" cellspacing="0" cellpadding="2">
-                        
+
                         <tr>
                             <td colspan="1" style="border: none; vertical-align: middle;">
                                 <input type="checkbox" id="item33">
@@ -1023,7 +1025,7 @@
                     </table>
                 </td>
             </tr>
-            
+
         </table>
 
 
