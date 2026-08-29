@@ -1178,6 +1178,311 @@
                 </tr>
             </table>
 
+
+            <!-- PAGE 2 - WARNINGS / DISPUTES / AUCTIONS SECTION -->
+
+            <div style="
+    width:100%;
+    margin-top:3mm;
+    border:1px solid #000;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:10.5px;
+    line-height:1.08;
+">
+
+                <!-- WARNINGS -->
+                <div style="
+        text-align:center;
+        font-weight:bold;
+        font-size:11px;
+        line-height:1;
+        padding:1.5mm 1mm 0.5mm 1mm;
+    ">
+                    WARNINGS
+                </div>
+
+                <table style="
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:10.5px;
+        line-height:1.08;
+    ">
+
+                    <!-- WARNING 1 -->
+                    <tr>
+                        <td style="
+                width:6mm;
+                vertical-align:top;
+                padding:1mm 0 0 2mm;
+            ">
+                            1.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1mm 2mm 0 0;
+            ">
+                            Various Acts of Parliament and other matters can affect the rights of the parties to this contract.
+                            &nbsp;Some important<br>
+                            matters are actions, claims, decisions, licences, notices, orders, proposals or rights of way involving
+
+                            <table style="
+                    width:100%;
+                    border-collapse:collapse;
+                    table-layout:fixed;
+                    margin-top:1mm;
+                    font-size:10.5px;
+                    line-height:1.12;
+                ">
+                                <tr>
+                                    <td style="width:29%; vertical-align:top; padding:0 2mm 0 0;">
+                                        AGL Gas Networks Limited
+                                    </td>
+                                    <td style="width:42%; vertical-align:top; padding:0 2mm 0 0;">
+                                        Government Business &amp; Government Procurement
+                                    </td>
+                                    <td style="width:29%; vertical-align:top;">
+                                        Public Works Dept
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">Council</td>
+                                    <td style="vertical-align:top;">Heritage Office</td>
+                                    <td style="vertical-align:top;">Roads &amp; Traffic Authority</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">County Council</td>
+                                    <td style="vertical-align:top;">Infrastructure Planning and Natural Resources</td>
+                                    <td style="vertical-align:top;">Rural Lands Protection Board</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">East Australian Pipeline Limited</td>
+                                    <td style="vertical-align:top;">Land &amp; Housing Corporation</td>
+                                    <td style="vertical-align:top;">Sustainable Energy Development</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">Education &amp; Training Dept</td>
+                                    <td style="vertical-align:top;">Mine Subsidence Board</td>
+                                    <td style="vertical-align:top;">Telecommunications authority</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">Electricity authority</td>
+                                    <td style="vertical-align:top;">Owner of adjoining land</td>
+                                    <td style="vertical-align:top;">Water, sewerage or drainage authority</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">Environment &amp; Conservation Dept</td>
+                                    <td style="vertical-align:top;">Primary Industries Department</td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;">Fair Trading</td>
+                                    <td style="vertical-align:top;">RailCorp</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+                            <div style="margin-top:1mm;">
+                                If you think that any of these matters affects the property, tell your solicitor.
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 2 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 0 2mm;
+            ">
+                            2.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 0 0;
+            ">
+                            A lease may be affected by the Agricultural Tenancies Act 1990, the Residential Tenancies Act 1987 or the Retail<br>
+                            Leases Act 1994.
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 3 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 0 2mm;
+            ">
+                            3.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 0 0;
+            ">
+                            If any purchase money is owing to the Crown, it may become payable when the transfer is registered.
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 4 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 0 2mm;
+            ">
+                            4.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 0 0;
+            ">
+                            If a consent to transfer is required under legislation, see clause 27 as to the obligations of the parties.
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 5 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 0 2mm;
+            ">
+                            5.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 0 0;
+            ">
+                            The vendor should continue the vendor’s insurance until completion. &nbsp;If the vendor wants to give the purchaser<br>
+                            possession before completion, the vendor should first ask the insurer to confirm this will not affect the insurance.
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 6 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 0 2mm;
+            ">
+                            6.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 0 0;
+            ">
+                            The purchaser will usually have to pay stamp duty on this contract. &nbsp;
+                            <span style="text-decoration:line-through;">
+                                The sale will also usually be a vendor duty<br>
+                                transaction.
+                            </span>
+                            &nbsp;If duty is not paid on time, a party may incur penalties.
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 7 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 0 2mm;
+            ">
+                            7.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 0 0;
+            ">
+                            If the purchaser agrees to the release of deposit any rights in relation to the land (for example, the rights mentioned<br>
+                            in clause 2.8) may be subject to the rights of other persons such as the vendor’s mortgagee.
+                        </td>
+                    </tr>
+
+                    <!-- WARNING 8 -->
+                    <tr>
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 0 1.8mm 2mm;
+            ">
+                            8.
+                        </td>
+
+                        <td style="
+                vertical-align:top;
+                padding:1.2mm 2mm 1.8mm 0;
+            ">
+                            The purchaser should arrange insurance as appropriate.
+                        </td>
+                    </tr>
+
+                </table>
+
+
+                <!-- DISPUTES -->
+                <div style="
+        border-top:1px solid #000;
+        padding:1.5mm 2mm 1mm 2mm;
+    ">
+
+                    <div style="
+            text-align:center;
+            font-size:11px;
+            line-height:1;
+            font-weight:bold;
+            margin-bottom:1mm;
+        ">
+                        DISPUTES
+                    </div>
+
+                    <div style="
+            font-size:10.5px;
+            line-height:1.08;
+        ">
+                        If you get into a dispute with the other party, the Law Society and Real Estate Institute encourage you to use informal<br>
+                        procedures such as negotiation, independent expert appraisal or mediation (for example mediation under the Law Society<br>
+                        Mediation Guidelines).
+                    </div>
+
+                </div>
+
+
+                <!-- AUCTIONS -->
+                <div style="
+        border-top:1px solid #000;
+        padding:1.5mm 2mm 1.5mm 2mm;
+    ">
+
+                    <div style="
+            text-align:center;
+            font-size:11px;
+            line-height:1;
+            font-weight:bold;
+            margin-bottom:1mm;
+        ">
+                        AUCTIONS
+                    </div>
+
+                    <div style="
+            font-size:10.5px;
+            line-height:1.08;
+        ">
+                        Regulations made under the Property Stock and Business Agents Act 2002 prescribe a number of conditions applying<br>
+                        to sales by auction.
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
         <!-- page 2 ends -->
 
