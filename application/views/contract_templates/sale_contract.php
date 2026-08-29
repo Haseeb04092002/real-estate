@@ -1003,7 +1003,7 @@
     ">
 
                     <colgroup>
-                        <col style="width:7mm;">
+                        <col style="width:1mm;">
                         <col>
                     </colgroup>
 
