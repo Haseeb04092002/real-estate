@@ -9,9 +9,18 @@
 <body>
 
     <style>
+        /*
+    |--------------------------------------------------------------------------
+    | DOMPDF - TRUE A4 PORTRAIT PAGE
+    |--------------------------------------------------------------------------
+    | The screenshots are sections of ONE portrait A4 page.
+    | A4 = 210mm × 297mm.
+    |--------------------------------------------------------------------------
+    */
+
         @page {
-            size: A4 landscape;
-            margin: 7mm 8mm 6mm 8mm;
+            size: 210mm 297mm;
+            margin: 7mm 7mm 6mm 7mm;
         }
 
         * {
@@ -20,67 +29,96 @@
 
         html,
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 11px;
-            line-height: 1.02;
+            font-size: 10px;
+            line-height: 1.04;
             color: #000;
         }
 
-        body {
-            width: 100%;
-        }
-
         .container {
-            width: 100%;
-            margin: 0;
+            width: 196mm;
+            margin: 0 auto;
             padding: 0;
         }
 
-        /*
-     * Keep the entire first contract page together.
-     * DOMPDF should not create a page break inside this block.
-     */
         .page {
-            width: 100%;
+            width: 196mm;
+            height: 284mm;
+            min-height: 284mm;
+            max-height: 284mm;
             margin: 0;
             padding: 0;
+            overflow: hidden;
+
+            page-break-after: always;
             page-break-inside: avoid;
-            break-inside: avoid;
         }
+
+        /* -------------------------------------------------------------
+       COPYRIGHT
+    ------------------------------------------------------------- */
 
         .copyright {
             width: 96%;
-            margin: 0 auto 1px auto;
+            margin: 0 auto 1.5mm auto;
+            padding: 0;
             text-align: center;
-            font-size: 8px;
-            line-height: 1;
+            font-size: 7.7px;
+            line-height: 1.05;
         }
 
+        /* -------------------------------------------------------------
+       MAIN TITLE
+    ------------------------------------------------------------- */
+
         .document-title {
-            margin: 1px 0;
+            margin: 0 0 1mm 0;
+            padding: 0;
             text-align: center;
-            font-size: 22px;
+            font-size: 23px;
             line-height: 1;
             font-weight: bold;
         }
 
+        /* -------------------------------------------------------------
+       GENERAL TABLE SETTINGS
+    ------------------------------------------------------------- */
+
         table {
             border-spacing: 0;
+            border-collapse: collapse;
         }
+
+        td,
+        th {
+            line-height: 1.04;
+        }
+
+        .no-border-table,
+        .no-border-table tr,
+        .no-border-table td,
+        .no-border-table th {
+            border: none !important;
+        }
+
+        /* -------------------------------------------------------------
+       TOP CONTRACT DETAILS TABLE
+    ------------------------------------------------------------- */
 
         .main-table {
             width: 100%;
+            margin: 0;
             border-collapse: collapse;
             table-layout: fixed;
-            margin: 0;
         }
 
         .main-table td {
+            padding: 0.7mm 0.5mm;
             vertical-align: top;
-            padding: 1px 2px;
-            line-height: 1.02;
+            font-size: 10.5px;
         }
 
         .term-col {
@@ -96,23 +134,23 @@
         }
 
         .header-cell {
+            padding-top: 0 !important;
+            padding-bottom: 0.7mm !important;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px !important;
             line-height: 1;
             font-weight: bold;
-            padding: 0 2px 1px 2px !important;
         }
 
         .term {
-            font-size: 11px;
-            line-height: 1.02;
-            font-weight: normal;
             padding-left: 0 !important;
+            font-size: 10.5px !important;
+            font-weight: normal;
         }
 
         .value {
-            font-size: 11px;
-            line-height: 1.02;
+            font-size: 10.5px !important;
+            line-height: 1.03;
             font-weight: bold;
         }
 
@@ -124,15 +162,13 @@
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
-            margin: 0;
         }
 
         .contact-table td {
-            padding: 0;
-            font-size: 10.5px;
+            padding: 0 !important;
+            font-size: 10px !important;
+            line-height: 1.02;
             font-weight: bold;
-            line-height: 1;
-            vertical-align: top;
         }
 
         .contact-label {
@@ -144,55 +180,39 @@
         }
 
         .space-small td {
-            padding-top: 3px !important;
+            padding-top: 1.4mm !important;
         }
 
         .space-medium td {
-            padding-top: 4px !important;
+            padding-top: 1.8mm !important;
         }
 
         .land-lines {
-            line-height: 1.02;
+            line-height: 1.03;
         }
 
-        .option-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: auto;
-            margin: 0;
-        }
+        /* -------------------------------------------------------------
+       CHECKBOXES
+    ------------------------------------------------------------- */
 
-        .option-table td {
-            padding: 0 5px 0 0;
-            white-space: nowrap;
-            vertical-align: middle;
-            font-size: 11px;
-            line-height: 1.05;
-            font-weight: normal;
-        }
-
-        /*
-     * Smaller checkboxes are important because the original 17px
-     * boxes consume a lot of vertical space in DOMPDF.
-     */
         .checkbox {
             display: inline-block;
             position: relative;
-            width: 11px;
-            height: 11px;
-            border: 1px solid #000;
+            width: 10px;
+            height: 10px;
             margin-right: 3px;
-            vertical-align: -2px;
+            border: 1px solid #000;
+            vertical-align: -1.5px;
         }
 
         .checkbox.checked:before,
         .checkbox.checked:after {
             content: "";
             position: absolute;
-            left: 4.5px;
+            left: 4px;
             top: -1px;
             width: 1px;
-            height: 12px;
+            height: 11px;
             background: #000;
         }
 
@@ -204,164 +224,206 @@
             transform: rotate(-45deg);
         }
 
+        /* -------------------------------------------------------------
+       OPTIONS
+    ------------------------------------------------------------- */
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        .option-table td {
+            padding: 0.3mm 1.8mm 0.3mm 0;
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: 10.5px !important;
+            line-height: 1.03;
+            font-weight: normal;
+        }
+
         .wide-options {
-            padding-top: 2px !important;
+            padding-top: 1.5mm !important;
         }
 
         .improvements-row td {
-            padding-top: 1px !important;
+            padding-top: 0.5mm !important;
         }
 
         .attached-row td {
-            padding-top: 1px !important;
+            padding-top: 0.5mm !important;
         }
 
         .attached-content {
-            font-size: 11px;
-            line-height: 1.02;
-            font-weight: normal;
+            font-size: 10.5px !important;
+            line-height: 1.03;
         }
 
         .attached-line {
             margin: 0;
+            padding: 0;
         }
 
         .other-documents {
-            margin-left: 205px;
+            margin-left: 51mm;
             line-height: 1;
         }
 
-        .no-border-table,
-        .no-border-table tr,
-        .no-border-table td,
-        .no-border-table th {
-            border: none !important;
-        }
+        /* -------------------------------------------------------------
+       FORCE INLINE 16PX VALUES TO MATCH A4 DOCUMENT
+    ------------------------------------------------------------- */
 
-        /*
-     * Force all nested tables/divs to use compact typography.
-     * This overrides the 16px inline declarations already present
-     * in the supplied body markup.
-     */
-        .page table,
-        .page table td,
-        .page div {
-            line-height: 1.02;
-        }
-
-        /*
-     * Overrides inline font-size:16px and font-size:17px declarations
-     * inside the second and third sections.
-     */
         .page table td {
-            font-size: 11px !important;
+            font-size: 10.5px !important;
         }
 
-        /*
-     * Real-estate-agent inclusions box
-     */
+        .page div {
+            line-height: 1.04;
+        }
+
+        /* -------------------------------------------------------------
+       REAL ESTATE AGENT BOX
+    ------------------------------------------------------------- */
+
         .page>div[style*="border:2px"] {
-            padding: 3px 6px 2px 6px !important;
-            font-size: 11px !important;
-            line-height: 1.02 !important;
-            margin: 1px 0 0 0 !important;
+            margin-top: 1mm !important;
+            padding: 1.5mm 2mm 1mm 2mm !important;
+            border: 1.5px solid #000 !important;
+
+            font-family: Arial, Helvetica, sans-serif !important;
+            font-size: 10.5px !important;
+            line-height: 1.04 !important;
         }
 
         .page>div[style*="border:2px"]>div:first-child {
-            font-size: 11.5px !important;
+            margin: 0 0 1mm 0 !important;
+            font-size: 11px !important;
             line-height: 1.02 !important;
-            margin-bottom: 2px !important;
+            font-weight: bold;
         }
 
-        /*
-     * Reduce all excessive vertical padding used in the
-     * purchaser / solicitor / price section.
-     */
+        .page>div[style*="border:2px"] table td {
+            font-size: 10.5px !important;
+            line-height: 1.04 !important;
+        }
+
+        /* Inclusions "other" text */
+        .page>div[style*="border:2px"] td[colspan="4"] {
+            line-height: 1.08 !important;
+        }
+
+        /* -------------------------------------------------------------
+       PURCHASER / SOLICITOR / PRICE AREA
+    ------------------------------------------------------------- */
+
         .page td[style*="padding-top:7px"] {
-            padding-top: 2px !important;
+            padding-top: 1.5mm !important;
         }
 
         .page td[style*="padding-top:10px"] {
-            padding-top: 3px !important;
+            padding-top: 2.5mm !important;
         }
 
         .page td[style*="padding-top:28px"] {
-            padding-top: 8px !important;
+            padding-top: 8mm !important;
         }
 
         .page td[style*="padding-left:55px"] {
-            padding-left: 25px !important;
+            padding-left: 13mm !important;
         }
 
-        /*
-     * Signature table.
-     * Original margin-top:34px wastes considerable page height.
-     */
+        /* -------------------------------------------------------------
+       SIGNATURE AREA
+    ------------------------------------------------------------- */
+
         .page>table[style*="margin-top:34px"] {
-            margin-top: 8px !important;
-            font-size: 11px !important;
+            width: 100% !important;
+            margin-top: 8mm !important;
+            font-size: 10.5px !important;
             line-height: 1 !important;
+        }
+
+        .page>table[style*="margin-top:34px"] td {
+            font-size: 10.5px !important;
         }
 
         .page td[style*="height:58px"] {
-            height: 31px !important;
+            height: 14mm !important;
         }
 
-        /*
-     * GST amount box
-     */
         .page div[style*="min-height:52px"] {
-            min-height: 30px !important;
-            padding: 1px 4px !important;
-            font-size: 10.5px !important;
-            line-height: 1 !important;
+            min-height: 13mm !important;
+            padding: 1mm 1.5mm !important;
+            font-size: 10px !important;
+            line-height: 1.02 !important;
         }
 
         .page div[style*="min-height:52px"] div {
-            font-size: 10.5px !important;
-            line-height: 1 !important;
+            font-size: 10px !important;
+            line-height: 1.02 !important;
         }
 
-        /*
-     * Tax information section
-     */
+        /* -------------------------------------------------------------
+       TAX INFORMATION
+    ------------------------------------------------------------- */
+
         .page>div:last-child {
-            font-size: 11px !important;
-            line-height: 1.02 !important;
-            margin-top: 2px !important;
+            margin-top: 2mm !important;
+            padding: 0 !important;
+            font-size: 10.5px !important;
+            line-height: 1.03 !important;
         }
 
         .page>div:last-child>div:first-child {
-            font-size: 11.5px !important;
-            line-height: 1 !important;
-            margin: 0 0 1px 0 !important;
+            margin: 0 0 1mm 0 !important;
+            padding: 0 !important;
+            text-align: center;
+            font-size: 11px !important;
+            line-height: 1.02 !important;
+            font-weight: bold;
         }
 
-        /*
-     * Holder of strata/community title records box
-     */
+        .page>div:last-child table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .page>div:last-child table td {
+            padding-top: 0.25mm;
+            padding-bottom: 0.25mm;
+            font-size: 10.5px !important;
+            line-height: 1.03 !important;
+        }
+
+        /* -------------------------------------------------------------
+       HOLDER OF STRATA / COMMUNITY TITLE RECORDS
+    ------------------------------------------------------------- */
+
         .page div[style*="min-height:50px"] {
-            min-height: 28px !important;
-            margin-top: 3px !important;
-            padding: 2px 6px !important;
+            min-height: 11mm !important;
+            margin-top: 2mm !important;
+            padding: 1mm 2mm !important;
+            border: 1px solid #000 !important;
         }
 
         .page div[style*="min-height:50px"] strong {
-            font-size: 11px !important;
+            font-size: 10.5px !important;
+            line-height: 1.02 !important;
         }
 
-        /*
-     * Prevent DOMPDF from splitting important structures.
-     */
+        /* -------------------------------------------------------------
+       DOMPDF PAGE-BREAK CONTROL
+    ------------------------------------------------------------- */
+
+        .page,
         .main-table,
-        .option-table,
         .contact-table,
+        .option-table,
+        .page>div,
         .page>table,
-        .page>div {
-            page-break-inside: avoid;
-        }
-
-        tr {
+        tr,
+        td {
             page-break-inside: avoid;
         }
     </style>
