@@ -4,308 +4,208 @@
 <head>
     <meta charset="utf-8">
     <title>Property Sale Agreement</title>
-
-    <style>
-        body {
-            font-family: "Libre Baskerville", serif;
-            font-size: 12px;
-            color: #000;
-            margin: 0px;
-            width: 100%;
-            height: 100%;
-            /*            border: 1px solid black;*/
-            /*            padding: 10px;*/
-        }
-
-        .container {
-            width: 100%;
-        }
-
-        /* HEADER */
-        /*.header {
-            border-bottom: 1px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }*/
-
-        .header-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /*.header-left {
-            font-size: 10px;
-            vertical-align: top;
-            width: 65%;
-            padding-right: 10px;
-        }*/
-
-        /*.header-right {
-            text-align: center;
-            vertical-align: top;
-            width: 35%;
-        }*/
-
-        /*.company-name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .company-info {
-            font-size: 11px;
-            line-height: 1.4;
-        }*/
-
-        /* TITLE */
-        .doc-title {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 25px 0;
-            text-decoration: underline;
-        }
-
-        /* TABLES */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        th,
-        td {
-            border: 1px solid #000;
-            padding: 8px;
-            font-size: 12px;
-            vertical-align: top;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-
-        .no-border td {
-            border: none;
-            padding-top: 30px;
-        }
-
-        /* SIGNATURES */
-        .signature-table td {
-            border: none;
-            padding-top: 40px;
-        }
-
-        .signature-line {
-            margin-top: 30px;
-            border-top: 1px solid #000;
-            width: 80%;
-        }
-
-        /* FOOTER */
-        .footer {
-            border-top: 1px solid #000;
-            padding-top: 10px;
-            font-size: 10px;
-            text-align: center;
-            margin-top: 40px;
-        }
-    </style>
 </head>
 
 <body>
 
+    <style>
+        @page {
+            margin: 18px 24px 16px 24px;
+            size: A4 landscape;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            line-height: 1.08;
+            color: #000;
+        }
+
+        .page {
+            width: 100%;
+        }
+
+        .copyright {
+            width: 94%;
+            margin: 5px auto 1px auto;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.05;
+        }
+
+        .document-title {
+            margin: 2px 0 1px 0;
+            text-align: center;
+            font-size: 32px;
+            line-height: 1;
+            font-weight: bold;
+        }
+
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .main-table td {
+            vertical-align: top;
+            padding: 3px 2px;
+        }
+
+        .term-col {
+            width: 22%;
+        }
+
+        .meaning-col {
+            width: 50%;
+        }
+
+        .contact-col {
+            width: 28%;
+        }
+
+        .header-cell {
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+            padding-top: 1px !important;
+            padding-bottom: 3px !important;
+        }
+
+        .term {
+            font-size: 16px;
+            font-weight: normal;
+            padding-left: 0 !important;
+        }
+
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .normal {
+            font-weight: normal;
+        }
+
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .contact-table td {
+            padding: 0;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1.05;
+            vertical-align: top;
+        }
+
+        .contact-label {
+            width: 35%;
+        }
+
+        .contact-value {
+            width: 65%;
+        }
+
+        .space-small td {
+            padding-top: 7px;
+        }
+
+        .space-medium td {
+            padding-top: 11px;
+        }
+
+        .land-lines {
+            line-height: 1.08;
+        }
+
+        .option-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        .option-table td {
+            padding: 1px 8px 1px 0;
+            white-space: nowrap;
+            vertical-align: middle;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .checkbox {
+            display: inline-block;
+            width: 17px;
+            height: 17px;
+            border: 1px solid #000;
+            vertical-align: -3px;
+            margin-right: 5px;
+            position: relative;
+        }
+
+        .checkbox.checked:before,
+        .checkbox.checked:after {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: -2px;
+            width: 1px;
+            height: 20px;
+            background: #000;
+        }
+
+        .checkbox.checked:before {
+            transform: rotate(45deg);
+        }
+
+        .checkbox.checked:after {
+            transform: rotate(-45deg);
+        }
+
+        .wide-options {
+            padding-top: 8px !important;
+        }
+
+        .improvements-row td {
+            padding-top: 2px;
+        }
+
+        .attached-row td {
+            padding-top: 3px;
+        }
+
+        .attached-content {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .attached-line {
+            margin-bottom: 2px;
+        }
+
+        .other-documents {
+            margin-left: 295px;
+        }
+
+        .no-border-table,
+        .no-border-table tr,
+        .no-border-table td,
+        .no-border-table th {
+            border: none !important;
+        }
+    </style>
+
     <div class="container">
 
         <!-- page 1 -->
-        <style>
-            @page {
-                margin: 18px 24px 16px 24px;
-                size: A4 landscape;
-            }
-
-            * {
-                box-sizing: border-box;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 16px;
-                line-height: 1.08;
-                color: #000;
-            }
-
-            .page {
-                width: 100%;
-            }
-
-            .copyright {
-                width: 94%;
-                margin: 5px auto 1px auto;
-                text-align: center;
-                font-size: 12px;
-                line-height: 1.05;
-            }
-
-            .document-title {
-                margin: 2px 0 1px 0;
-                text-align: center;
-                font-size: 32px;
-                line-height: 1;
-                font-weight: bold;
-            }
-
-            .main-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed;
-            }
-
-            .main-table td {
-                vertical-align: top;
-                padding: 3px 2px;
-            }
-
-            .term-col {
-                width: 22%;
-            }
-
-            .meaning-col {
-                width: 50%;
-            }
-
-            .contact-col {
-                width: 28%;
-            }
-
-            .header-cell {
-                text-align: center;
-                font-size: 17px;
-                font-weight: bold;
-                padding-top: 1px !important;
-                padding-bottom: 3px !important;
-            }
-
-            .term {
-                font-size: 16px;
-                font-weight: normal;
-                padding-left: 0 !important;
-            }
-
-            .value {
-                font-size: 16px;
-                font-weight: bold;
-            }
-
-            .normal {
-                font-weight: normal;
-            }
-
-            .contact-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed;
-            }
-
-            .contact-table td {
-                padding: 0;
-                font-size: 15px;
-                font-weight: bold;
-                line-height: 1.05;
-                vertical-align: top;
-            }
-
-            .contact-label {
-                width: 35%;
-            }
-
-            .contact-value {
-                width: 65%;
-            }
-
-            .space-small td {
-                padding-top: 7px;
-            }
-
-            .space-medium td {
-                padding-top: 11px;
-            }
-
-            .land-lines {
-                line-height: 1.08;
-            }
-
-            .option-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: auto;
-            }
-
-            .option-table td {
-                padding: 1px 8px 1px 0;
-                white-space: nowrap;
-                vertical-align: middle;
-                font-size: 16px;
-                font-weight: normal;
-            }
-
-            .checkbox {
-                display: inline-block;
-                width: 17px;
-                height: 17px;
-                border: 1px solid #000;
-                vertical-align: -3px;
-                margin-right: 5px;
-                position: relative;
-            }
-
-            .checkbox.checked:before,
-            .checkbox.checked:after {
-                content: "";
-                position: absolute;
-                left: 7px;
-                top: -2px;
-                width: 1px;
-                height: 20px;
-                background: #000;
-            }
-
-            .checkbox.checked:before {
-                transform: rotate(45deg);
-            }
-
-            .checkbox.checked:after {
-                transform: rotate(-45deg);
-            }
-
-            .wide-options {
-                padding-top: 8px !important;
-            }
-
-            .improvements-row td {
-                padding-top: 2px;
-            }
-
-            .attached-row td {
-                padding-top: 3px;
-            }
-
-            .attached-content {
-                font-size: 16px;
-                font-weight: normal;
-            }
-
-            .attached-line {
-                margin-bottom: 2px;
-            }
-
-            .other-documents {
-                margin-left: 295px;
-            }
-        </style>
         <div class="page">
 
             <div class="copyright">
@@ -320,7 +220,7 @@
                 Contract for the sale of land – 2005 edition
             </div>
 
-            <table class="main-table">
+            <table class="main-table no-border-table">
                 <colgroup>
                     <col class="term-col">
                     <col class="meaning-col">
@@ -456,6 +356,191 @@
                         <div class="other-documents">
                             <span class="checkbox"></span>Other documents:
                         </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="border:2px solid #000; padding:6px 10px 4px 10px; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.08;">
+
+                <div style="font-weight:bold; font-size:17px; margin-bottom:4px;">
+                    A real estate agent is permitted by <em>legislation</em> to fill up the items in this box in a sale of residential property.
+                </div>
+
+                <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                    <tr>
+                        <td style="width:22%; vertical-align:top; font-size:16px;">Inclusions</td>
+
+                        <td style="width:78%; vertical-align:top;">
+                            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                                <tr>
+                                    <td style="width:25%; white-space:nowrap;">
+                                        <span class="checkbox checked"></span>blinds
+                                    </td>
+                                    <td style="width:28%; white-space:nowrap;">
+                                        <span class="checkbox checked"></span>curtains
+                                    </td>
+                                    <td style="width:22%; white-space:nowrap;">
+                                        <span class="checkbox"></span>insect screens
+                                    </td>
+                                    <td style="width:25%; white-space:nowrap;">
+                                        <span class="checkbox"></span>stove
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox checked"></span>built-in wardrobes
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox checked"></span>dishwasher
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox checked"></span>light fittings
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox"></span>pool equipment
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox checked"></span>clothes line
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox checked"></span>fixed floor coverings
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox checked"></span>range hood
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        <span class="checkbox"></span>TV antenna
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="4" style="padding-top:2px; line-height:1.2;">
+                                        <span class="checkbox checked"></span>
+                                        other:&nbsp; Wall air-conditioner, garden corner bench and table, groundwater pump, bird<br>
+                                        bath, build in shelves in living room, workbench and machinery in garage, kitchen corner<br>
+                                        bench, Wardrobe in bedroom, pot plants, washing machine in internal laundry, shelves in<br>
+                                        spare bedroom
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-top:7px; font-size:16px;">Exclusions</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-top:10px; font-size:16px;">Purchaser</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-top:28px; font-size:16px;">Purchaser’s solicitor</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" style="padding-top:28px;">
+                            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+                                <tr>
+                                    <td style="width:22%; font-size:16px;">Price</td>
+                                    <td style="width:4%; font-size:16px; font-weight:bold;">$</td>
+                                    <td style="width:74%;"></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-size:16px;">Deposit</td>
+                                    <td style="font-size:16px; font-weight:bold; border-bottom:1px solid #000;">$</td>
+                                    <td style="font-size:16px; padding-left:55px;">
+                                        (10% of the price, unless otherwise stated)
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-size:16px;">Balance</td>
+                                    <td style="font-size:16px; font-weight:bold;">$</td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-size:16px;">Contract date</td>
+                                    <td></td>
+                                    <td style="font-size:16px; text-align:right;">
+                                        (if not stated, the date this contract was made)
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <table style="width:100%; border-collapse:collapse; table-layout:fixed; margin-top:34px; font-family:Arial, Helvetica, sans-serif; font-size:16px;">
+                <tr>
+                    <td style="width:42%; vertical-align:top;">
+                        <div style="border-top:1px solid #000; padding-top:3px; font-weight:bold;">
+                            Vendor
+                        </div>
+                    </td>
+
+                    <td style="width:16%;"></td>
+
+                    <td style="width:42%; vertical-align:top;">
+                        <div style="border-top:1px solid #000; padding-top:3px; text-align:right; font-weight:bold;">
+                            Witness
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height:58px;"></td>
+
+                    <td style="vertical-align:top;">
+                        <div style="border:1px dotted #000; padding:2px 8px 3px 8px; min-height:52px;">
+                            <div style="font-weight:bold; font-size:16px;">
+                                GST AMOUNT <span style="font-weight:normal;">(optional)</span>
+                            </div>
+                            <div>The price includes</div>
+                            <div>GST of:</div>
+                        </div>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="vertical-align:top;">
+                        <div style="border-top:1px solid #000; padding-top:3px; font-weight:bold;">
+                            Purchaser
+                        </div>
+                    </td>
+
+                    <td colspan="2" style="vertical-align:top;">
+                        <table style="width:100%; border-collapse:collapse; table-layout:auto;">
+                            <tr>
+                                <td style="white-space:nowrap; padding-left:6px;">
+                                    <span class="checkbox"></span>JOINT TENANTS
+                                </td>
+
+                                <td style="white-space:nowrap; padding-left:8px;">
+                                    <span class="checkbox"></span>tenants in common
+                                </td>
+
+                                <td style="white-space:nowrap; padding-left:8px;">
+                                    <span class="checkbox"></span>in unequal shares
+                                </td>
+
+                                <td style="width:100%; border-top:1px solid #000; text-align:right; padding-top:3px; font-weight:bold;">
+                                    Witness
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
